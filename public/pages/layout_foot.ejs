@@ -1,0 +1,6 @@
+  <script src="<%= asset('common.js') %>"></script>
+<% (locals.js || []).forEach(function(src) { -%>
+  <script src="<%= asset(src) %>"></script>
+<% }) -%>
+</body>
+</html>

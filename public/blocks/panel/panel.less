@@ -1,0 +1,35 @@
+.panel {
+  height: 50px;
+  padding: 10px 0;
+  border-radius: 0 0 5px 5px;
+  text-align: center;
+
+  &__letters {
+    position: relative;
+    display: inline-block;
+    height: 50px;
+    width: 420px;
+  }
+
+  &__letter {
+    overflow: hidden;
+    position: absolute;
+    z-index: 1;
+    width: 48px;
+    height: 48px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    text-align: center;
+    line-height: 75px;
+    font-weight: 600;
+    font-size: 40px;
+
+    transition: left .2s;
+
+    &_dragging {
+      z-index: 2;
+      box-shadow: 5px 5px 10px rgba(0,0,0,.1);
+    }
+  }
+}
