@@ -4,8 +4,9 @@ var _ = require('lodash')
 module.exports = function() {
   var letters = _.map(this.state.letters, (letter, i) => {
     return (
-      <div className="panel__letter" style={{left: i*60}}>
-        {letter.letter}
+      <div className="panel__letter" style={{left: i*52}}>
+        <div className="panel__letter-score">1</div>
+        <div className="panel__letter-tile">{letter.letter}</div>
       </div>
     )
   })

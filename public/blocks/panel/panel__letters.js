@@ -6,14 +6,13 @@ var _ = require('lodash')
 module.exports = React.createClass({
   getInitialState() {
     var letters;  
-    letters = ['А','Б','В','Г','Д','Е','И']
+    letters = ['Б','Б','Т','Р','И','О', '']
     letters = _.map(letters, (letter, i) => {
       return {
         id: _.uniqueId()
       , letter: letter
       }
     })
-
     return {
       letters: letters
     }

@@ -1,107 +1,160 @@
 var _ = require('lodash')
 var $ = require('jquery')
 
-var LETTER_SIZE = 60
+var LETTER_SIZE = 52
+var LETTERS_WIDTH = LETTER_SIZE * 7
+var LETTERS_HEIGHT = LETTER_SIZE
+var LETTERS_OFFSET_LEFT = (612 - LETTERS_WIDTH) / 2 - 6
+var LETTERS_OFFSET_TOP = (70 - LETTERS_HEIGHT) / 2 + 6
+var TABLE_CELL_SIZE = 40
+var TABLE_SIZE = 600
 
 module.exports = (el) => {
   var $el = $(el)
   var $letters = $el.find('.panel__letter')
   var reordering = false
-  var occupied = []
   var letters = {}
+  var placed = []
 
   mapLetters()
 
   $letters.each(function() {
-    var letterLeft;
-    var letterIndex;
-
     var $letter = $(this)
+    var letterIndex;
+    var letterDeltaX = 0;
+    var letterDeltaY = 0;
+    var letterIndex;
+    var letterLeft;
 
     $letter.on('drag', (e, d) => {
-      $letter.css({transform: `translate(
-        ${d.deltaX}px,
-        ${d.deltaY}px
-      )`})
+      translateLetter($letter,
+        letterDeltaX + d.deltaX,
+        letterDeltaY + d.deltaY)
 
+      // do nothing while animating
       if (reordering) return
 
-      var centerX = d.deltaX + LETTER_SIZE / 2 + letterLeft
-      var centerY = d.deltaY + LETTER_SIZE / 2
+      var centerX = letterDeltaX + d.deltaX + LETTER_SIZE / 2 + letterLeft
+      var centerY = letterDeltaY + d.deltaY + LETTER_SIZE / 2
 
-      _.each(occupied, (i) => {
-        var $occupied = letters[i]
-        var oLeft = $occupied.data('left')
+      // do nothing if current letter coords
+      // don't fall within letters block space
+      if (centerX < 0 || centerX > LETTERS_WIDTH ||
+          centerY < 0 || centerY > LETTERS_HEIGHT) {
+        return
+      }
 
-        if (centerX > oLeft && 
-            centerX < oLeft + LETTER_SIZE &&
-            centerY > 0 && centerY < LETTER_SIZE) {
-          
-          var oIndex = calcIndex($occupied)
-          var eIndex = findEmpty(oIndex)
-          reorderLetters(eIndex, oIndex)
-          letterIndex = oIndex
-        }
-      })
+      letterIndex = ~~(centerX / LETTER_SIZE)
+
+      if (letters[letterIndex]) {
+        reorderLetters(findEmpty(letterIndex), letterIndex)
+      }
+    })
+
+    $letter.on('mousedown', () => {
+      $letter.addClass('panel__letter_dragging')
+    })
+    $letter.on('mouseup', () => {
+      $letter.removeClass('panel__letter_dragging')
     })
 
     $letter.on('dragstart', (e, d) => {
-      $letter.addClass('panel__letter_dragging')
-      $letter.data('dragging', true)
-
-      letterIndex = calcIndex($letter)
-      letterLeft = $letter.position().left
-      releaseLetter($letter)
+      // start dragging from table
+      if ($letter.hasClass('panel__letter_placed')) {
+        $letter.removeClass('panel__letter_placed')
+        letterDeltaX -= 6
+        letterDeltaY -= 6
+      // start dragging from panel
+      } else {
+        letterIndex = getIndex($letter)
+        letterLeft = getLeft($letter)
+        delete letters[letterIndex]
+      }
     })
 
     $letter.on('dragend', (e, d) => {
-      $letter.removeClass('panel__letter_dragging')
-      $letter.css({transform: 'translate(0,0)'})
-      $letter.data('dragging', null)
+      // calc letter coordinates related to the table
+      var centerX = letterDeltaX + d.deltaX + LETTER_SIZE / 2 + letterLeft
+      var centerY = letterDeltaY + d.deltaY + LETTER_SIZE / 2
       
-      moveLetter($letter, letterIndex)
-      mapLetters()
+      centerX += LETTERS_OFFSET_LEFT
+      centerY += LETTERS_OFFSET_TOP
+      centerY += TABLE_SIZE
+      
+      var cellX = ~~(centerX / TABLE_CELL_SIZE)
+      var cellY = ~~(centerY / TABLE_CELL_SIZE)
+
+      // if current letter coords fall within table
+      // then we try to place it there if possible
+      if (!isPlaced(cellX, cellY) &&
+          centerX > 0 && centerX < TABLE_SIZE &&
+          centerY > 0 && centerY < TABLE_SIZE) {
+
+        letterDeltaX = cellX * TABLE_CELL_SIZE - LETTERS_OFFSET_LEFT - letterLeft
+        letterDeltaY = cellY * TABLE_CELL_SIZE - LETTERS_OFFSET_TOP - TABLE_SIZE
+        
+        $letter.addClass('panel__letter_placed')
+        translateLetter($letter, letterDeltaX, letterDeltaY)
+        addPlaced(cellX, cellY)
+
+      // otherwise move letter back to panel
+      } else {
+        letterDeltaX = 0
+        letterDeltaY = 0
+
+        // if previous spot is not available then
+        // find closed available and place there
+        if (letters[letterIndex] && !reordering) {
+          letterIndex = findEmpty(letterIndex)
+        }
+        
+        translateLetter($letter, 0, 0)
+        moveLetter($letter, letterIndex)
+        mapLetters()
+      }
     })
   })
 
   function mapLetters() {
-    occupied = []
     letters = {}
       
     $letters.each(function() {
       var $letter = $(this)    
-      var index = calcIndex($letter)
       
-      $letter.data('left', $letter.position().left)
-
-      if (!$letter.data('dragging')) {
-        letters[index] = $letter
-        occupied.push(index)
+      if (!$letter.hasClass('panel__letter_placed') &&
+          !$letter.hasClass('panel__letter_dragging')) {
+        letters[getIndex($letter)] = $letter
       }
     })
   }
 
-  function releaseLetter($letter) {
-    var index = calcIndex($letter)
-    occupied = _.without(occupied, index)
-    delete letters[index]
-  }
-
-  function calcIndex($letter) {
-    return $letter.css('left').replace('px', '') / LETTER_SIZE
-  }
-
+  // find closest empty index
   function findEmpty(index) {
     for (var i = index; i < 7; i++) {
-      if (!_.contains(occupied, i)) return i}
+      if (!letters[i]) return i}
     for (var i = index; i >= 0; i--) {
-      if (!_.contains(occupied, i)) return i}
+      if (!letters[i]) return i}
+  }
+
+  function getIndex($letter) {
+    return getLeft($letter) / LETTER_SIZE
+  }
+
+  function getLeft($letter) {
+    return +$letter.css('left').replace('px', '')
   }
   
+  function translateLetter($letter, x, y) {
+    $letter.css({transform: `translate(${x}px,${y}px)`})
+  }
+
+  // move letter to new position by index
   function moveLetter($letter, index) {
     $letter.css('left', LETTER_SIZE * index)
   }
 
+  // move a row of letters on one cell left or
+  // right considering where the empty index is
   function moveLetters(eindex, oindex) {
     if (eindex < oindex) {
       for (var i = eindex + 1; i <= oindex; i++) {
@@ -114,6 +167,7 @@ module.exports = (el) => {
     }
   }
 
+  // the same as moveLetters but with animation
   function reorderLetters(eindex, oindex) {
     $el.addClass('panel_animate')
     moveLetters(eindex, oindex)
@@ -124,6 +178,23 @@ module.exports = (el) => {
       reordering = false
       mapLetters()
     }, 150)
+  }
+
+  function addPlaced(x, y) {
+    placed.push([x, y])
+  }
+
+  function removePlaced(x, y) {
+    placed = _.remove(placed, (letter) => {
+      return letter[0] == x && letter[1] == y
+    })
+  }
+
+  function isPlaced(x, y) {
+    return false
+    return _.any(placed, (letter) => {
+      return letter[0] == x && letter[1] == y
+    })
   }
 }
 
