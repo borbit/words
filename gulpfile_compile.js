@@ -137,8 +137,8 @@ gulp.task('compile-common-js', () => {
 gulp.task('compile', [
   'compile-common-less'
 , 'compile-page-less'
-, 'compile-common-js'
-, 'compile-page-js'
+// , 'compile-common-js'
+// , 'compile-page-js'
 ])
 
 // synchroniously read common.coffee and parse
