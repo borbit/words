@@ -1,7 +1,9 @@
 var io = require('io-server')
 var express = require('express')
-var passport = require('passport')
+var session = require('express-session')
+var cookieParser = require('cookie-parser')
 var engines = require('consolidate')
+var passport = require('passport')
 var config = require('config')
 var _ = require('lodash')
 
@@ -12,6 +14,8 @@ app.set('view engine', 'ejs')
 app.engine('ejs', engines.ejs)
 app.enable('trust proxy')
 
+app.use(cookieParser());
+app.use(session({secret: 'keyboard cat'}));
 app.use(express.static(config.assets_dir_path))
 app.use(express.static(config.public_dir_path))
 app.use(passport.initialize())
@@ -30,19 +34,11 @@ app.locals.asset = (src) => {
   return src
 }
 
-([
-  require('routes/index')
-, require('routes/table')
-, require('routes/auth')
-]).forEach((route) => {
-  route(app)
-})
-
 app.all('*', (req, res, next) => {
   var allowed = [
-    '/login',
-    '/login/cb'
-    '/logout'
+    '/login'
+  , '/login/cb'
+  , '/logout'
   ]
   if (_.contains(allowed, req.path)) {
     return next()
@@ -51,6 +47,16 @@ app.all('*', (req, res, next) => {
     return res.redirect('/login')
   }
   next()
+})
+
+var routes = [
+  require('lib/routes/index')
+, require('lib/routes/table')
+, require('lib/routes/auth')
+]
+
+routes.forEach((route) => {
+  route(app)
 })
 
 app.listen(config.port, config.host, (err) => {
