@@ -1,6 +1,7 @@
 var io = require('io-server')
 var express = require('express')
-var session = require('express-session')
+var expressState = require('express-state')
+var expressSession = require('express-session')
 var cookieParser = require('cookie-parser')
 var engines = require('consolidate')
 var passport = require('passport')
@@ -10,16 +11,18 @@ var _ = require('lodash')
 var app = express()
 app.set('strict routing', false)
 app.set('views', 'public/pages')
+app.set('state namespace', 'app')
 app.set('view engine', 'ejs')
 app.engine('ejs', engines.ejs)
 app.enable('trust proxy')
 
 app.use(cookieParser());
-app.use(session({secret: 'keyboard cat'}));
+app.use(expressSession({secret: 'keyboard cat'}));
 app.use(express.static(config.assets_dir_path))
 app.use(express.static(config.public_dir_path))
 app.use(passport.initialize())
 app.use(passport.session())
+expressState.extend(app)
 
 try {
   var manifest = require(config.dist_manifest_path)

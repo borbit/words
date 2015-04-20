@@ -63,7 +63,6 @@ gulp.task('compile-common-less', () => {
 //
 //
 gulp.task('compile-page-js', () => {
-  // var b = watchify(browserify({
   var b = browserify({
     cache: {},
     packageCache: {},
@@ -72,10 +71,6 @@ gulp.task('compile-page-js', () => {
   })
 
   b.transform(babelify)
-  b.on('update', () => {
-    console.log('update')
-    compile()
-  })
 
   getExternalModules().forEach((module) => {
     b.exclude(module.name)
@@ -90,20 +85,15 @@ gulp.task('compile-page-js', () => {
     console.log('browserify', err.message)
   })
 
-  function compile() {
-    return gulp
-      .src(paths.globPageJs)
-      .pipe(bundle)
-      .pipe(gulp.dest(paths.assetsDir));
-  }
-
-  return compile()
+  return gulp
+    .src(paths.globPageJs)
+    .pipe(bundle)
+    .pipe(gulp.dest(paths.assetsDir));
 })
 
 //
 //
 gulp.task('compile-common-js', () => {
-  // var b = watchify(browserify({
   var b = browserify({
     cache: {},
     packageCache: {},
@@ -137,8 +127,8 @@ gulp.task('compile-common-js', () => {
 gulp.task('compile', [
   'compile-common-less'
 , 'compile-page-less'
-// , 'compile-common-js'
-// , 'compile-page-js'
+, 'compile-common-js'
+, 'compile-page-js'
 ])
 
 // synchroniously read common.coffee and parse

@@ -2,7 +2,8 @@ var React = require('react')
 
 module.exports = function() {
   return (
-    <div className="aside">
-    </div>
+    <ul className="tabs">
+      {this.props.children}
+    </ul>
   )
 }
