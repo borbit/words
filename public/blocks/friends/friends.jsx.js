@@ -1,10 +1,13 @@
 var React = require('react')
-var Tabs = require('../tabs/tabs')
-var TabsTab = require('../tabs/tabs__tab')
 var FriendsFriend = require('./friends__friend')
+var Tabs = require('../tabs/tabs')
 
 module.exports = function() {
   var friends = []
+  var tabs = [
+    {title: 'Грати зараз', active: true}
+  , {title: 'Запросити'}
+  ]
 
   this.state.friends.forEach((friend) => {
     friends.push(
@@ -15,10 +18,7 @@ module.exports = function() {
 
   return (
     <div className="friends">
-      <Tabs>
-        <TabsTab>Грати зараз</TabsTab>
-        <TabsTab>Запросити</TabsTab>
-      </Tabs>
+      <Tabs tabs={tabs}/>
       <div className="friends__list">
         {friends}
       </div>
