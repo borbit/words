@@ -9,7 +9,9 @@ module.exports = React.createClass({
   ],
 
   getInitialState() {
-    return LayoutStore.getState()
+    return {
+      layout: LayoutStore.getState()
+    }
   },
 
   render() {

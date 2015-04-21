@@ -54,8 +54,8 @@ app.all('*', (req, res, next) => {
 
 var routes = [
   require('lib/routes/index')
-, require('lib/routes/table')
 , require('lib/routes/auth')
+, require('lib/routes/game')
 ]
 
 routes.forEach((route) => {

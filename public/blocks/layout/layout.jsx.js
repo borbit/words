@@ -23,9 +23,9 @@ module.exports = function() {
 
   return (
     <div className="layout">
-      {this.state.page == 'game' && <Field/>}
-      {this.state.page == 'menu' && <LayoutMenu/>}
-      {rullers[this.state.page]}
+      {this.state.layout.get('page') == 'game' && <Field/>}
+      {this.state.layout.get('page') == 'menu' && <LayoutMenu/>}
+      {rullers[this.state.layout.get('page')]}
     </div>
   )
 }

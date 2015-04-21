@@ -1,13 +1,12 @@
 var Reflux = require('reflux')
+var Immutable = require('immutable')
 
 module.exports = Reflux.createStore({
   init() {
-    this.page = 'menu'
+    this.state = Immutable.Map({page: 'menu'})
   },
 
   getState() {
-    return {
-      page: this.page
-    }
+    return this.state
   }
 })

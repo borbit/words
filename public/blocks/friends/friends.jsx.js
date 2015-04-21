@@ -9,14 +9,14 @@ module.exports = function() {
   this.state.friends.forEach((friend) => {
     friends.push(
       <FriendsFriend
-        facebookName={friend.facebook_name}
-        facebookId={friend.facebook_id}/>)
+        facebookName={friend.fb_name}
+        facebookId={friend.fb_id}/>)
   })
 
   return (
     <div className="friends">
       <Tabs>
-        <TabsTab>Друзi</TabsTab>
+        <TabsTab>Грати зараз</TabsTab>
         <TabsTab>Запросити</TabsTab>
       </Tabs>
       <div className="friends__list">

@@ -6,8 +6,8 @@ module.exports = function() {
 
   return (
     <div className="me">
-      <span className="me__avatar"><Avatar facebookId={me.get('facebook_id')}/></span>
-      <span className="me__name">{me.get('facebook_name')}</span>
+      <span className="me__avatar"><Avatar facebookId={me.get('fb_id')}/></span>
+      <span className="me__name">{me.get('fb_name')}</span>
     </div>
   )
 }
