@@ -1,10 +1,10 @@
 var React = require('react')
 var GameActions = require('../../js/actions/game')
-var render = require('./friends__friend.jsx')
+var render = require('./games__game.jsx')
 
 module.exports = React.createClass({
   onPlay() {
-    GameActions.addGame(this.props.friend.get('fb_id'))
+    GameActions.getGame(this.props.game.get('id'))
   },
 
   render() {

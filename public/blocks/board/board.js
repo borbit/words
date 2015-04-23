@@ -1,5 +1,5 @@
 var React = require('react')
-var render = require('./layout__menu.jsx')
+var render = require('./board.jsx')
 
 module.exports = React.createClass({
   render() {

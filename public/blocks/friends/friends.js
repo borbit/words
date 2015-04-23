@@ -1,6 +1,6 @@
 var React = require('react')
 var Reflux = require('reflux')
-var FriendsStore = require('../../js/stores/friends')
+var FriendsStore = require('./friends.store')
 var render = require('./friends.jsx')
 
 module.exports = React.createClass({

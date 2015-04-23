@@ -1,6 +1,6 @@
 var React = require('react')
-var draggable = require('./panel__letters-draggable')
-var render = require('./panel__letters.jsx')
+var draggable = require('./letters-draggable')
+var render = require('./letters.jsx')
 var _ = require('lodash')
 
 module.exports = React.createClass({

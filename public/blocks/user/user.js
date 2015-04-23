@@ -1,5 +1,5 @@
 var React = require('react')
-var render = require('./panel.jsx')
+var render = require('./user.jsx')
 
 module.exports = React.createClass({
   render() {

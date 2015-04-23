@@ -1,12 +1,12 @@
 var React = require('react')
 var Avatar = require('../avatar/avatar')
+var User = require('../user/user')
 
 module.exports = function() {
   return (
     <div className="friends__friend">
-      <button className="friends__play">Створити гру</button>
-      <div className="friends__avatar"><Avatar facebookId={this.props.facebookId}/></div>
-      <div className="friends__name">{this.props.facebookName}</div>
+      <button className="friends__play" onClick={this.onPlay}>Створити гру</button>
+      <User user={this.props.friend}/>
     </div>
   )
 }

@@ -5,13 +5,13 @@ var LETTER_SIZE = 52
 var LETTERS_WIDTH = LETTER_SIZE * 7
 var LETTERS_HEIGHT = LETTER_SIZE
 var LETTERS_OFFSET_LEFT = (620 - LETTERS_WIDTH) / 2 - 10
-var LETTERS_OFFSET_TOP = (70 - LETTERS_HEIGHT) / 2 + 10
+var LETTERS_OFFSET_TOP = (70 - LETTERS_HEIGHT) / 2
 var TABLE_CELL_SIZE = 40
 var TABLE_SIZE = 600
 
 module.exports = (el) => {
   var $el = $(el)
-  var $letters = $el.find('.panel__letter')
+  var $letters = $el.find('.letters__letter')
   var reordering = false
   var letters = {}
   var placed = []
@@ -52,16 +52,16 @@ module.exports = (el) => {
     })
 
     $letter.on('mousedown', () => {
-      $letter.addClass('panel__letter_dragging')
+      $letter.addClass('letters__letter_dragging')
     })
     $letter.on('mouseup', () => {
-      $letter.removeClass('panel__letter_dragging')
+      $letter.removeClass('letters__letter_dragging')
     })
 
     $letter.on('dragstart', (e, d) => {
       // start dragging from table
-      if ($letter.hasClass('panel__letter_placed')) {
-        $letter.removeClass('panel__letter_placed')
+      if ($letter.hasClass('letters__letter_placed')) {
+        $letter.removeClass('letters__letter_placed')
         letterDeltaX -= 6
         letterDeltaY -= 6
       // start dragging from panel
@@ -93,7 +93,7 @@ module.exports = (el) => {
         letterDeltaX = cellX * TABLE_CELL_SIZE - LETTERS_OFFSET_LEFT - letterLeft
         letterDeltaY = cellY * TABLE_CELL_SIZE - LETTERS_OFFSET_TOP - TABLE_SIZE
         
-        $letter.addClass('panel__letter_placed')
+        $letter.addClass('letters__letter_placed')
         translateLetter($letter, letterDeltaX, letterDeltaY)
         addPlaced(cellX, cellY)
 
@@ -121,8 +121,8 @@ module.exports = (el) => {
     $letters.each(function() {
       var $letter = $(this)    
       
-      if (!$letter.hasClass('panel__letter_placed') &&
-          !$letter.hasClass('panel__letter_dragging')) {
+      if (!$letter.hasClass('letters__letter_placed') &&
+          !$letter.hasClass('letters__letter_dragging')) {
         letters[getIndex($letter)] = $letter
       }
     })

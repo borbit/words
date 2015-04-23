@@ -5,7 +5,7 @@ var render = require('./layout.jsx')
 
 module.exports = React.createClass({
   mixins: [
-    Reflux.connect(LayoutStore)
+    Reflux.connect(LayoutStore, 'layout')
   ],
 
   getInitialState() {
