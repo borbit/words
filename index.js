@@ -40,6 +40,11 @@ app.locals.asset = (src) => {
   return src
 }
 
+app.use(function(err, req, res, next) {
+  res.status(500)
+  res.send(JSON.stringify(err))
+})
+
 app.all('*', (req, res, next) => {
   var allowed = [
     '/login'

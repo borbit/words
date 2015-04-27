@@ -1,0 +1,32 @@
+.aside {
+  &__head {
+    overflow: hidden;
+    height: 58px;
+    padding: 0;
+  }
+
+  &__body {
+    padding: 10px;
+    height: 682px;
+  }
+
+  &__tab {
+    width: 92px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    border-bottom: 0;
+    border-top: 0;
+
+    &:first-child {
+      border-top-left-radius: 2px;
+      border-bottom-left-radius: 0;
+      border-left: 0;
+    }
+    &:last-child {
+      border-top-right-radius: 2px;
+      border-bottom-right-radius: 0;
+      border-right: 0;
+      width: 91px;
+    }
+  }
+}

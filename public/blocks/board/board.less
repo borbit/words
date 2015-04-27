@@ -1,8 +1,29 @@
 .board {
   &__head {
-    height: 60px;
+    padding: 0;
+    height: 58px;
   }
-  &__foot {
-    margin-top: 9px;
+
+  &__body {
+    padding: 10px;
+  }
+
+  &__letters {
+    margin-top: 10px;
+  }
+
+  &__player {
+    float: left;
+    padding-top: 10px;
+    width: 50%;
+
+    &:first-child {
+      padding-right: 5px;
+      text-align: right;
+    }
+    &:last-child {
+      padding-left: 5px;
+      text-align: left;
+    }
   }
 }
