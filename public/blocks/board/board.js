@@ -1,16 +1,19 @@
 var React = require('react')
 var Reflux = require('reflux')
+var GameStore = require('../../js/stores/game')
 var MeStore = require('../../js/stores/me')
 var render = require('./board.jsx')
 
 module.exports = React.createClass({
   mixins: [
-    Reflux.connect(MeStore)
+    Reflux.connect(GameStore, 'game')
+  , Reflux.connect(MeStore, 'me')
   ],
 
   getInitialState() {
     return {
-      me: MeStore.getState()
+      game: GameStore.getState()
+    , me: MeStore.getState()
     }
   },
 

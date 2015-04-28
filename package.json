@@ -32,6 +32,7 @@
     "jquery": "latest",
     "jquery.event.drag": "latest",
     "lodash": "latest",
+    "moment": "^2.10.2",
     "node-uuid": "^1.4.3",
     "nodemon": "latest",
     "passport": "^0.2.1",

@@ -7,8 +7,8 @@ module.exports = Reflux.createStore({
   mixins: [StoreMixin],
 
   init() {
-    this.state = Immutable.Map({page: 'menu'})
-    this.listenTo(GameActions.getGame.completed, this.onGame)
+    // this.state = Immutable.Map({page: 'menu'})
+    // this.listenTo(GameActions.getGame.completed, this.onGame)
   },
 
   onGame() {

@@ -18,6 +18,8 @@ module.exports = (el) => {
 
   mapLetters()
 
+  console.log($letters.length)
+  
   $letters.each(function() {
     var $letter = $(this)
     var letterIndex;
@@ -27,6 +29,8 @@ module.exports = (el) => {
     var letterLeft;
 
     $letter.on('drag', (e, d) => {
+      console.log('drag')
+
       translateLetter($letter,
         letterDeltaX + d.deltaX,
         letterDeltaY + d.deltaY)
@@ -169,12 +173,12 @@ module.exports = (el) => {
 
   // the same as moveLetters but with animation
   function reorderLetters(eindex, oindex) {
-    $el.addClass('panel_animate')
+    $el.addClass('letters_animate')
     moveLetters(eindex, oindex)
     reordering = true
 
     setTimeout(function() {
-      $el.removeClass('panel_animate')
+      $el.removeClass('letters_animate')
       reordering = false
       mapLetters()
     }, 150)
@@ -195,5 +199,15 @@ module.exports = (el) => {
     return _.any(placed, (letter) => {
       return letter[0] == x && letter[1] == y
     })
+  }
+
+  return {
+    off() {
+      $letters.off('drag')
+      $letters.off('mousedown')
+      $letters.off('mouseup')
+      $letters.off('dragstart')
+      $letters.off('dragend')
+    }
   }
 }

@@ -10,19 +10,15 @@ module.exports = function() {
         <div className="btn-group">
           <button className="aside__tab btn btn-default active">
             <i className="fa fa-gamepad"></i><br/>
-            <small>Поточнi iгри</small>
-          </button>
-          <button className="aside__tab btn btn-default">
-            <i className="fa fa-user"></i><br/>
-            <small>Профiль</small>
           </button>
           <button className="aside__tab btn btn-default">
             <i className="fa fa-users"></i><br/>
-            <small>Друзi</small>
+          </button>
+          <button className="aside__tab btn btn-default">
+            <i className="fa fa-user"></i><br/>
           </button>
           <button className="aside__tab btn btn-default">
             <i className="fa fa-star"></i><br/>
-            <small>Лiдерборд</small>
           </button>
         </div>
       </div>

@@ -3,6 +3,10 @@
   vertical-align: top;
   line-height: 15px;
 
+  &_right {
+    text-align: right
+  }
+
   &__avatar {
     float: left;
     margin-right: 10px;
@@ -20,5 +24,9 @@
 
   &__info {
     float: left;
+  }
+
+  &_right &__info {
+    float: right;
   }
 }

@@ -1,25 +1,28 @@
 var React = require('react')
-var draggable = require('./letters-draggable')
+var Dragging = require('./letters-dragging')
 var render = require('./letters.jsx')
-var _ = require('lodash')
 
 module.exports = React.createClass({
-  getInitialState() {
-    var letters;  
-    letters = ['Б','Б','Т','Р','И','О', '']
-    letters = _.map(letters, (letter, i) => {
-      return {
-        id: _.uniqueId()
-      , letter: letter
-      }
-    })
-    return {
-      letters: letters
-    }
+  componentDidMount() {
+    this.draggingOn()
+  },
+  componentDidUpdate() {
+    this.draggingOn()
   },
 
-  componentDidMount() {
-    draggable(this.getDOMNode())
+  componentWillUpdate() {
+    this.draggingOff()
+  },
+  componentWillUnmount() {
+    this.draggingOff()
+  },
+
+  draggingOn() {
+    this.dragging = Dragging(this.getDOMNode())
+  },
+
+  draggingOff() {
+    this.dragging && this.dragging.off()
   },
 
   render() {
