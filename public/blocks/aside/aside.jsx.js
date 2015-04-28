@@ -23,7 +23,6 @@ module.exports = function() {
         </div>
       </div>
       <div className="aside__body panel-body">
-        <Friends/>
         <Games/>
       </div>
     </div>

@@ -22,7 +22,7 @@ module.exports = React.createClass({
   },
 
   draggingOff() {
-    this.dragging && this.dragging.off()
+    this.dragging && this.dragging.destroy()
   },
 
   render() {

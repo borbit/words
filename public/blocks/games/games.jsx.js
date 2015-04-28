@@ -11,10 +11,10 @@ module.exports = function() {
 
   return (
     <div className="games">
-      <h4>Твiй хiд</h4>
-      <div className="games__list">
-        {games}
-      </div>
+      <h4>Твiй хiд <span className="badge">{games.length}</span></h4>
+      <div className="games__list list-group">{games}</div>
+      <h4>В очiкуванi <span className="badge">{games.length}</span></h4>
+      <div className="games__list list-group">{games}</div>
     </div>
   )
 }

@@ -1,3 +1,4 @@
+var events = require('events')
 var _ = require('lodash')
 var $ = require('jquery')
 
@@ -5,21 +6,21 @@ var LETTER_SIZE = 52
 var LETTERS_WIDTH = LETTER_SIZE * 7
 var LETTERS_HEIGHT = LETTER_SIZE
 var LETTERS_OFFSET_LEFT = (620 - LETTERS_WIDTH) / 2 - 10
-var LETTERS_OFFSET_TOP = (70 - LETTERS_HEIGHT) / 2
+var LETTERS_OFFSET_TOP = 10
 var TABLE_CELL_SIZE = 40
 var TABLE_SIZE = 600
 
 module.exports = (el) => {
   var $el = $(el)
   var $letters = $el.find('.letters__letter')
+  var emitter = new events.EventEmitter()
   var reordering = false
   var letters = {}
   var placed = []
 
   mapLetters()
 
-  console.log($letters.length)
-  
+
   $letters.each(function() {
     var $letter = $(this)
     var letterIndex;
@@ -29,8 +30,6 @@ module.exports = (el) => {
     var letterLeft;
 
     $letter.on('drag', (e, d) => {
-      console.log('drag')
-
       translateLetter($letter,
         letterDeltaX + d.deltaX,
         letterDeltaY + d.deltaY)
@@ -114,6 +113,7 @@ module.exports = (el) => {
         
         translateLetter($letter, 0, 0)
         moveLetter($letter, letterIndex)
+        removePlaced(cellX, cellY)
         mapLetters()
       }
     })
@@ -186,6 +186,7 @@ module.exports = (el) => {
 
   function addPlaced(x, y) {
     placed.push([x, y])
+    emitter.emit('change', placed)
   }
 
   function removePlaced(x, y) {
@@ -202,7 +203,7 @@ module.exports = (el) => {
   }
 
   return {
-    off() {
+    destroy() {
       $letters.off('drag')
       $letters.off('mousedown')
       $letters.off('mouseup')
