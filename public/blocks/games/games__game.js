@@ -1,10 +1,10 @@
 var React = require('react')
-var GameActions = require('../../js/actions/game')
+var GamesActions = require('../../js/actions/games')
 var render = require('./games__game.jsx')
 
 module.exports = React.createClass({
   onPlay() {
-    GameActions.getGame(this.props.game.get('id'))
+    GamesActions.getGame(this.props.game.get('id'))
   },
 
   render() {

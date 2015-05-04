@@ -1,13 +1,13 @@
 var React = require('react')
 var Reflux = require('reflux')
-var GamesStore = require('./games.store')
+var GamesStore = require('../../js/stores/games')
 var MeStore = require('../../js/stores/me')
 var render = require('./games.jsx')
 
 module.exports = React.createClass({
   mixins: [
-    Reflux.connect(GamesStore)
-  , Reflux.connect(MeStore)
+    Reflux.connect(GamesStore, 'games')
+  , Reflux.connect(MeStore, 'me')
   ],
 
   getInitialState() {

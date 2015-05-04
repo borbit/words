@@ -27,6 +27,9 @@ app.use(passport.initialize())
 app.use(passport.session())
 expressState.extend(app)
 
+var moment = require('moment')
+moment.locale('uk')
+
 try {
   var manifest = require(config.dist_manifest_path)
 } catch(e) {
@@ -39,11 +42,6 @@ app.locals.asset = (src) => {
   }
   return src
 }
-
-app.use(function(err, req, res, next) {
-  res.status(500)
-  res.send(JSON.stringify(err))
-})
 
 app.all('*', (req, res, next) => {
   var allowed = [
@@ -68,6 +66,13 @@ var routes = [
 
 routes.forEach((route) => {
   route(app)
+})
+
+app.use(function(err, req, res, next) {
+  res.status(500)
+  res.json({
+    error: err.message
+  })
 })
 
 app.listen(config.port, config.host, (err) => {

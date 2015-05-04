@@ -1,15 +1,30 @@
-var React = require('react')
-var _ = require('lodash')
+const React = require('react')
+const cn = require('classnames')
+const _ = require('lodash')
+
+function isLetterNotEmpty(letter) {
+  return letter && letter != ' '
+}
 
 module.exports = function() {
-  var cells = []
+  let cells = []
+  let field = this.props.field
 
+  _.range(0, 15).forEach((y) => {
   _.range(0, 15).forEach((x) => {
-    _.range(0, 15).forEach((y) => {
-      cells.push(
-        <div className="field__cell"></div>
-      )
-    })
+    let className = {'field__cell': true}
+    let style = {left: x*40, top: y*40}
+    let letter = field[y*15+x]
+    
+    if (isLetterNotEmpty(letter)) {
+      className['field__cell_l'] = true
+      if (y > 0)  { className['field__cell_at'] = isLetterNotEmpty(field[(y-1)*15+x]) }
+      if (y < 15) { className['field__cell_ab'] = isLetterNotEmpty(field[(y+1)*15+x]) }
+      if (x > 0)  { className['field__cell_al'] = isLetterNotEmpty(field[y*15+x-1]) }
+      if (x < 15) { className['field__cell_ar'] = isLetterNotEmpty(field[y*15+x+1]) }
+      cells.push(<div className={cn(className)} style={style}>{letter}</div>)
+    }
+  })
   })
 
   return (

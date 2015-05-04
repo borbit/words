@@ -1,13 +1,70 @@
 .field {
+  position: relative;
   height: 600px;
   width: 600px;
+
+  background: no-repeat center;
+  background-image: url("img/bg.png");
   
   &__cell {
-    float: left;
+    position: absolute;
     margin: 2px;
     height: 36px;
     width: 36px;
     border-radius: 4px;
     border: 1px solid #eee;
+
+    &_l {
+      overflow: hidden;
+      margin: 1px;
+      height: 38px;
+      width: 38px;
+      background: #fff;
+      border-color: #ccc;
+      text-align: center;
+      line-height: 44px;
+      font-weight: 600;
+      font-size: 30px;
+    }
+
+    &_al {
+      border-left: none;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      margin-left: 0;
+      width: 39px;
+    }
+
+    &_ar {
+      border-right: none;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      margin-right: 0;
+      width: 39px;
+    }
+
+    &_at {
+      border-top: none;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      margin-top: 0;
+      height: 39px;
+    }
+
+    &_ab {
+      border-bottom: none;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      margin-bottom: 0;
+      height: 39px;
+    }
+
+    &_al&_ar {
+      width: 40px
+    }
+
+    &_at&_ab {
+      height: 40px
+    }
   }
 }

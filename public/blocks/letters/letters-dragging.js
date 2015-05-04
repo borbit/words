@@ -1,19 +1,19 @@
-var events = require('events')
+var {EventEmitter} = require('events')
 var _ = require('lodash')
 var $ = require('jquery')
 
-var LETTER_SIZE = 52
-var LETTERS_WIDTH = LETTER_SIZE * 7
-var LETTERS_HEIGHT = LETTER_SIZE
-var LETTERS_OFFSET_LEFT = (620 - LETTERS_WIDTH) / 2 - 10
-var LETTERS_OFFSET_TOP = 10
-var TABLE_CELL_SIZE = 40
-var TABLE_SIZE = 600
+const LETTER_SIZE = 52
+const LETTERS_WIDTH = LETTER_SIZE * 7
+const LETTERS_HEIGHT = LETTER_SIZE
+const LETTERS_OFFSET_LEFT = (620 - LETTERS_WIDTH) / 2 - 10
+const LETTERS_OFFSET_TOP = 10
+const TABLE_CELL_SIZE = 40
+const TABLE_SIZE = 600
 
 module.exports = (el) => {
   var $el = $(el)
   var $letters = $el.find('.letters__letter')
-  var emitter = new events.EventEmitter()
+  var emitter = new EventEmitter()
   var reordering = false
   var letters = {}
   var placed = []
@@ -27,6 +27,8 @@ module.exports = (el) => {
     var letterDeltaX = 0;
     var letterDeltaY = 0;
     var letterIndex;
+    var letterCellX;
+    var letterCellY;
     var letterLeft;
 
     $letter.on('drag', (e, d) => {
@@ -65,8 +67,11 @@ module.exports = (el) => {
       // start dragging from table
       if ($letter.hasClass('letters__letter_placed')) {
         $letter.removeClass('letters__letter_placed')
+        removePlaced(letterCellX, letterCellY)
         letterDeltaX -= 6
         letterDeltaY -= 6
+        letterCellX = null
+        letterCellY = null
       // start dragging from panel
       } else {
         letterIndex = getIndex($letter)
@@ -96,9 +101,11 @@ module.exports = (el) => {
         letterDeltaX = cellX * TABLE_CELL_SIZE - LETTERS_OFFSET_LEFT - letterLeft
         letterDeltaY = cellY * TABLE_CELL_SIZE - LETTERS_OFFSET_TOP - TABLE_SIZE
         
-        $letter.addClass('letters__letter_placed')
         translateLetter($letter, letterDeltaX, letterDeltaY)
-        addPlaced(cellX, cellY)
+        addPlaced(cellX, cellY, $letter.data('letter'))
+        $letter.addClass('letters__letter_placed')
+        letterCellX = cellX
+        letterCellY = cellY
 
       // otherwise move letter back to panel
       } else {
@@ -113,7 +120,6 @@ module.exports = (el) => {
         
         translateLetter($letter, 0, 0)
         moveLetter($letter, letterIndex)
-        removePlaced(cellX, cellY)
         mapLetters()
       }
     })
@@ -184,31 +190,32 @@ module.exports = (el) => {
     }, 150)
   }
 
-  function addPlaced(x, y) {
-    placed.push([x, y])
-    emitter.emit('change', placed)
+  function addPlaced(x, y, letter) {
+    placed.push({x: x, y: y, letter: letter})
+    emitter.emit('place', placed)
   }
 
   function removePlaced(x, y) {
-    placed = _.remove(placed, (letter) => {
-      return letter[0] == x && letter[1] == y
+    placed = _.filter(placed, (letter) => {
+      return letter.x != x || letter.y != y
     })
+    emitter.emit('place', placed)
   }
 
   function isPlaced(x, y) {
-    return false
     return _.any(placed, (letter) => {
-      return letter[0] == x && letter[1] == y
+      return letter.x == x && letter.y == y
     })
   }
 
-  return {
-    destroy() {
-      $letters.off('drag')
-      $letters.off('mousedown')
-      $letters.off('mouseup')
-      $letters.off('dragstart')
-      $letters.off('dragend')
-    }
+  emitter.destroy = function() {
+    emitter.removeAllListeners()
+    $letters.off('mousedown')
+    $letters.off('mouseup')
+    $letters.off('dragstart')
+    $letters.off('dragend')
+    $letters.off('drag')
   }
+
+  return emitter
 }

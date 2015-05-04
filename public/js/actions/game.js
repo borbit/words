@@ -1,21 +1,35 @@
 var Reflux = require('reflux')
+var GamesActions = require('./games')
 var $ = require('jquery')
 
 var Actions = module.exports = Reflux.createActions({
-  'addGame': {asyncResult: true}
-, 'getGame': {asyncResult: true}
+  'play': {asyncResult: true}
+, 'pass': {asyncResult: true}
+, 'resign': {asyncResult: true}
+, 'resetError': {}
 });
 
-Actions.addGame.listen(function(opponentFBId) {
-  var promise = $.post('/games', {
-    opponentFBId: opponentFBId
+Actions.play.listen(function(gameId, letters) {
+  let promise = $.ajax({
+    url: `/games/${gameId}/play`
+  , data: JSON.stringify({letters: letters})
+  , contentType: 'application/json'
+  , type: 'POST'
   })
   promise.done(this.completed)
   promise.fail(this.failed)
 })
 
-Actions.getGame.listen(function(gameId) {
-  var promise = $.get(`/games/${gameId}`)
+Actions.pass.listen(function(gameId, letters) {
+  let promise = $.get(`/games/${gameId}/pass`)
   promise.done(this.completed)
   promise.fail(this.failed)
+})
+
+Actions.play.completed.listen(function() {
+  GamesActions.getGames()
+})
+
+Actions.pass.completed.listen(function() {
+  GamesActions.getGames()
 })

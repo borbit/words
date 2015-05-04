@@ -1,5 +1,5 @@
-const React = require('react')
-const render = require('./board.jsx')
+var React = require('react')
+var render = require('./mask.jsx')
 
 module.exports = React.createClass({
   render() {
