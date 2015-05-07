@@ -16,8 +16,8 @@ module.exports = function() {
               {this.props.children}
             </div>}
           <div className="modal-footer">
+            <button className="btn btn-primary" onClick={this.props.onOK}>Так</button>
             <button className="btn btn-default" onClick={this.props.onCancel}>Не зараз</button>
-            <button className="btn btn-primary" onClick={this.props.onOK}>OK</button>
           </div>
         </div>
       </div>

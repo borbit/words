@@ -7,13 +7,17 @@ module.exports = function() {
       {this.state.game.get('id') &&
         <div className="board__player">
           <User user={this.state.me} theme="right">
-            {this.state.game.get('my_score')}
+            <span className="badge">
+              <i className="fa fa-star"></i> {this.state.game.get('my_score')}
+            </span>
           </User>
         </div>}
       {this.state.game.get('id') &&
         <div className="board__player">
           <User user={this.state.game.get('opponent')}>
-            {this.state.game.get('opponent_score')}
+            <span className="badge">
+              <i className="fa fa-star"></i> {this.state.game.get('opponent_score')}
+            </span>
           </User>
         </div>}
     </div>

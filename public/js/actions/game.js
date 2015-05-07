@@ -20,8 +20,14 @@ Actions.play.listen(function(gameId, letters) {
   promise.fail(this.failed)
 })
 
-Actions.pass.listen(function(gameId, letters) {
+Actions.pass.listen(function(gameId) {
   let promise = $.get(`/games/${gameId}/pass`)
+  promise.done(this.completed)
+  promise.fail(this.failed)
+})
+
+Actions.resign.listen(function(gameId) {
+  let promise = $.get(`/games/${gameId}/resign`)
   promise.done(this.completed)
   promise.fail(this.failed)
 })
@@ -31,5 +37,9 @@ Actions.play.completed.listen(function() {
 })
 
 Actions.pass.completed.listen(function() {
+  GamesActions.getGames()
+})
+
+Actions.resign.completed.listen(function() {
   GamesActions.getGames()
 })

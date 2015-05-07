@@ -6,6 +6,7 @@
   &__head {
     padding: 0;
     height: 58px;
+    background: none !important;
   }
 
   &__body {
@@ -33,15 +34,22 @@
   }
 
   &__btn {
+    float: none !important;
+    outline: none !important;
+  }
+
+  &__btns {
     position: absolute;
     margin-top: -17px;
+    text-align: center;
+    width: 120px;
     top: 50%;
 
-    &_pass {
-      left: 35px;
+    &_left {
+      left: 0;
     }
-    &_play {
-      right: 35px;
+    &_right {
+      right: 0;
     }
   }
 }

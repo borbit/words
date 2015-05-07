@@ -11,18 +11,19 @@ module.exports = function() {
         <Field field={this.state.game.get('field') || ''}/>
       </div>
       <div className="board__letters">
-        <button className="board__btn board__btn_pass btn btn-default" onClick={this.onPass} disabled={!this.state.game.get('my_turn')}>
-          {!this.state.game.get('passing') &&
-            <i className="fa fa-random"></i>}
-          {this.state.game.get('passing') &&
-            <i className="fa fa-spin fa-circle-o-notch"></i>}
-        </button>
-        <button className="board__btn board__btn_play btn btn-default" onClick={this.onPlay} disabled={!this.state.game.get('my_turn') || !this.state.placed.length || this.state.game.get('playing')}>
-          {!this.state.game.get('playing') &&
-            <i className="fa fa-play-circle"></i>}
-          {this.state.game.get('playing') &&
-            <i className="fa fa-spin fa-circle-o-notch"></i>}
-        </button>
+        <div className="board__btns board__btns_left btn-group">
+          <button className="board__btn btn btn-default" onClick={this.onResign} disabled={!this.state.game.get('id') || this.state.game.get('finished_at') || this.state.game.get('resigning')}>
+            <i className={`fa ${this.state.game.get('resigning') ? 'fa-spin fa-circle-o-notch' : 'fa-close'}`}></i>
+          </button>
+          <button className="board__btn btn btn-default" onClick={this.onPass} disabled={!this.state.game.get('my_turn') || this.state.game.get('passing')}>
+            <i className={`fa ${this.state.game.get('passing') ? 'fa-spin fa-circle-o-notch' : 'fa-random'}`}></i>
+          </button>
+        </div>
+        <div className="board__btns board__btns_right btn-group">
+          <button className="board__btn btn btn-default" onClick={this.onPlay} disabled={!this.state.game.get('my_turn') || !this.state.letters.length || this.state.game.get('playing')}>
+            <i className={`fa ${this.state.game.get('playing') ? 'fa-spin fa-circle-o-notch' : 'fa-play-circle'}`}></i>
+          </button>
+        </div>
         <Letters 
           letters={this.state.game.get('my_letters')}
           onPlace={this.onPlace}/>
@@ -35,13 +36,23 @@ module.exports = function() {
         <Alert title="Помилка" onClose={this.onResetError}>
           {this.state.game.get('error')}
         </Alert>}
-      {this.state.confirmPlay &&
-        <Confirm onOK={this.onPlayConfirm}>
-          Ви впевненi що хочете цього?
-        </Confirm>}
       {this.state.confirmPass &&
-        <Confirm onOK={this.onPassConfirm}>
-          Ви впевненi що хочете цього?
+        <Confirm 
+          onOK={this.onPassConfirm}
+          onCancel={this.onPassCancel}>
+          Ви впевненi що хочете спасувати?
+        </Confirm>}
+      {this.state.confirmResign &&
+        <Confirm
+          onOK={this.onResignConfirm}
+          onCancel={this.onResignCancel}>
+          Ви впевненi що хочете закiнчити гру?
+        </Confirm>}
+      {this.state.confirmPlay &&
+        <Confirm
+          onOK={this.onPlayConfirm}
+          onCancel={this.onPlayCancel}>
+          Ви впевненi що хочете зiграти {this.state.words.join(', ')}?
         </Confirm>}
     </div>
   )

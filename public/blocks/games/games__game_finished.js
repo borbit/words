@@ -1,6 +1,6 @@
 var React = require('react')
 var GamesActions = require('../../js/actions/games')
-var render = require('./games__game.jsx')
+var render = require('./games__game_finished.jsx')
 
 module.exports = React.createClass({
   onPlay() {

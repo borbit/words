@@ -24,9 +24,9 @@ module.exports = Reflux.createStore({
     this.setState(data)
   },
 
-  onPassFailed(data) {
+  onPlayFailed(data) {
     this.state = this.state.set('error', data.responseJSON.error)
-    this.state = this.state.set('passing', false)
+    this.state = this.state.set('playing', false)
     this.trigger(this.state)
   },
 
@@ -34,14 +34,29 @@ module.exports = Reflux.createStore({
     this.state = this.state.set('passing', true)
     this.trigger(this.state)
   },
-
+  
   onPassCompleted(data) {
     this.setState(data)
   },
 
-  onPlayFailed(data) {
+  onPassFailed(data) {
     this.state = this.state.set('error', data.responseJSON.error)
-    this.state = this.state.set('playing', false)
+    this.state = this.state.set('passing', false)
+    this.trigger(this.state)
+  },
+
+  onResign() {
+    this.state = this.state.set('resigning', true)
+    this.trigger(this.state)
+  },
+  
+  onResignCompleted(data) {
+    this.setState(data)
+  },
+
+  onResignFailed(data) {
+    this.state = this.state.set('error', data.responseJSON.error)
+    this.state = this.state.set('resigning', false)
     this.trigger(this.state)
   },
 
