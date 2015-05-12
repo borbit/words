@@ -5,7 +5,8 @@ var User = require('../user/user')
 module.exports = function() {
   return (
     <div className="games__game list-group-item" onClick={this.onPlay}>
-      <i className="fa fa-eye games__play"></i>
+      <i className="fa fa-play-circle games__play"></i>
+      <i className="fa fa-times games__delete"></i>
       <User user={this.props.game.get('opponent')}>
         Почали: {moment(+this.props.game.get('created_at')).fromNow()}<br/>
         Зкiнчили: {moment(+this.props.game.get('finished_at')).fromNow()}<br/>

@@ -2,6 +2,7 @@ var React = require('react')
 var {PureRenderMixin} = React.addons
 var Dragging = require('./letters-dragging')
 var render = require('./letters.jsx')
+var _ = require('lodash')
 
 module.exports = React.createClass({
   mixins: [
@@ -26,8 +27,8 @@ module.exports = React.createClass({
 
   draggingOn() {
     this.dragging = Dragging(this.getDOMNode())
-    this.dragging.on('place', (letters) => {
-      this.props.onPlace(letters)
+    this.dragging.on('place', (placed) => {
+      this.props.onPlace(placed)
     })
   },
 

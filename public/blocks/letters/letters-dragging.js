@@ -1,3 +1,5 @@
+var React = require('react')
+var Abc = require('../abc/abc')
 var {EventEmitter} = require('events')
 var _ = require('lodash')
 var $ = require('jquery')
@@ -5,10 +7,7 @@ var $ = require('jquery')
 const LETTER_SIZE = 52
 const LETTERS_WIDTH = LETTER_SIZE * 7
 const LETTERS_HEIGHT = LETTER_SIZE
-const LETTERS_OFFSET_LEFT = (620 - LETTERS_WIDTH) / 2 - 10
 const LETTERS_OFFSET_TOP = 10
-const TABLE_CELL_SIZE = 40
-const TABLE_SIZE = 600
 
 module.exports = (el) => {
   var $el = $(el)
@@ -18,11 +17,17 @@ module.exports = (el) => {
   var letters = {}
   var placed = []
 
-  mapLetters()
+  var LETTERS_OFFSET_LEFT = ($el.width() - LETTERS_WIDTH) / 2
+  var TABLE_CELL_SIZE = $el.width() / 15
+  var TABLE_SIZE = $el.width()
 
+  mapLetters()
 
   $letters.each(function() {
     var $letter = $(this)
+    var $score = $letter.find('.letters__letter-score')
+    var $tile = $letter.find('.letters__letter-tile')
+
     var letterIndex;
     var letterDeltaX = 0;
     var letterDeltaY = 0;
@@ -30,6 +35,9 @@ module.exports = (el) => {
     var letterCellX;
     var letterCellY;
     var letterLeft;
+
+    $letter.css({height: TABLE_CELL_SIZE})
+    $letter.css({width: TABLE_CELL_SIZE})
 
     $letter.on('drag', (e, d) => {
       translateLetter($letter,
@@ -89,8 +97,9 @@ module.exports = (el) => {
       centerY += LETTERS_OFFSET_TOP
       centerY += TABLE_SIZE
       
-      var cellX = ~~(centerX / TABLE_CELL_SIZE)
-      var cellY = ~~(centerY / TABLE_CELL_SIZE)
+      let cellX = ~~(centerX / TABLE_CELL_SIZE)
+      let cellY = ~~(centerY / TABLE_CELL_SIZE)
+      let letter = $letter.data('letter')
 
       // if current letter coords fall within table
       // then we try to place it there if possible
@@ -102,8 +111,14 @@ module.exports = (el) => {
         letterDeltaY = cellY * TABLE_CELL_SIZE - LETTERS_OFFSET_TOP - TABLE_SIZE
         
         translateLetter($letter, letterDeltaX, letterDeltaY)
-        addPlaced(cellX, cellY, $letter.data('letter'))
         $letter.addClass('letters__letter_placed')
+
+        if (letter == ' ') {
+          addEmpty(cellX, cellY, $tile)
+        } else {
+          addPlaced(cellX, cellY, letter)
+        }
+
         letterCellX = cellX
         letterCellY = cellY
 
@@ -116,6 +131,10 @@ module.exports = (el) => {
         // find closed available and place there
         if (letters[letterIndex] && !reordering) {
           letterIndex = findEmpty(letterIndex)
+        }
+        // remove chosen letter if it was empty initialy
+        if (letter == ' ') {
+          $tile.empty()
         }
         
         translateLetter($letter, 0, 0)
@@ -206,6 +225,19 @@ module.exports = (el) => {
     return _.any(placed, (letter) => {
       return letter.x == x && letter.y == y
     })
+  }
+
+  function addEmpty(x, y, $tile) {
+    let $container = $('<div/>')
+
+    function onLetter(letter) {
+      addPlaced(x, y, letter)
+      $container.remove()
+      $tile.html(letter)
+    }
+
+    React.render(<Abc onLetter={onLetter}/>, $container[0])
+    $container.appendTo($el)
   }
 
   emitter.destroy = function() {

@@ -1,12 +1,14 @@
 .letters {
-  margin: 0 auto;
-  position: relative;
-  display: block;
-  height: 52px;
-  width: 364px;
+  &__list {
+    margin: 0 auto;
+    position: relative;
+    display: block;
+    height: 52px;
+    width: 364px;
 
-  background: repeat-x top left;
-  background-image: url("img/blank.png");
+    background: repeat-x top left;
+    background-image: url("img/blank.png");
+  }
 
   &__letter {
     position: absolute;
@@ -22,8 +24,7 @@
     }
 
     &_placed {
-      height: 40px;
-      width: 40px;
+      padding: 1px;
     }
 
     &-tile {
@@ -74,10 +75,9 @@
     }
 
     &_placed &-tile {
-      margin-top: 1px;
-      margin-left: 1px;
-      height: 38px;
-      width: 38px;
+      margin: 0;
+      height: 100%;
+      width: 100%;
       line-height: 44px;
       font-size: 30px;
     }

@@ -51,7 +51,7 @@ module.exports = React.createClass({
     }
     
     this.setState({
-      words: FIELD.defineNewWords(findPlacementErrorseld, letters)
+      words: FIELD.defineNewWords(field, letters)
     , confirmPlay: true
     })
   },
