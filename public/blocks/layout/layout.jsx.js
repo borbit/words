@@ -6,7 +6,7 @@ var Menu = require('../menu/menu')
 module.exports = function() {
   return (
     <div className="layout">
-      <div className="layout__page">
+      <div className="layout__page" ref="page">
         <div className="layout__menu" ref="menu">
           <Menu/>
         </div>

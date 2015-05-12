@@ -2,6 +2,7 @@ const React = require('react')
 const Reflux = require('reflux')
 const LayoutStore = require('./layout.store')
 const render = require('./layout.jsx')
+const _ = require('lodash')
 
 module.exports = React.createClass({
   mixins: [
@@ -15,23 +16,37 @@ module.exports = React.createClass({
   },
 
   componentDidMount() {
-    let $board = $(this.refs.board.getDOMNode())
-    let $aside = $(this.refs.aside.getDOMNode())
-    let $menu = $(this.refs.menu.getDOMNode())
-    
-    let windowWidth = $(window).width()
-    let boardWidth = $board.height() - 120
+    this.$board = $(this.refs.board.getDOMNode())
+    this.$aside = $(this.refs.aside.getDOMNode())
+    this.$menu = $(this.refs.menu.getDOMNode())
+    this.$page = $(this.refs.page.getDOMNode())
+
+    this.arrangeLayout()
+    this._arrangeLayout = _.debounce(() => {
+      this.arrangeLayout()
+    }, 250)
+
+    $(window).on('resize', this._arrangeLayout)
+  },
+
+  componentWillUnmount() {
+    $(window).off('resize', this._arrangeLayout)
+  },
+
+  arrangeLayout() {
+    let pageWidth = this.$page.outerWidth()
+    let boardWidth = this.$board.outerHeight() - 120
     let asideWidth
 
-    if (windowWidth > 1200) {
-      asideWidth = (windowWidth - boardWidth) / 2 - 20
+    if (pageWidth > 1200) {
+      asideWidth = (pageWidth - boardWidth) / 2 - 20
     } else {
-      asideWidth = windowWidth - boardWidth - 30
+      asideWidth = pageWidth - boardWidth - 30
     }
 
-    $board.width(boardWidth)
-    $aside.width(asideWidth)
-    $menu.width(asideWidth)
+    this.$board.width(boardWidth)
+    this.$aside.width(asideWidth)
+    this.$menu.width(asideWidth)
   },
 
   render() {
