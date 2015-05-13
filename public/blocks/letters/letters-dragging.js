@@ -209,8 +209,12 @@ module.exports = (el) => {
     }, 150)
   }
 
-  function addPlaced(x, y, letter) {
-    placed.push({x: x, y: y, letter: letter})
+  function addPlaced(x, y, letter, empty) {
+    if (empty) {
+      placed.push({x: x, y: y, letter: letter, empty: true})
+    } else {
+      placed.push({x: x, y: y, letter: letter})
+    }
     emitter.emit('place', placed)
   }
 
@@ -231,7 +235,7 @@ module.exports = (el) => {
     let $container = $('<div/>')
 
     function onLetter(letter) {
-      addPlaced(x, y, letter)
+      addPlaced(x, y, letter, true)
       $container.remove()
       $tile.html(letter)
     }

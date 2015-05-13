@@ -19,7 +19,6 @@ module.exports = function() {
       <div className="abc modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <b className="close" onClick={this.props.onCancel}>&times;</b>
             <h4 className="modal-title">Виберiть лiтеру</h4>
           </div>
           <div className="abc__letters modal-body">

@@ -7,14 +7,26 @@ module.exports = function() {
   var gamesMyTurn = []
   var gamesWaiting = []
   var gamesFinished = []
+  var games = this.state.games.sortBy((game) => {
+    return -(
+      game.get('finished_at') ||
+      game.get('last_turn_at') ||
+      game.get('created_at')
+    )
+  })
 
-  this.state.games.forEach((game) => {
+  games.forEach((game) => {
     let item
+    let isCurrent = false
+
+    if (this.state.game) {
+      isCurrent = game.get('id') == this.state.game.get('id')
+    }
 
     if (game.get('finished_at')) {
-      item = <GamesGameFinished game={game}/>
+      item = <GamesGameFinished game={game} current={isCurrent}/>
     } else {
-      item = <GamesGameActive game={game}/>
+      item = <GamesGameActive game={game} current={isCurrent}/>
     }
     
     if (game.get('finished_at')) {

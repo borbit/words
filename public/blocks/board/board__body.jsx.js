@@ -26,7 +26,6 @@ module.exports = function() {
         </div>
         <Letters 
           letters={this.state.game.get('my_letters')}
-          key={this.state.game.get('id')}
           onPlace={this.onPlace}/>
       </div>
       {this.state.error &&
