@@ -8,15 +8,20 @@ module.exports = function() {
     'games__game list-group-item': true
   , 'games__game_current': this.props.current
   })
+
+  let lastTurnAt = this.props.game.get('last_turn_at')
+
+  if (!lastTurnAt) {
+    lastTurnAt = this.props.game.get('created_at')
+  }
   
   return (
     <div className={className} onClick={this.onPlay}>
-      <i className="fa fa-play-circle games__play"></i>
+      {this.props.current &&
+        <i className="fa fa-play-circle games__play"></i>}
       <User user={this.props.game.get('opponent')}>
-        Почали: {moment(+this.props.game.get('created_at')).fromNow()}<br/>
-        Попер. хiд: {moment(+this.props.game.get('last_turn_at')).fromNow()}<br/>
-        Залишилось лiтер: {this.props.game.get('letters_count')}<br/>
-        Скор: {`${this.props.game.get('opponent_score')}/${this.props.game.get('my_score')}`}
+        <i className="fa fa-clock-o"></i> {moment(+lastTurnAt).fromNow()}<br/>
+        <i className="fa fa-star"></i> {this.props.game.get('opponent_score')}-{this.props.game.get('my_score')}
       </User>
     </div>
   )

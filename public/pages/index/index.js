@@ -29,5 +29,3 @@ io.on('game:update', (data) => {
 GamesActions.getGame.listen(function(gameId) {
   io.emit('game:listen', {gameId: gameId})
 })
-
-СЛОВОГРАЙ
