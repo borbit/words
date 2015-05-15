@@ -11,7 +11,8 @@ module.exports = function() {
 
   return (
     <div className={className} onClick={this.onPlay}>
-      <i className="fa fa-play-circle games__play"></i>
+      {this.props.current &&
+        <i className="fa fa-play-circle games__play"></i>}
       <i className="fa fa-times games__delete"></i>
       <User user={this.props.game.get('opponent')}>
         Почали: {moment(+this.props.game.get('created_at')).fromNow()}<br/>
