@@ -1,4 +1,5 @@
 require('../../js/bootstrap')
+require('../../js/changelog')
 
 var React = require('react')
 var Layout = require('../../blocks/layout/layout')
@@ -16,7 +17,7 @@ MeStore.setState(app.me)
 
 React.render(<Layout/>, document.getElementsByTagName('main')[0])
 
-io = io.connect('ws://192.168.10.118:5001')
+io = io.connect('ws://192.168.0.61:5001')
 io.on('connect', () => {
   console.log('IO CONNECTED')
 })

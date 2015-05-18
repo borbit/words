@@ -6,11 +6,6 @@ const GameActions = require('../../js/actions/game')
 const render = require('./board__body.jsx')
 const _ = require('lodash')
 
-const ERROR_ONE_WORD = 'Маэ бути одне слово'
-const ERROR_CONNECT_TO_PREVIOUS = 'Слово маэ з\'эднуватися з попереднiми'
-const ERROR_START_FROM_CENTER = 'Слово маэ починатися з середини поля'
-const ERROR_STRIGHT_LINE = 'Слово маэ буди в одну лiнiю'
-
 module.exports = React.createClass({
   mixins: [
     Reflux.connect(GameStore, 'game')
@@ -45,10 +40,11 @@ module.exports = React.createClass({
   onPlay() {
     let letters = this.state.letters
     let field = this.state.game.get('field')
-    let error = FIELD.findPlacementErrors(field, letters)
 
-    if (error) {
-      return this.setState({error: error.message})
+    if (!FIELD.checkPlacement(field, letters)) {
+      return this.setState({
+        error: 'Не правильне розташування лiтер'
+      })
     }
     
     this.setState({
