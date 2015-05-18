@@ -40,13 +40,21 @@ module.exports = function() {
 
   return (
     <div className="games">
-      <section className="games__group">
-        <div className="games__list list-group">
-          {gamesMyTurn}
-          {gamesWaiting}
-          {gamesFinished}
-        </div>
-      </section>
+      {!!gamesMyTurn.length &&
+        <section className="games__group">
+          <h4>Мiй хiд <span className="badge">{gamesMyTurn.length}</span></h4>
+          <div className="games__list list-group">{gamesMyTurn}</div>
+        </section>}
+      {!!gamesWaiting.length &&
+        <section className="games__group">
+          <h4>В очiкуванi <span className="badge">{gamesWaiting.length}</span></h4>
+          <div className="games__list list-group">{gamesWaiting}</div>
+        </section>}
+      {!!gamesFinished.length &&
+        <section className="games__group">
+          <h4>Закiнченi <span className="badge">{gamesFinished.length}</span></h4>
+          <div className="games__list list-group">{gamesFinished}</div>
+        </section>}
     </div>
   )
 }
