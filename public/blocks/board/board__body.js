@@ -22,6 +22,7 @@ module.exports = React.createClass({
     , confirmPlay: false
     , confirmResign: false
     , confirmPass: false
+    , confirmSwap: false
     , error: null
     , letters: []
     , words: []
@@ -79,7 +80,9 @@ module.exports = React.createClass({
   },
 
   onPass() {
-    this.setState({confirmPass: true})
+    if (this.state.game.get('my_turn')) {
+      this.setState({confirmPass: true})
+    }
   },
 
   onPassConfirm() {
@@ -89,6 +92,21 @@ module.exports = React.createClass({
 
   onPassCancel() {
     this.setState({confirmPass: false})
+  },
+
+  onSwap() {
+    if (this.state.game.get('my_turn')) {
+      this.setState({confirmSwap: true})
+    }
+  },
+
+  onSwapConfirm(letters) {
+    GameActions.swap(this.state.game.get('id'), letters)
+    this.onSwapCancel()
+  },
+
+  onSwapCancel() {
+    this.setState({confirmSwap: false})
   },
 
   render() {

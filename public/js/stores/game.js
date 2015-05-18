@@ -60,6 +60,21 @@ module.exports = Reflux.createStore({
     this.trigger(this.state)
   },
 
+  onSwap() {
+    this.state = this.state.set('swapping', true)
+    this.trigger(this.state)
+  },
+  
+  onSwapCompleted(data) {
+    this.setState(data)
+  },
+
+  onSwapFailed(data) {
+    this.state = this.state.set('error', data.responseJSON.error)
+    this.state = this.state.set('swapping', false)
+    this.trigger(this.state)
+  },
+
   onResetError() {
     this.state = this.state.delete('error')
     this.trigger(this.state)

@@ -3,25 +3,57 @@ var Field = require('../field/field')
 var Letters = require('../letters/letters')
 var Confirm = require('../confirm/confirm')
 var Alert = require('../alert/alert')
+var Swap = require('../swap/swap')
 
 module.exports = function() {
+  let playIcon = <i className="fa fa-play-circle"></i>
+  let menuIcon = <i className="fa fa-navicon"></i>
+  let playDisabled = false
+  let menuDisabled = false
+
+  if (this.state.game.get('playing')) {
+    playIcon = <i className="fa fa-spin fa-circle-o-notch"></i>
+    playDisabled = true
+  }
+
+  if (this.state.game.get('resigning') ||
+      this.state.game.get('swipping') ||
+      this.state.game.get('passing')) {
+    menuIcon = <i className="fa fa-spin fa-circle-o-notch"></i>
+    menuDisabled = true
+  }
+
+  if (!this.state.letters.length ||
+      !this.state.game.get('my_turn')) {
+    playDisabled = true
+  }
+
+  if (!this.state.game.get('id') ||
+       this.state.game.get('finished_at')) {
+    menuDisabled = true
+  }
+
   return (
     <div className="panel-body board__body">
       <div className="board__field">
         <Field field={this.state.game.get('field') || ''}/>
       </div>
       <div className="board__letters">
-        <div className="board__btns board__btns_left btn-group">
-          <button className="board__btn btn btn-default" onClick={this.onResign} disabled={!this.state.game.get('id') || this.state.game.get('finished_at') || this.state.game.get('resigning')}>
-            <i className={`fa ${this.state.game.get('resigning') ? 'fa-spin fa-circle-o-notch' : 'fa-close'}`}></i>
-          </button>
-          <button className="board__btn btn btn-default" onClick={this.onPass} disabled={!this.state.game.get('my_turn') || this.state.game.get('passing')}>
-            <i className={`fa ${this.state.game.get('passing') ? 'fa-spin fa-circle-o-notch' : 'fa-random'}`}></i>
-          </button>
+        <div className="board__btns board__btns_left">
+          <div className="btn-group dropup">
+            <button className="btn btn-default dropdown-toggle" data-toggle="dropdown" disabled={menuDisabled}>
+              {menuIcon}
+            </button>
+            <ul className="dropdown-menu">
+              <li onClick={this.onSwap} className={!this.state.game.get('my_turn') && 'disabled'}><a>Помiняти лiтери</a></li>
+              <li onClick={this.onResign} className={this.state.game.get('finished_at') && 'disabled'}><a>Закiнчити гру</a></li>
+              <li onClick={this.onPass} className={!this.state.game.get('my_turn') && 'disabled'}><a>Спасувати</a></li>
+            </ul>
+          </div>
         </div>
-        <div className="board__btns board__btns_right btn-group">
-          <button className="board__btn btn btn-default" onClick={this.onPlay} disabled={!this.state.game.get('my_turn') || !this.state.letters.length || this.state.game.get('playing')}>
-            <i className={`fa ${this.state.game.get('playing') ? 'fa-spin fa-circle-o-notch' : 'fa-play-circle'}`}></i>
+        <div className="board__btns board__btns_right">
+          <button className="board__btn btn btn-default" onClick={this.onPlay} disabled={playDisabled}>
+            {playIcon}
           </button>
         </div>
         <Letters 
@@ -54,6 +86,12 @@ module.exports = function() {
           onCancel={this.onPlayCancel}>
           Ви впевненi що хочете зiграти {this.state.words.join(', ')}?
         </Confirm>}
+      {this.state.confirmSwap &&
+        <Swap
+          onSwap={this.onSwapConfirm}
+          onCancel={this.onSwapCancel}
+          letters={this.state.game.get('my_letters')}>
+        </Swap>}
     </div>
   )
 }
