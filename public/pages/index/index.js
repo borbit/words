@@ -12,6 +12,7 @@ var MeStore = require('../../js/stores/me')
 var io = require('io-client')
 
 GamesStore.setState(app.games)
+GameStore.setState(app.games[0])
 FriendsStore.setState(app.friends)
 MeStore.setState(app.me)
 

@@ -24,9 +24,9 @@ module.exports = function() {
     }
 
     if (game.get('finished_at')) {
-      item = <GamesGameFinished game={game} current={isCurrent}/>
+      item = <GamesGameFinished game={game} current={isCurrent} key={game.get('id')}/>
     } else {
-      item = <GamesGameActive game={game} current={isCurrent}/>
+      item = <GamesGameActive game={game} current={isCurrent} key={game.get('id')}/>
     }
     
     if (game.get('finished_at')) {
