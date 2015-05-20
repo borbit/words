@@ -12,19 +12,25 @@ var MeStore = require('../../js/stores/me')
 var io = require('io-client')
 
 GamesStore.setState(app.games)
-GameStore.setState(app.games[0])
 FriendsStore.setState(app.friends)
 MeStore.setState(app.me)
 
+if (app.games[0]) {
+  GameStore.setState(app.games[0])
+}
+
 React.render(<Layout/>, document.getElementsByTagName('main')[0])
 
-io = io.connect('ws://192.168.0.61:5001')
+io = io.connect('ws://192.168.10.118:5001')
 io.on('connect', () => {
   console.log('IO CONNECTED')
 })
 
 io.on('game:update', (data) => {
-  GamesActions.getGame(data.gameId)
+  let game = GameStore.getState()
+  if (game.get('id') == data.gameId) {
+    GamesActions.getGame(data.gameId)
+  }
   GamesActions.getGames()
 })
 
