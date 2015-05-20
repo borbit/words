@@ -77,7 +77,7 @@ app.use(function(err, req, res, next) {
   })
 })
 
-app.listen(config.port, config.host, (err) => {
+app.listen(config.port, null, (err) => {
   if (err) throw err
 
   console.log('Application server started on', {

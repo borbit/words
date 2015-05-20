@@ -35,7 +35,7 @@ module.exports = React.createClass({
 
   arrangeLayout() {
     let pageWidth = this.$page.outerWidth()
-    let boardWidth = this.$board.outerHeight() - 120
+    let boardWidth = this.$board.outerHeight() - 100
     let asideWidth
 
     if (pageWidth > 1200) {

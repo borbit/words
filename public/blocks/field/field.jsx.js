@@ -10,8 +10,8 @@ module.exports = function() {
   let cells = []
   let field = this.props.field
 
-  _.range(0, 15).forEach((y) => {
-  _.range(0, 15).forEach((x) => {
+  _.each(_.range(0, 15), (y) => {
+  _.each(_.range(0, 15), (x) => {
     let className = {'field__cell': true}
     let style = {left: `${x*6.6666}%`, top: `${y*6.6666}%`}
     let letter = field[y*15+x]

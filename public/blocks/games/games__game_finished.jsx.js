@@ -1,6 +1,7 @@
 var React = require('react')
-var moment = require('moment')
+var Preview = require('../preview/preview')
 var User = require('../user/user')
+var moment = require('moment')
 var cn = require('classnames')
 
 module.exports = function() {
@@ -11,9 +12,10 @@ module.exports = function() {
 
   return (
     <div className={className} onClick={this.onPlay}>
-      {this.props.current &&
-        <i className="fa fa-play-circle games__play"></i>}
       <i className="fa fa-times games__delete"></i>
+      <div className="games__preview">
+        <Preview field={this.props.game.get('field')}/>
+      </div>
       <User user={this.props.game.get('opponent')}>
         Почали: {moment(+this.props.game.get('created_at')).fromNow()}<br/>
         Зкiнчили: {moment(+this.props.game.get('finished_at')).fromNow()}<br/>
