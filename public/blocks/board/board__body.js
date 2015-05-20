@@ -43,7 +43,7 @@ module.exports = React.createClass({
 
     if (!FIELD.checkPlacement(field, letters)) {
       return this.setState({
-        error: 'Не правильне розташування лiтер'
+        error: 'Неправильне розташування лiтер'
       })
     }
     

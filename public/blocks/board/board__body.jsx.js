@@ -58,6 +58,7 @@ module.exports = function() {
         </div>
         <Letters 
           letters={this.state.game.get('my_letters')}
+          field={this.state.game.get('field')}
           onPlace={this.onPlace}/>
       </div>
       {this.state.error &&

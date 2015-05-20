@@ -9,7 +9,7 @@ const LETTERS_WIDTH = LETTER_SIZE * 7
 const LETTERS_HEIGHT = LETTER_SIZE
 const LETTERS_OFFSET_TOP = 10
 
-module.exports = (el) => {
+module.exports = (el, field) => {
   var $el = $(el)
   var $letters = $el.find('.letters__letter')
   var emitter = new EventEmitter()
@@ -17,9 +17,9 @@ module.exports = (el) => {
   var letters = {}
   var placed = []
 
-  var LETTERS_OFFSET_LEFT = ($el.width() - LETTERS_WIDTH) / 2
-  var TABLE_CELL_SIZE = $el.width() / 15
-  var TABLE_SIZE = $el.width()
+  var lettersOffsetLeft = ($el.width() - LETTERS_WIDTH) / 2
+  var tableCellSize = $el.width() / 15
+  var tableSize = $el.width()
 
   mapLetters()
 
@@ -36,8 +36,8 @@ module.exports = (el) => {
     var letterCellY;
     var letterLeft;
 
-    $letter.css({height: TABLE_CELL_SIZE})
-    $letter.css({width: TABLE_CELL_SIZE})
+    $letter.css({height: tableCellSize})
+    $letter.css({width: tableCellSize})
 
     $letter.on('drag', (e, d) => {
       translateLetter($letter,
@@ -93,22 +93,22 @@ module.exports = (el) => {
       var centerX = letterDeltaX + d.deltaX + LETTER_SIZE / 2 + letterLeft
       var centerY = letterDeltaY + d.deltaY + LETTER_SIZE / 2
       
-      centerX += LETTERS_OFFSET_LEFT
+      centerX += lettersOffsetLeft
       centerY += LETTERS_OFFSET_TOP
-      centerY += TABLE_SIZE
+      centerY += tableSize
       
-      let cellX = ~~(centerX / TABLE_CELL_SIZE)
-      let cellY = ~~(centerY / TABLE_CELL_SIZE)
+      let cellX = ~~(centerX / tableCellSize)
+      let cellY = ~~(centerY / tableCellSize)
       let letter = $letter.data('letter')
 
       // if current letter coords fall within table
       // then we try to place it there if possible
-      if (!isPlaced(cellX, cellY) &&
-          centerX > 0 && centerX < TABLE_SIZE &&
-          centerY > 0 && centerY < TABLE_SIZE) {
+      if (!isOccupied(cellX, cellY) &&
+          centerX > 0 && centerX < tableSize &&
+          centerY > 0 && centerY < tableSize) {
 
-        letterDeltaX = cellX * TABLE_CELL_SIZE - LETTERS_OFFSET_LEFT - letterLeft
-        letterDeltaY = cellY * TABLE_CELL_SIZE - LETTERS_OFFSET_TOP - TABLE_SIZE
+        letterDeltaX = cellX * tableCellSize - lettersOffsetLeft - letterLeft
+        letterDeltaY = cellY * tableCellSize - LETTERS_OFFSET_TOP - tableSize
         
         translateLetter($letter, letterDeltaX, letterDeltaY)
         $letter.addClass('letters__letter_placed')
@@ -225,7 +225,10 @@ module.exports = (el) => {
     emitter.emit('place', placed)
   }
 
-  function isPlaced(x, y) {
+  function isOccupied(x, y) {
+    if (field[y*15+x] && field[y*15+x] != ' ') {
+      return true
+    }
     return _.any(placed, (letter) => {
       return letter.x == x && letter.y == y
     })

@@ -10,11 +10,15 @@ module.exports = React.createClass({
   ],
 
   componentDidMount() {
-    this.draggingOn()
+    setTimeout(() => {
+      this.draggingOn()
+    }, 0)
   },
   
   componentDidUpdate() {
-    this.draggingOn()
+    setTimeout(() => {
+      this.draggingOn()
+    }, 0)
   },
 
   componentWillUpdate() {
@@ -26,7 +30,7 @@ module.exports = React.createClass({
   },
 
   draggingOn() {
-    this.dragging = Dragging(this.getDOMNode())
+    this.dragging = Dragging(this.getDOMNode(), this.props.field)
     this.dragging.on('place', (placed) => {
       this.props.onPlace(placed)
     })

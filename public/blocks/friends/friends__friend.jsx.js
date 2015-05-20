@@ -1,4 +1,5 @@
 var React = require('react')
+var moment = require('moment')
 var Avatar = require('../avatar/avatar')
 var Confirm = require('../confirm/confirm')
 var User = require('../user/user')
@@ -6,10 +7,9 @@ var User = require('../user/user')
 module.exports = function() {
   return (
     <div className="friends__friend list-group-item" onClick={this.onCreate}>
-      <i className="fa fa-play-circle friends__play"></i>
       <User user={this.props.friend}>
         <span className="badge">
-          <i className="fa fa-trophy"></i> 38
+          <i className="fa fa-clock-o"></i> {moment(+this.props.friend.get('created_at')).toNow(true)}
         </span>
       </User>
       {this.state.confirmCreate &&

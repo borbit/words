@@ -48,6 +48,7 @@ app.all('*', (req, res, next) => {
     '/login'
   , '/login/cb'
   , '/logout'
+  , '/boards/score'
   ]
   if (_.contains(allowed, req.path)) {
     return next()
@@ -61,7 +62,8 @@ app.all('*', (req, res, next) => {
 var routes = [
   require('lib/routes/index')
 , require('lib/routes/auth')
-, require('lib/routes/game')
+, require('lib/routes/games')
+, require('lib/routes/boards')
 ]
 
 routes.forEach((route) => {
