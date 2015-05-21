@@ -90,6 +90,6 @@ io.listen(config.port_io, (err) => {
   if (err) throw err
 
   console.log('IO server started on', {
-    port: 5001
+    port: config.port_io
   })
 })

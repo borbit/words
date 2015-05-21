@@ -25,11 +25,11 @@ module.exports = function() {
   })
 
   return (
-    <div className="menu panel panel-default">
-      <div className="menu__head panel-heading">
+    <div className="menu">
+      <div className="menu__head">
         <div className="menu__tabs btn-group">{tabs}</div>
       </div>
-      <div className="menu__body panel-body">
+      <div className="menu__body">
         {this.state.tab == 'games' &&
           <Games/>}
         {this.state.tab == 'friends' &&

@@ -28,24 +28,32 @@
     }
 
     &-tile {
-      overflow: hidden;
+      position: relative;
       margin: 1px;
       width: 50px;
       height: 50px;
       background: #fff;
       border: 1px solid #ddd;
       border-radius: 3px;
+      cursor: pointer;
+    }
+
+    &-letter {
+      position: absolute;
+      top: 50%;
+      margin-top: -12px;
+      height: 24px;
+      width: 100%;
+      line-height: 24px;
       text-align: center;
-      line-height: 50px;
       font-weight: 600;
       font-size: 24px;
-      cursor: pointer;
     }
 
     &-score {
       position: absolute;
-      top: 5px;
-      left: 5px;
+      top: 4px;
+      left: 4px;
       line-height: 10px;
       font-size: 10px;
       color: #333;
@@ -55,8 +63,6 @@
     &_dragging&_placed &-tile {
       width: 60px;
       height: 60px;
-      line-height: 60px;
-      font-size: 28px;
     }
 
     &_dragging &-tile {
@@ -69,24 +75,10 @@
       margin-left: -10px;
     }
 
-    &_dragging &-score,
-    &_dragging&_placed &-score {
-      left: -1px;
-      top: -1px;
-    }
-
     &_placed &-tile {
       margin: 0;
       height: 100%;
       width: 100%;
-      line-height: 30px;
-      font-size: 24px;
-    }
-
-    &_placed &-score {
-      font-size: 8px;
-      left: 4px;
-      top: 4px;
     }
   }
 
