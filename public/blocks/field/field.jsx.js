@@ -21,7 +21,11 @@ module.exports = function() {
       if (y < 15) { className['field__cell_ab'] = isLetterNotEmpty(field[(y+1)*15+x]) }
       if (x > 0)  { className['field__cell_al'] = isLetterNotEmpty(field[y*15+x-1]) }
       if (x < 15) { className['field__cell_ar'] = isLetterNotEmpty(field[y*15+x+1]) }
-      cells.push(<div className={cn(className)} style={style}>{letter}</div>)
+      cells.push(
+        <div className={cn(className)} style={style}>
+          <div className="field__cell-wrap">{letter}</div>
+        </div>
+      )
     }
   })
   })

@@ -17,7 +17,7 @@ module.exports = React.createClass({
 
   componentDidMount() {
     this.$board = $(this.refs.board.getDOMNode())
-    // this.$aside = $(this.refs.aside.getDOMNode())
+    this.$aside = $(this.refs.aside.getDOMNode())
     this.$menu = $(this.refs.menu.getDOMNode())
     this.$page = $(this.refs.page.getDOMNode())
 
@@ -35,7 +35,7 @@ module.exports = React.createClass({
 
   arrangeLayout() {
     let pageWidth = this.$page.outerWidth()
-    let boardWidth = this.$board.outerHeight() - 100
+    let boardWidth = this.$board.outerHeight() - 42
     let asideWidth
 
     if (pageWidth > 1200) {
@@ -45,7 +45,7 @@ module.exports = React.createClass({
     }
 
     this.$board.width(boardWidth)
-    // this.$aside.width(asideWidth)
+    this.$aside.width(asideWidth)
     this.$menu.width(asideWidth)
   },
 

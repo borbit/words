@@ -1,7 +1,8 @@
 var config = module.exports
 
-config.port = process.env.PORT || 9000
 config.host = process.env.HOST || 'localhost'
+config.port = process.env.PORT || 9000
+config.port_io = process.env.PORT_IO || 9001
 config.dist_manifest_path = __dirname + '/public/dist/rev-manifest'
 config.assets_dir_path = __dirname + '/public/assets'
 config.public_dir_path = __dirname + '/public'

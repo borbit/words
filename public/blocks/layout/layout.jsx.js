@@ -13,11 +13,10 @@ module.exports = function() {
         <div className="layout__board" ref="board">
           <Board/>
         </div>
+        <div className="layout__aside" ref="aside">
+          <Aside/>
+        </div>
       </div>
     </div>
   )
 }
-
-// <div className="layout__aside" ref="aside">
-//   <Aside/>
-// </div>

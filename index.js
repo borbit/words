@@ -86,7 +86,7 @@ app.listen(config.port, null, (err) => {
   })
 })
 
-io.listen(5001, (err) => {
+io.listen(config.port_io, (err) => {
   if (err) throw err
 
   console.log('IO server started on', {

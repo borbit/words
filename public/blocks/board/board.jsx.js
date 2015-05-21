@@ -6,7 +6,6 @@ module.exports = function() {
   return (
     <div className="board">
       <div className="board__panel panel panel-default">
-        <BoardHead/>
         <BoardBody/>
       </div>
     </div>

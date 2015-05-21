@@ -10,6 +10,7 @@
   background-size: contain;
   
   &__cell {
+    display: table;
     position: absolute;
     overflow: hidden;
     height: 6.6666%;
@@ -17,9 +18,8 @@
     border: 1px solid #ddd;
     border-radius: 3px;
     background: #fff;
-    text-align: center;
-    line-height: 38px;
     font-weight: 700;
+    line-height: 24px;
     font-size: 24px;
 
     &_al {
@@ -45,5 +45,11 @@
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
     }
+  }
+
+  &__cell-wrap {
+    display: table-cell;
+    vertical-align: middle;
+    text-align:center;
   }
 }

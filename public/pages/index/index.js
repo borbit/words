@@ -11,8 +11,8 @@ var GameStore = require('../../js/stores/game')
 var MeStore = require('../../js/stores/me')
 var io = require('io-client')
 
-GamesStore.setState(app.games)
 FriendsStore.setState(app.friends)
+GamesStore.setState(app.games)
 MeStore.setState(app.me)
 
 if (app.games[0]) {
@@ -21,7 +21,7 @@ if (app.games[0]) {
 
 React.render(<Layout/>, document.getElementsByTagName('main')[0])
 
-io = io.connect('ws://192.168.10.118:5001')
+io = io.connect(`ws://${app.config.host}:${app.config.port_io}`)
 io.on('connect', () => {
   console.log('IO CONNECTED')
 })

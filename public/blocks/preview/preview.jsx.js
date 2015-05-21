@@ -4,7 +4,7 @@ var Surface = ReactCanvas.Surface;
 var Layer = ReactCanvas.Layer;
 var _ = require('lodash')
 
-const CELL_SIZE = 5
+const CELL_SIZE = 2
 
 module.exports = function() {
   let cells = []
@@ -19,10 +19,10 @@ module.exports = function() {
       
     let style = {
       backgroundColor: '#000'
-    , top: y * CELL_SIZE + 1
-    , left: x * CELL_SIZE + 1
-    , width: CELL_SIZE - 1
-    , height: CELL_SIZE - 1
+    , top: y * CELL_SIZE
+    , left: x * CELL_SIZE
+    , width: CELL_SIZE
+    , height: CELL_SIZE
     }
 
     cells.push(
