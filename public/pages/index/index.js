@@ -35,6 +35,6 @@ io.on('game:update', (data) => {
   GamesActions.getGames()
 })
 
-GamesActions.getGame.listen(function(gameId) {
+GameActions.get.listen(function(gameId) {
   io.emit('game:listen', {gameId: gameId})
 })
