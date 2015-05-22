@@ -1,15 +1,12 @@
 var React = require('react')
 var render = require('./menu.jsx')
+var $ = require('jquery')
 
 module.exports = React.createClass({
-  getInitialState() {
-    return {
-      tab: 'games'
-    }
-  },
-
-  onTab(tab) {
-    this.setState({tab: tab})
+  componentDidMount() {
+    $(this.getDOMNode()).on('touchmove', (e) => {
+      e.stopPropagation()
+    })
   },
 
   render() {

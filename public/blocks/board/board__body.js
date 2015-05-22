@@ -32,9 +32,6 @@ module.exports = React.createClass({
     if (this.state.error) {
       this.setState({error: null})
     }
-    if (this.state.game.get('error')) {
-      GameActions.resetError()
-    }
   },
 
   onPlay() {

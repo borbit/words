@@ -65,10 +65,6 @@ module.exports = function() {
         <Alert title="Помилка" onClose={this.onResetError}>
           {this.state.error}
         </Alert>}
-      {this.state.game.get('error') &&
-        <Alert title="Помилка" onClose={this.onResetError}>
-          {this.state.game.get('error')}
-        </Alert>}
       {this.state.confirmPass &&
         <Confirm 
           onOK={this.onPassConfirm}

@@ -10,9 +10,20 @@ module.exports = Reflux.createStore({
   
   init() {
     this.state = Immutable.Map()
-    this.listenTo(GamesActions.getGame.completed, this.setState)
-    this.listenTo(GamesActions.addGame.completed, this.setState)
     this.listenToMany(GameActions);
+  },
+
+  onGetCompleted(data) {
+    this.setState(data)
+  },
+
+  onAddCompleted(data) {
+    this.setState(data)
+  },
+
+  onAddFailed(data) {
+    this.state = this.state.set('error', data.responseJSON.error)
+    this.trigger(this.state)
   },
 
   onPlay() {
@@ -72,11 +83,6 @@ module.exports = Reflux.createStore({
   onSwapFailed(data) {
     this.state = this.state.set('error', data.responseJSON.error)
     this.state = this.state.set('swapping', false)
-    this.trigger(this.state)
-  },
-
-  onResetError() {
-    this.state = this.state.delete('error')
     this.trigger(this.state)
   }
 })

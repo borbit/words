@@ -6,6 +6,10 @@ module.exports = Reflux.createStore({
   mixins: [StoreMixin],
 
   init() {
-    this.listenTo(GamesActions.getGames.completed, this.setState)
+    this.listenToMany(GamesActions);
   },
+
+  onGetGamesCompleted(data) {
+    this.setState(data)
+  }
 })

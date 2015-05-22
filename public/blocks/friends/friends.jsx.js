@@ -2,17 +2,21 @@ var React = require('react')
 var FriendsFriend = require('./friends__friend')
 
 module.exports = function() {
-  var friends = []
+  let rows = []
+  let friends = this.state.friends.sortBy((friend) => {
+    let rank = friend.get('ranks').get('score')
+    return rank >= 0 ? rank : 10000
+  })
   
-  this.state.friends.forEach((friend) => {
-    friends.push(<FriendsFriend friend={friend}/>)
+  friends.forEach((friend) => {
+    rows.push(<FriendsFriend friend={friend}/>)
   })
 
   return (
     <div className="friends">
       <h4>Друзi <span className="badge">{friends.length}</span></h4>
       <div className="friends__list list-group">
-        {friends}
+        {rows}
       </div>
     </div>
   )

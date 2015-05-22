@@ -1,5 +1,5 @@
 var React = require('react')
-var GamesActions = require('../../js/actions/games')
+var GameActions = require('../../js/actions/game')
 var render = require('./friends__friend.jsx')
 
 module.exports = React.createClass({
@@ -18,7 +18,7 @@ module.exports = React.createClass({
   },
 
   onCreateConfirm() {
-    GamesActions.addGame(this.props.friend.get('fb_id'))
+    GameActions.add(this.props.friend.get('fb_id'))
     this.onCreateCancel()
   },
 
