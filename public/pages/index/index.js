@@ -6,6 +6,7 @@ var Layout = require('../../blocks/layout/layout')
 var LayoutStore = require('../..//blocks/layout/layout.store')
 var FriendsStore = require('../../blocks/friends/friends.store')
 var GamesActions = require('../../js/actions/games')
+var GameActions = require('../../js/actions/game')
 var GamesStore = require('../../js/stores/games')
 var GameStore = require('../../js/stores/game')
 var MeStore = require('../../js/stores/me')
@@ -29,7 +30,7 @@ io.on('connect', () => {
 io.on('game:update', (data) => {
   let game = GameStore.getState()
   if (game.get('id') == data.gameId) {
-    GamesActions.getGame(data.gameId)
+    GameActions.get(data.gameId)
   }
   GamesActions.getGames()
 })
