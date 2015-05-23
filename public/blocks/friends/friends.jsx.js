@@ -14,7 +14,7 @@ module.exports = function() {
 
   return (
     <div className="friends">
-      <h4>Друзi <span className="badge">{friends.length}</span></h4>
+      <h4>Друзi <span className="badge">{friends.count()}</span></h4>
       <div className="friends__list list-group">
         {rows}
       </div>

@@ -9,6 +9,7 @@ var GamesActions = require('../../js/actions/games')
 var GameActions = require('../../js/actions/game')
 var GamesStore = require('../../js/stores/games')
 var GameStore = require('../../js/stores/game')
+var LogsStore = require('../../js/stores/logs')
 var MeStore = require('../../js/stores/me')
 var io = require('io-client')
 
@@ -18,6 +19,7 @@ MeStore.setState(app.me)
 
 if (app.games[0]) {
   GameStore.setState(app.games[0])
+  LogsStore.setState(app.logs)
 }
 
 React.render(<Layout/>, document.getElementsByTagName('main')[0])

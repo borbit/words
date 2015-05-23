@@ -9,7 +9,6 @@ var Actions = module.exports = Reflux.createActions({
 , 'swap': {asyncResult: true}
 , 'pass': {asyncResult: true}
 , 'resign': {asyncResult: true}
-, 'resign': {asyncResult: true}
 , 'resetError': {}
 })
 

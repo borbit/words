@@ -1,5 +1,6 @@
 var React = require('react')
 var ReactCanvas = require('react-canvas')
+var BONUSES = require('../../../lib/bonuses')
 var Surface = ReactCanvas.Surface;
 var Layer = ReactCanvas.Layer;
 var _ = require('lodash')
@@ -12,13 +13,19 @@ module.exports = function() {
   _.each(_.range(0, 15), (y) => {
   _.each(_.range(0, 15), (x) => {
     let letter = this.props.field[y*15+x]
-    
-    if (!letter || letter == ' ') {
+    let background
+
+    if (letter && letter != ' ') {
+      let b = _.random(40, 120)
+      background = `rgb(${b},${b},${b})`
+    } else if (BONUSES[y][x]) {
+      background = '#ddd'
+    } else {
       return
     }
       
     let style = {
-      backgroundColor: '#000'
+      backgroundColor: background
     , top: y * CELL_SIZE
     , left: x * CELL_SIZE
     , width: CELL_SIZE

@@ -1,20 +1,14 @@
 var React = require('react')
 var User = require('../user/user')
 var moment = require('moment')
-var cn = require('classnames')
 
 if (typeof window != 'undefined') {
   var Preview = require('../preview/preview')
 }
 
 module.exports = function() {
-  let className = cn({
-    'games__game list-group-item': true
-  , 'games__game_current': this.props.current
-  })
-
   return (
-    <div className={className} onClick={this.onPlay}>
+    <div className="games__game list-group-item" onClick={this.onPlay}>
       <i className="fa fa-times games__delete"></i>
       <div className="games__preview">
         {typeof window != 'undefined' &&

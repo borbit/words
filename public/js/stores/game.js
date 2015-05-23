@@ -1,7 +1,6 @@
 var Reflux = require('reflux')
 var Immutable = require('immutable')
 var StoreMixin = require('../mixins/store')
-var GamesActions = require('../actions/games')
 var GameActions = require('../actions/game')
 var Immutable = require('immutable')
 
