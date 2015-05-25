@@ -2,6 +2,26 @@
   margin: 0;
 
   &__item {
-    padding: 5px;
+    margin-bottom: 10px;
+
+    &_me {
+      text-align: right;
+    }
+  }
+
+  &__balloon {
+    display: inline-block;
+    padding: 4px 8px 4px 4px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+  }
+
+  &__item_me &__balloon {
+    padding-left: 8px;
+  }
+
+  &__avatar {
+    float: left;
+    margin-right: 5px;
   }
 }

@@ -9,6 +9,10 @@ module.exports = Reflux.createStore({
   
   init() {
     this.state = Immutable.List()
-    // this.listenToMany(GameActions);
+    this.listenToMany(LogsActions);
+  },
+
+  onGetCompleted(data) {
+    this.setState(data)
   }
 })

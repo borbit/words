@@ -63,15 +63,15 @@ Actions.resign.listen(function(gameId) {
 Actions.play.completed.listen(function() {
   GamesActions.getGames()
 })
-
 Actions.swap.completed.listen(function() {
   GamesActions.getGames()
 })
-
 Actions.pass.completed.listen(function() {
   GamesActions.getGames()
 })
-
 Actions.resign.completed.listen(function() {
+  GamesActions.getGames()
+})
+Actions.add.completed.listen(function() {
   GamesActions.getGames()
 })

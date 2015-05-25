@@ -17,6 +17,9 @@ module.exports = function() {
       <h4>Друзi <span className="badge">{friends.count()}</span></h4>
       <div className="friends__list list-group">
         {rows}
+        <div className="friends__friend list-group-item text-center">
+          Грати компанiєю
+        </div>
       </div>
     </div>
   )
