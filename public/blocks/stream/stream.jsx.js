@@ -1,6 +1,8 @@
 var React = require('react')
 var Avatar = require('../avatar/avatar')
+var moment = require('moment')
 var cn = require('classnames')
+var _ = require('lodash')
 
 module.exports = function() {
   let items = []
@@ -8,7 +10,7 @@ module.exports = function() {
 
   let me = this.state.me
   let opponent = this.state.game.get('opponent')
-  
+
   if (opponent) {
     users[me.get('fb_id')] = {
       name: me.get('fb_name')
@@ -18,47 +20,60 @@ module.exports = function() {
       name: opponent.get('fb_name')
     , gender: opponent.get('gender')
     }
-  }
+  
 
-  this.state.logs.forEach((log) => {
-    log = log.get('log').split('|')
+    this.state.logs.forEach((log) => {
+      let text = log.get('log').split('|')
+      let [action, userFBId] = text
+      let user = users[userFBId]
+      let message = ''
 
-    let [action, userFBId] = log
-    let user = users[userFBId]
-    let message = ''
+      if (!user) {
+        return
+      }
 
-    let isMe = me.get('fb_id') == userFBId
+      let isMe = me.get('fb_id') == userFBId
 
-    if (action == 'PLAY') {
-      message += ` ${user.gender == "male" ? "виклав" : "виклала"}  ${log[2].split(',').join(', ')}, ${user.gender == "male" ? "отримав" : "отримала"} ${log[3]} очок`
-    }
-    if (action == 'SWAP') {
-      message += ` ${user.gender == "male" ? "помiняв" : "помiняла"} лiтери та ${user.gender == "male" ? "пропустив" : "пропустила"} хiд`
-    }
-    if (action == 'PASS') {
-      message += ` ${user.gender == "male" ? "пропустив" : "пропустила"} хiд`
-    }
-    if (action == 'START') {
-      message += ` ${user.gender == "male" ? "почав" : "почала"} гру`
-    }
+      if (action == 'PLAY') {
+        let words = _.map(text[2].split(','), (word) => {
+          return `<a href="http://sum.in.ua/?swrd=${word}">${word}</a>`
+        })
 
-    let className = cn({
-      'stream__item': true
-    , 'stream__item_me': isMe
-    })
+        message += ` ${user.gender == "male" ? "склав" : "склала"}  ${words.join(', ')}, ${user.gender == "male" ? "отримав" : "отримала"} ${text[3]} очок`
+      }
+      if (action == 'SWAP') {
+        message += ` ${user.gender == "male" ? "помiняв" : "помiняла"} лiтери та ${user.gender == "male" ? "пропустив" : "пропустила"} хiд`
+      }
+      if (action == 'PASS') {
+        message += ` ${user.gender == "male" ? "пропустив" : "пропустила"} хiд`
+      }
+      if (action == 'START') {
+        message += ` ${user.gender == "male" ? "почав" : "почала"} гру`
+      }
+      if (action == 'RESIGN') {
+        message += ` ${user.gender == "male" ? "закiнчів" : "закiнчила"} гру`
+      }
 
-    items.push(
-      <div className={className}>
-        <div className="stream__balloon">
-          {!isMe &&
+      let className = cn({
+        'stream__item': true
+      , 'stream__item_me': isMe
+      })
+
+      items.push(
+        <div className={className}>
+          <div className="stream__balloon">
             <div className="stream__avatar">
               <Avatar facebookId={userFBId} width="20" height="20"/>
-            </div>}
-          {message}
+            </div>
+            <div className="stream__message">
+              <p className="stream__message-text" dangerouslySetInnerHTML={{__html: message}}/>
+              <i className="stream__message-date">{moment(+log.get('date')).fromNow()}</i>
+            </div>
+          </div>
         </div>
-      </div>
-    )
-  })
+      )
+    })
+  }
 
   return (
     <div className="stream">

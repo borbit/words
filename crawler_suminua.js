@@ -23,10 +23,14 @@ function crawlPage(url, cb) {
 
     let pages = _.filter(items, i => ~i.url.indexOf('vkazivnyk'))
     let words = _.filter(items, (i) => {
+      let unique = _.unique(i.txt.split(''))
+
       return i.txt.length > 1 &&
              !~i.url.indexOf('vkazivnyk') &&
              !~i.txt.indexOf(' ') &&
-             !~i.txt.indexOf('-')
+             !~i.txt.indexOf('-') &&
+             !/\d/.test(i.txt) &&
+             unique.length > 1
     })
 
     console.log(words.length)

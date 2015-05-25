@@ -81,7 +81,7 @@ module.exports = function() {
         <Confirm
           onOK={this.onPlayConfirm}
           onCancel={this.onPlayCancel}>
-          Ви впевненi що хочете зiграти {this.state.words.join(', ')}?
+          Ви впевненi що хочете зiграти {this.state.words.words.join(', ')}?
         </Confirm>}
       {this.state.confirmSwap &&
         <Swap
