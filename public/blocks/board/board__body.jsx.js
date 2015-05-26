@@ -52,9 +52,14 @@ module.exports = function() {
           </div>
         </div>
         <div className="board__btns board__btns_right">
-          <button className="board__btn btn btn-default" onClick={this.onPlay} disabled={playDisabled}>
-            {playIcon}
-          </button>
+          <div className="btn-group">
+            <button className="board__btn btn btn-default" disabled={true}>
+              <i className="fa fa-undo"></i>
+            </button>
+            <button className="board__btn btn btn-default" onClick={this.onPlay} disabled={playDisabled}>
+              {playIcon}
+            </button>
+          </div>
         </div>
         <Letters 
           letters={this.state.game.get('my_letters')}
