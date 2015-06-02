@@ -1,12 +1,20 @@
 var React = require('react')
-var Friends = require('../friends/friends')
 var Games = require('../games/games')
 
 module.exports = function() {
+  let rank = this.state.me.get('ranks').get('score')
+
   return (
     <div className="menu">
+      <div className="menu__btns btn-group">
+        <button className="btn btn-sm btn-default" onClick={this.onBoardsClick}>
+          <i className="fa fa-trophy"></i> <span>{rank+1}</span>
+        </button>
+        <button className="btn btn-sm btn-default" onClick={this.onNewClick}>
+          <i className="fa fa-plus-circle"></i>
+        </button>
+      </div>
       <Games/>
-      <Friends/>      
     </div>
   )
 }

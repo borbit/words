@@ -1,12 +1,29 @@
 var React = require('react')
+var Reflux = require('reflux')
+var BoardsActions = require('../../js/actions/boards')
+var LayoutActions = require('../layout/layout.actions')
+var MeStore = require('../../js/stores/me')
 var render = require('./menu.jsx')
-var $ = require('jquery')
 
 module.exports = React.createClass({
-  componentDidMount() {
-    $(this.getDOMNode()).on('touchmove', (e) => {
-      e.stopPropagation()
-    })
+  mixins: [
+    Reflux.connect(MeStore, 'me')
+  ],
+
+  getInitialState() {
+    return {
+      me: MeStore.getState()
+    }
+  },
+
+  onBoardsClick() {
+    this.setState({boardsOpen: true})
+    LayoutActions.boardsOpen()
+    BoardsActions.getBoards()
+  },
+
+  onNewClick() {
+    LayoutActions.newOpen()
   },
 
   render() {

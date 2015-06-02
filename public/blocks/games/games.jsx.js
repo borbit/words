@@ -15,12 +15,22 @@ module.exports = function() {
     )
   })
 
+  let myFBId = this.state.me.get('fb_id')
+
   games.forEach((game) => {
     let item
     let isCurrent = false
+    let myIndex = false
 
     if (this.state.game) {
       isCurrent = game.get('id') == this.state.game.get('id')
+    }
+
+    for (let i = 1; i <= game.get('users_count'); i++) {
+      if (game.get(`user${i}`).get('fb_id') == myFBId) {
+        myIndex = i
+        break
+      }
     }
 
     if (game.get('finished_at')) {
@@ -31,7 +41,7 @@ module.exports = function() {
     
     if (game.get('finished_at')) {
       gamesFinished.push(item)
-    } else if (game.get('my_turn')) {
+    } else if (game.get('current_turn') == myIndex) {
       gamesMyTurn.push(item)
     } else {
       gamesWaiting.push(item)
@@ -42,17 +52,25 @@ module.exports = function() {
     <div className="games">
       {!!gamesMyTurn.length &&
         <section className="games__group">
-          <h4>Мiй хiд <span className="badge">{gamesMyTurn.length}</span></h4>
+          <h4 className="games__title">Мiй хiд <span className="badge">{gamesMyTurn.length}</span></h4>
           <div className="games__list list-group">{gamesMyTurn}</div>
         </section>}
       {!!gamesWaiting.length &&
         <section className="games__group">
-          <h4>В очiкуванi <span className="badge">{gamesWaiting.length}</span></h4>
+          <h4 className="games__title">В очiкуванi <span className="badge">{gamesWaiting.length}</span></h4>
           <div className="games__list list-group">{gamesWaiting}</div>
         </section>}
+      <section className="games__group">
+        {!games.count() && <h4 className="games__title">Привiт <span className="badge">:)</span></h4>}
+        <div className="games__list list-group">
+          <div className="games__create list-group-item" onClick={this.onNewClick}>
+            Почати нову гру
+          </div>
+        </div>
+      </section>
       {!!gamesFinished.length &&
         <section className="games__group">
-          <h4>Закiнченi <span className="badge">{gamesFinished.length}</span></h4>
+          <h4 className="games__title">Закiнченi <span className="badge">{gamesFinished.length}</span></h4>
           <div className="games__list list-group">{gamesFinished}</div>
         </section>}
     </div>

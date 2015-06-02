@@ -1,26 +1,62 @@
 .games {
-  &__list {
-    margin-bottom: 10px;
+  &__group {
+    margin: 10px 0;
   }
 
-  &__play {
-    float: right;
-    margin-left: 5px;
+  &__list {
+    margin-bottom: 0;
   }
 
   &__delete {
     float: right;
   }
 
-  &__game {
+  &__game,
+  &__create {
     overflow: hidden;
     border-color: #eee;
-    font-weight: 300;
     cursor: pointer;
+  }
+
+  &__create {
+    text-align: center;
   }
 
   &__preview {
     float: left;
     background: #eee;
+  }
+
+  &__users {
+    overflow: hidden;
+    margin-bottom: 5px;
+  }
+
+  &__user {
+    float: left;
+
+    & + & {
+      margin-left: -2px;
+    }
+  }
+
+  &__title {
+    margin: 15px 0;
+  }
+
+  &__info {
+    line-height: 16px;
+    margin-top: 5px;
+    width: 100%;
+
+    td {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    td:last-child {
+      text-align: right;
+    }
   }
 }

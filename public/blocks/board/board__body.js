@@ -1,6 +1,7 @@
 const React = require('react')
 const Reflux = require('reflux')
 const FIELD = require('../../../lib/field')
+const MeStore = require('../../js/stores/me')
 const GameStore = require('../../js/stores/game')
 const GameActions = require('../../js/actions/game')
 const render = require('./board__body.jsx')
@@ -9,11 +10,13 @@ const _ = require('lodash')
 module.exports = React.createClass({
   mixins: [
     Reflux.connect(GameStore, 'game')
+  , Reflux.connect(MeStore, 'me')
   ],
 
   getInitialState() {
     return {
-      game: GameStore.getState()
+      me: MeStore.getState()
+    , game: GameStore.getState()
     , confirmPlay: false
     , confirmResign: false
     , confirmPass: false
@@ -73,9 +76,7 @@ module.exports = React.createClass({
   },
 
   onPass() {
-    if (this.state.game.get('my_turn')) {
-      this.setState({confirmPass: true})
-    }
+    this.setState({confirmPass: true})
   },
 
   onPassConfirm() {
@@ -88,9 +89,7 @@ module.exports = React.createClass({
   },
 
   onSwap() {
-    if (this.state.game.get('my_turn')) {
-      this.setState({confirmSwap: true})
-    }
+    this.setState({confirmSwap: true})
   },
 
   onSwapConfirm(letters) {

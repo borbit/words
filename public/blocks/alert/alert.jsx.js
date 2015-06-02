@@ -16,7 +16,7 @@ module.exports = function() {
               {this.props.children}
             </div>}
           <div className="modal-footer">
-            <button className="btn btn-default" onClick={this.props.onClose}>OK</button>
+            <button className="btn btn-default" onClick={this.props.onClose}>&times;</button>
           </div>
         </div>
       </div>

@@ -1,5 +1,4 @@
 var React = require('react')
-var BoardHead = require('./board__head')
 var BoardBody = require('./board__body')
 
 module.exports = function() {

@@ -5,22 +5,18 @@ var cn = require('classnames')
 var _ = require('lodash')
 
 module.exports = function() {
-  let items = []
-  let users = {}
-
   let me = this.state.me
-  let opponent = this.state.game.get('opponent')
+  let users = {}
+  let items = []
 
-  if (opponent) {
-    users[me.get('fb_id')] = {
-      name: me.get('fb_name')
-    , gender: me.get('gender')
+  if (this.state.game.get('id')) {
+    for (let i = 1; i <= this.state.game.get('users_count'); i++) {
+      let user = this.state.game.get(`user${i}`)
+      users[user.get('fb_id')] = {
+        name: user.get('fb_name')
+      , gender: user.get('gender')
+      }
     }
-    users[opponent.get('fb_id')] = {
-      name: opponent.get('fb_name')
-    , gender: opponent.get('gender')
-    }
-  
 
     this.state.logs.forEach((log) => {
       let text = log.get('log').split('|')

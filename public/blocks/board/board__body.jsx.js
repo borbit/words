@@ -11,6 +11,20 @@ module.exports = function() {
   let playDisabled = false
   let menuDisabled = false
 
+  let myFBId = this.state.me.get('fb_id')
+  let myIndex = 0
+
+  for (let i = 1; i <= this.state.game.get('users_count'); i++) {
+    if (this.state.game.get(`user${i}`).get('fb_id') == myFBId) {
+      myIndex = i
+      break
+    }
+  }
+
+  let isFinished = !!this.state.game.get('finished_at') 
+  let myLetters = this.state.game.get(`user${myIndex}_letters`)
+  let myTurn = this.state.game.get(`user${myIndex}_turn`)
+  
   if (this.state.game.get('playing')) {
     playIcon = <i className="fa fa-spin fa-circle-o-notch"></i>
     playDisabled = true
@@ -24,7 +38,7 @@ module.exports = function() {
   }
 
   if (!this.state.letters.length ||
-      !this.state.game.get('my_turn')) {
+      !myTurn) {
     playDisabled = true
   }
 
@@ -36,7 +50,7 @@ module.exports = function() {
   return (
     <div className="panel-body board__body">
       <div className="board__field">
-        <Field field={this.state.game.get('field') || ''}/>
+        <Field field={this.state.game.get('field')}/>
       </div>
       <div className="board__letters">
         <div className="board__btns board__btns_left">
@@ -45,9 +59,9 @@ module.exports = function() {
               {menuIcon}
             </button>
             <ul className="dropdown-menu">
-              <li onClick={this.onSwap} className={!this.state.game.get('my_turn') && 'disabled'}><a>Помiняти лiтери</a></li>
-              <li onClick={this.onResign} className={this.state.game.get('finished_at') && 'disabled'}><a>Закiнчити гру</a></li>
-              <li onClick={this.onPass} className={!this.state.game.get('my_turn') && 'disabled'}><a>Спасувати</a></li>
+              <li onClick={this.onSwap} className={!myTurn && 'disabled'}><a>Помiняти лiтери</a></li>
+              <li onClick={this.onResign} className={isFinished && 'disabled'}><a>Закiнчити гру</a></li>
+              <li onClick={this.onPass} className={!myTurn && 'disabled'}><a>Спасувати</a></li>
             </ul>
           </div>
         </div>
@@ -62,9 +76,9 @@ module.exports = function() {
           </div>
         </div>
         <Letters 
-          letters={this.state.game.get('my_letters')}
           field={this.state.game.get('field')}
-          onPlace={this.onPlace}/>
+          onPlace={this.onPlace}
+          letters={myLetters}/>
       </div>
       {this.state.error &&
         <Alert title="Помилка" onClose={this.onResetError}>
@@ -92,7 +106,7 @@ module.exports = function() {
         <Swap
           onSwap={this.onSwapConfirm}
           onCancel={this.onSwapCancel}
-          letters={this.state.game.get('my_letters')}>
+          letters={myLetters}>
         </Swap>}
     </div>
   )

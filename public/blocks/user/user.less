@@ -1,34 +1,12 @@
 .user {
   overflow: hidden;
+  height: 30px;
+  width: 30px;
   vertical-align: top;
   line-height: 15px;
 
-  &_right {
-    text-align: right
-  }
-
   &__avatar {
-    float: left;
     position: relative;
-    margin-right: 10px;
-  }
-
-  &_right &__avatar {
-    float: right;
-    margin-left: 10px;
-    margin-right: 0;
-  }
-
-  &__name {
-    font-size: 12px;
-  }
-
-  &__info {
-    float: left;
-  }
-
-  &_right &__info {
-    float: right;
   }
 
   &__rank {
@@ -45,10 +23,5 @@
     font-weight: 500;
     font-size: 10px;
     color: #000;
-  }
-
-  &_right &__rank {
-    right: initial;
-    left: -2px;
   }
 }

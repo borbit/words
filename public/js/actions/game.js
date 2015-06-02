@@ -18,9 +18,13 @@ Actions.get.listen(function(gameId) {
   promise.fail(this.failed)
 })
 
-Actions.add.listen(function(opponentFBId) {
-  var promise = $.post('/games', {
-    opponentFBId: opponentFBId
+Actions.add.listen(function(opponentFBIds) {
+  let data = {opponentFBIds: opponentFBIds.toArray()}
+  let promise = $.ajax({
+    url: '/games'
+  , data: JSON.stringify(data)
+  , contentType: 'application/json'
+  , type: 'POST'
   })
   promise.done(this.completed)
   promise.fail(this.failed)

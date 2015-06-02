@@ -3,17 +3,20 @@ var Reflux = require('reflux')
 var GameStore = require('../../js/stores/game')
 var GameActions = require('../../js/actions/game')
 var LayoutStore = require('./layout.store')
+var LayoutActions = require('./layout.actions')
 var render = require('./layout.jsx')
 var _ = require('lodash')
 
 module.exports = React.createClass({
   mixins: [
     Reflux.connect(GameStore, 'game')
+  , Reflux.connect(LayoutStore, 'layout')
   ],
 
   getInitialState() {
     return {
       game: GameStore.getState()
+    , layout: LayoutStore.getState()
     }
   },
 
@@ -57,6 +60,14 @@ module.exports = React.createClass({
     } else if (this.state.games.get('error')) {
       GamesActions.resetError()
     }
+  },
+
+  onBoardsClose() {
+    LayoutActions.boardsClose()
+  },
+
+  onNewClose() {
+    LayoutActions.newClose()
   },
 
   render() {
