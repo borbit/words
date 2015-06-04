@@ -6,12 +6,16 @@ var cn = require('classnames')
 
 module.exports = function() {
   let rows = []
+  let cols = []
   let friends = this.state.friends.sortBy((friend) => {
     let rank = friend.get('ranks').get('score')
     return rank >= 0 ? rank : 10000
   })
+
+  let total = friends.count()
+  let half = Math.ceil(total / 2)
   
-  friends.forEach((friend) => {
+  friends.forEach((friend, i) => {
     rows.push(
       <div className="new__user list-group-item" onClick={this.onToggle.bind(this, friend.get('fb_id'))}>
         <div className="new__ctrl">
@@ -26,6 +30,17 @@ module.exports = function() {
         </div>
       </div>
     )
+
+    if (i+1 == half || i+1 == total) {
+      cols.push(
+        <div className="new__col">
+          <div className="list-group">
+            {rows}
+          </div>
+        </div>
+      )
+      rows = []
+    }
   })
 
   return (
@@ -37,10 +52,14 @@ module.exports = function() {
             <h4 className="modal-title">Створити нову гру</h4>
           </div>
           <div className="modal-body">
-            <h4>Друзi <span className="badge">{friends.count()}</span></h4>
-            <div className="list-group">
-              {rows}
-            </div>
+            <h4>Бавитись с друзями <span className="badge">{friends.count()}</span></h4>
+            <section className="new__section">
+              {cols}
+            </section>
+            <h4>Бавитись з iньшими <span className="badge">{friends.count()}</span></h4>
+            <section className="new__section">
+              {cols}
+            </section>
           </div>
           <div className="modal-footer">
             <button className="btn btn-primary" onClick={this.onCreate} disabled={!this.state.checked.count()}>Створити гру</button>

@@ -7,6 +7,12 @@ module.exports = React.createClass({
     PureRenderMixin
   ],
 
+  getDefaultProps() {
+    return {
+      field: ''
+    }
+  },
+
   render() {
     return render.call(this)
   }
