@@ -48,9 +48,11 @@ app.all('*', (req, res, next) => {
     '/login'
   , '/login/cb'
   , '/logout'
-  , '/boards/score'
   ]
   if (_.contains(allowed, req.path)) {
+    return next()
+  }
+  if (_.startsWith(req.path, '/dict')) {
     return next()
   }
   if (!req.isAuthenticated()) {
@@ -64,6 +66,7 @@ var routes = [
 , require('lib/routes/auth')
 , require('lib/routes/games')
 , require('lib/routes/boards')
+, require('lib/routes/dict')
 ]
 
 routes.forEach((route) => {

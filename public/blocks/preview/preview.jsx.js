@@ -5,7 +5,7 @@ var Surface = ReactCanvas.Surface;
 var Layer = ReactCanvas.Layer;
 var _ = require('lodash')
 
-const CELL_SIZE = 2
+const CELL_SIZE = 3
 
 module.exports = function() {
   let cells = []

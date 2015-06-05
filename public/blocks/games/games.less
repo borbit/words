@@ -11,15 +11,10 @@
     float: right;
   }
 
-  &__game,
-  &__create {
+  &__game {
     overflow: hidden;
     border-color: #eee;
     cursor: pointer;
-  }
-
-  &__create {
-    text-align: center;
   }
 
   &__preview {
@@ -45,18 +40,27 @@
   }
 
   &__info {
-    line-height: 16px;
-    margin-top: 5px;
-    width: 100%;
+    margin-left: 50px;
+    line-height: 20px;
 
-    td {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    table {
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    td:first-child {
+      width: 25px;
     }
 
     td:last-child {
       text-align: right;
+      width: 35%;
     }
+  }
+
+  &__ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }

@@ -62,10 +62,10 @@ module.exports = function() {
         </section>}
       <section className="games__group">
         {!games.count() && <h4 className="games__title">Привiт <span className="badge">:)</span></h4>}
-        <div className="games__list list-group">
-          <div className="games__create list-group-item" onClick={this.onNewClick}>
+        <div className="games__list">
+          <button className="btn btn-block btn-default" onClick={this.onNewClick}>
             Почати нову гру
-          </div>
+          </button>
         </div>
       </section>
       {!!gamesFinished.length &&

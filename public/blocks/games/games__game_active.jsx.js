@@ -11,29 +11,27 @@ module.exports = function() {
   let info = []
 
   for (let i = 1; i <= this.props.game.get('users_count'); i++) {
-    users.push(
-      <div className="games__user">
-        <User user={this.props.game.get(`user${i}`)}/>
-      </div>
-    )
     info.push(
       <tr>
-        <td>{this.props.game.get(`user${i}`).get('fb_name')}</td>
-        <td>{this.props.game.get(`user${i}_score`)}</td>
+        <td><User user={this.props.game.get(`user${i}`)} width={20} height={20}/></td>
+        <td><div className="games__ellipsis">{this.props.game.get(`user${i}`).get('fb_name')}</div></td>
+        <td><div className="games__ellipsis">{this.props.game.get(`user${i}_score`)}</div></td>
       </tr>
     )
   }
 
   info.push(
     <tr>
-      <td>Попер. хiд</td>
-      <td>{moment(+this.props.game.get('created_at')).fromNow()}</td>
+      <td></td>
+      <td><div className="games__ellipsis">Попер. хiд</div></td>
+      <td><div className="games__ellipsis">{moment(+this.props.game.get('created_at')).fromNow()}</div></td>
     </tr>
   )
   info.push(
     <tr>
-      <td>Залишилось лiтер</td>
-      <td>{this.props.game.get('letters_count')}</td>
+      <td></td>
+      <td><div className="games__ellipsis">Залишилось лiтер</div></td>
+      <td><div className="games__ellipsis">{this.props.game.get('letters_count')}</div></td>
     </tr>
   )
 
@@ -43,12 +41,11 @@ module.exports = function() {
         {typeof window != 'undefined' &&
           <Preview field={this.props.game.get('field')}/>}
       </div>
-      <div className="games__users">
-        {users}
+      <div className="games__info">
+        <table>
+          {info}
+        </table>
       </div>
-      <table className="games__info">
-        {info}
-      </table>
     </div>
   )
 }
