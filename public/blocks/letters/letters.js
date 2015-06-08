@@ -41,6 +41,10 @@ module.exports = React.createClass({
     this.dragging.destroy()
   },
 
+  reset() {
+    this.forceUpdate()
+  },
+
   render() {
     return render.call(this)
   }

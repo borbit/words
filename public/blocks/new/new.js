@@ -1,18 +1,23 @@
 var React = require('react')
 var Reflux = require('reflux')
 var Immutable = require('immutable')
+var MeStore = require('../../js/stores/me')
+var UsersStore = require('../../js/stores/users')
 var FriendsStore = require('../../js/stores/friends')
 var GameActions = require('../../js/actions/game')
 var render = require('./new.jsx')
 
 module.exports = React.createClass({
   mixins: [
-    Reflux.connect(FriendsStore)
+    Reflux.connect(FriendsStore, 'friends')
+  , Reflux.connect(UsersStore, 'users')
   ],
 
   getInitialState() {
     return {
-      friends: FriendsStore.getState()
+      me: MeStore.getState()
+    , users: UsersStore.getState()
+    , friends: FriendsStore.getState()
     , checked: Immutable.Set()
     }
   },

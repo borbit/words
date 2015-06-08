@@ -10,6 +10,7 @@ module.exports = function() {
   let menuIcon = <i className="fa fa-navicon"></i>
   let playDisabled = false
   let menuDisabled = false
+  let undoDisabled = false
 
   let myFBId = this.state.me.get('fb_id')
   let myIndex = 0
@@ -40,6 +41,7 @@ module.exports = function() {
   if (!this.state.letters.length ||
       !myTurn) {
     playDisabled = true
+    undoDisabled = true
   }
 
   if (!this.state.game.get('id') ||
@@ -67,7 +69,7 @@ module.exports = function() {
         </div>
         <div className="board__btns board__btns_right">
           <div className="btn-group">
-            <button className="board__btn btn btn-default" disabled={true}>
+            <button className="board__btn btn btn-default" onClick={this.onReset} disabled={undoDisabled}>
               <i className="fa fa-undo"></i>
             </button>
             <button className="board__btn btn btn-default" onClick={this.onPlay} disabled={playDisabled}>
@@ -78,7 +80,8 @@ module.exports = function() {
         <Letters 
           field={this.state.game.get('field')}
           onPlace={this.onPlace}
-          letters={myLetters}/>
+          letters={myLetters}
+          ref="letters"/>
       </div>
       {this.state.error &&
         <Alert title="Помилка" onClose={this.onResetError}>

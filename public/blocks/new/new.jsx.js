@@ -1,45 +1,77 @@
 var React = require('react')
 var moment = require('moment')
+var NewUser = require('./new__user')
 var User = require('../user/user')
 var Mask = require('../mask/mask')
 var cn = require('classnames')
 
 module.exports = function() {
-  let rows = []
-  let cols = []
+  let friendsRows = []
+  let friendsCols = []
+  let friendsFBIds = []
   let friends = this.state.friends.sortBy((friend) => {
     let rank = friend.get('ranks').get('score')
+    friendsFBIds.push(friend.get('fb_id'))
     return rank >= 0 ? rank : 10000
   })
 
-  let total = friends.count()
-  let half = Math.ceil(total / 2)
+  let friendsTotal = friends.count()
+  let friendsHalf = Math.ceil(friendsTotal / 2)
   
   friends.forEach((friend, i) => {
-    rows.push(
-      <div className="new__user list-group-item" onClick={this.onToggle.bind(this, friend.get('fb_id'))}>
-        <div className="new__ctrl">
-          <input type="checkbox" checked={this.state.checked.has(friend.get('fb_id'))}/>
-        </div>
-        <div className="new__user-avatar">
-          <User user={friend}/>
-        </div>
-        <div className="new__user-info">
-          <span className="new__user-name">{friend.get('fb_name')}</span><br/>
-          <span className="new__user-hint">грає {moment(+friend.get('created_at')).toNow(true)}</span>
-        </div>
-      </div>
+    friendsRows.push(
+      <NewUser
+        checked={this.state.checked.has(friend.get('fb_id'))}
+        onToggle={this.onToggle.bind(this, friend.get('fb_id'))}
+        key={friend.get('fb_id')}
+        user={friend}
+      />
     )
-
-    if (i+1 == half || i+1 == total) {
-      cols.push(
-        <div className="new__col">
+    if (i+1 == friendsHalf || i+1 == friendsTotal) {
+      friendsCols.push(
+        <div className="new__col" key={i}>
           <div className="list-group">
-            {rows}
+            {friendsRows}
           </div>
         </div>
       )
-      rows = []
+      friendsRows = []
+    }
+  })
+
+  let usersRows = []
+  let usersCols = []
+  let users = this.state.users.filter((user) => {
+    return user.get('fb_id') != this.state.me.get('fb_id') &&
+      !~friendsFBIds.indexOf(user.get('fb_id'))
+  })
+  
+  users = users.sortBy((user) => {
+    let rank = user.get('ranks').get('score')
+    return rank >= 0 ? rank : 10000
+  })
+
+  let usersTotal = users.count()
+  let usersHalf = Math.ceil(usersTotal / 2)
+  
+  users.forEach((user, i) => {
+    usersRows.push(
+      <NewUser
+        checked={this.state.checked.has(user.get('fb_id'))}
+        onToggle={this.onToggle.bind(this, user.get('fb_id'))}
+        key={user.get('fb_id')}
+        user={user}
+      />
+    )
+    if (i+1 == usersHalf || i+1 == usersTotal) {
+      usersCols.push(
+        <div className="new__col" key={i}>
+          <div className="list-group">
+            {usersRows}
+          </div>
+        </div>
+      )
+      usersRows = []
     }
   })
 
@@ -52,14 +84,16 @@ module.exports = function() {
             <h4 className="modal-title">Створити нову гру</h4>
           </div>
           <div className="modal-body">
-            <h4>Бавитись с друзями <span className="badge">{friends.count()}</span></h4>
-            <section className="new__section">
-              {cols}
-            </section>
-            <h4>Бавитись з iньшими <span className="badge">{friends.count()}</span></h4>
-            <section className="new__section">
-              {cols}
-            </section>
+            {!!friends.count() &&
+              <section className="new__section">
+                <h4>Бавитись с друзями <span className="badge">{friends.count()}</span></h4>
+                {friendsCols}
+              </section>}
+            {!!users.count() &&
+              <section className="new__section">
+                <h4>Бавитись з iньшими <span className="badge">{users.count()}</span></h4>
+                {usersCols}
+              </section>}
           </div>
           <div className="modal-footer">
             <button className="btn btn-primary" onClick={this.onCreate} disabled={!this.state.checked.count()}>Створити гру</button>

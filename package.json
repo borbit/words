@@ -16,6 +16,8 @@
     "del": "latest",
     "ejs": "latest",
     "envify": "latest",
+    "event-stream": "^3.3.1",
+    "vinyl-source-stream": "^1.1.0",
     "express": "latest",
     "express-session": "^1.11.1",
     "express-state": "^1.2.0",
@@ -42,9 +44,6 @@
     "react": "latest",
     "redis": "^0.12.1",
     "reflux": "^0.2.7",
-    "request": "^2.55.0",
-    "vinyl-paths": "latest",
-    "vinyl-transform": "latest",
-    "watchify": "^3.1.0"
+    "request": "^2.55.0"
   }
 }

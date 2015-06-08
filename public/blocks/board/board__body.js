@@ -1,16 +1,18 @@
-const React = require('react')
-const Reflux = require('reflux')
-const FIELD = require('../../../lib/field')
-const MeStore = require('../../js/stores/me')
-const GameStore = require('../../js/stores/game')
-const GameActions = require('../../js/actions/game')
-const render = require('./board__body.jsx')
-const _ = require('lodash')
+var React = require('react')
+var Reflux = require('reflux')
+var FIELD = require('../../../lib/field')
+var MeStore = require('../../js/stores/me')
+var GameStore = require('../../js/stores/game')
+var GameActions = require('../../js/actions/game')
+var EscapeMixin = require('../../js/mixins/escape')
+var render = require('./board__body.jsx')
+var _ = require('lodash')
 
 module.exports = React.createClass({
   mixins: [
     Reflux.connect(GameStore, 'game')
   , Reflux.connect(MeStore, 'me')
+  , EscapeMixin
   ],
 
   getInitialState() {
@@ -99,6 +101,15 @@ module.exports = React.createClass({
 
   onSwapCancel() {
     this.setState({confirmSwap: false})
+  },
+
+  onReset() {
+    this.setState({letters: []})
+    this.refs.letters.reset()
+  },
+
+  onEscape() {
+    this.onReset()
   },
 
   render() {
