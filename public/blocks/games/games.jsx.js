@@ -34,7 +34,7 @@ module.exports = function() {
     }
 
     if (game.get('finished_at')) {
-      item = <GamesGameFinished game={game} current={isCurrent} key={game.get('id')}/>
+      item = <GamesGameActive game={game} current={isCurrent} key={game.get('id')}/>
     } else {
       item = <GamesGameActive game={game} current={isCurrent} key={game.get('id')}/>
     }
