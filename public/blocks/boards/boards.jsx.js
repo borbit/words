@@ -15,22 +15,20 @@ module.exports = function() {
   let board = this.state.boards.get(current)
   let myFBId = this.state.me.get('fb_id')
 
-  if (board) {
-    board.get('list').forEach((row, i) => {
-      let className = cn({
-        'boards__row': true
-      , 'boards__row_me': myFBId == row.get('member')
-      })
-
-      rows.push(
-        <tr className={className}>
-          <td>{i+1}</td>
-          <td>{row.get('user').get('fb_name')}</td>
-          <td>{row.get('score')}</td>
-        </tr>
-      )
+  board.get('list').forEach((row, i) => {
+    let className = cn({
+      'boards__row': true
+    , 'boards__row_me': myFBId == row.get('member')
     })
-  }
+
+    rows.push(
+      <tr className={className}>
+        <td>{i+1}</td>
+        <td>{row.get('user').get('fb_name')}</td>
+        <td>{row.get('score')}</td>
+      </tr>
+    )
+  })
 
   tabs = _.map(tabs, (tab) => {
     let board = this.state.boards.get(tab.board)
@@ -38,7 +36,7 @@ module.exports = function() {
       'boards__tab': true
     , 'active': current == tab.board
     })
-    
+
     return (
       <li className={className}>
         <a onClick={this.onTab.bind(this, tab.board)}>
