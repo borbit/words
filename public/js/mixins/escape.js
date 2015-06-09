@@ -1,6 +1,6 @@
 var $ = require('jquery')
 
-if (document) {
+if (typeof(document) != 'undefined') {
   var $document = $(document)
 }
 

@@ -1,6 +1,7 @@
 var React = require('react')
 var Reflux = require('reflux')
-var BoardsStore = require('../../js/stores/boards')
+var BoardsActions = require('./boards.actions')
+var BoardsStore = require('./boards.store')
 var MeStore = require('../../js/stores/me')
 var render = require('./boards.jsx')
 
@@ -15,6 +16,10 @@ module.exports = React.createClass({
       boards: BoardsStore.getState()
     , me: MeStore.getState()
     }
+  },
+
+  onTab(board) {
+    BoardsActions.getBoard(board)
   },
 
   render() {

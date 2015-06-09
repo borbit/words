@@ -1,6 +1,6 @@
 var React = require('react')
 var Reflux = require('reflux')
-var BoardsActions = require('../../js/actions/boards')
+var BoardsActions = require('../boards/boards.actions')
 var LayoutActions = require('../layout/layout.actions')
 var MeStore = require('../../js/stores/me')
 var render = require('./menu.jsx')
@@ -18,8 +18,8 @@ module.exports = React.createClass({
 
   onBoardsClick() {
     this.setState({boardsOpen: true})
+    BoardsActions.getBoard('score')
     LayoutActions.boardsOpen()
-    BoardsActions.getBoards()
   },
 
   onNewClick() {
