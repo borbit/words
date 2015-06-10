@@ -4,7 +4,6 @@ var gulp = require('gulp')
 var gulpLess = require('gulp-less')
 var gulpBase64 = require('gulp-base64')
 var browserify = require('browserify')
-var watchify = require('watchify')
 var babelify = require('babelify')
 
 var es = require('event-stream')
