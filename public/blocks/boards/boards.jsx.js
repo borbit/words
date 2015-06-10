@@ -8,6 +8,7 @@ module.exports = function() {
   let tabs = [
     {board: 'score', title: 'Рахунок'}
   , {board: 'words', title: 'Кiлькiсть слiв'}
+  , {board: 'wins', title: 'Кiлькiсть перемог'}
   ]
 
   let next = this.state.boards.get('next')

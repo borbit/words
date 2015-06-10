@@ -1,6 +1,5 @@
 var React = require('react')
-var GamesGameActive = require('./games__game_active')
-var GamesGameFinished = require('./games__game_finished')
+var GamesGame = require('./games__game_active')
 var Avatar = require('../avatar/avatar')
 
 module.exports = function() {
@@ -34,9 +33,9 @@ module.exports = function() {
     }
 
     if (game.get('finished_at')) {
-      item = <GamesGameActive game={game} current={isCurrent} key={game.get('id')}/>
+      item = <GamesGame game={game} current={isCurrent} key={game.get('id')}/>
     } else {
-      item = <GamesGameActive game={game} current={isCurrent} key={game.get('id')}/>
+      item = <GamesGame game={game} current={isCurrent} key={game.get('id')}/>
     }
     
     if (game.get('finished_at')) {

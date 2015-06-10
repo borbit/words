@@ -38,15 +38,18 @@ module.exports = function() {
     menuDisabled = true
   }
 
-  if (!this.state.letters.length ||
-      !myTurn) {
+  if (!this.state.letters.length || !myTurn) {
     playDisabled = true
+  }
+
+  if (!this.state.letters.length) {
     undoDisabled = true
   }
 
   if (!this.state.game.get('id') ||
        this.state.game.get('finished_at')) {
     menuDisabled = true
+    playDisabled = true
   }
 
   return (

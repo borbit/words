@@ -30,20 +30,42 @@ module.exports = function() {
     return -this.props.game.get(`user${i+1}_score`)
   })
 
-  info.push(
-    <tr>
-      <td></td>
-      <td><div className="games__ellipsis">Попер. хiд</div></td>
-      <td><div className="games__ellipsis">{moment(+this.props.game.get('created_at')).fromNow()}</div></td>
-    </tr>
-  )
-  info.push(
-    <tr>
-      <td></td>
-      <td><div className="games__ellipsis">Залишилось лiтер</div></td>
-      <td><div className="games__ellipsis">{this.props.game.get('letters_count')}</div></td>
-    </tr>
-  )
+  let finishedAt = this.props.game.get('finished_at')
+  let winner = this.props.game.get('winner')
+
+  if (finishedAt && winner >= 0) {
+    let user =this.props.game.get(`user${winner}`)
+
+    info.push(
+      <tr>
+        <td></td>
+        <td><div className="games__ellipsis">{user.get('gender') == 'male' ? 'Перемiг' : 'Перемогла'}</div></td>
+        <td><div className="games__ellipsis">{user.get('fb_name')}</div></td>
+      </tr>
+    )
+    info.push(
+      <tr>
+        <td></td>
+        <td><div className="games__ellipsis">Закiнчили</div></td>
+        <td><div className="games__ellipsis">{moment(+finishedAt).fromNow()}</div></td>
+      </tr>
+    )
+  } else {
+    info.push(
+      <tr>
+        <td></td>
+        <td><div className="games__ellipsis">Попер. хiд</div></td>
+        <td><div className="games__ellipsis">{moment(+this.props.game.get('created_at')).fromNow()}</div></td>
+      </tr>
+    )
+    info.push(
+      <tr>
+        <td></td>
+        <td><div className="games__ellipsis">Залишилось лiтер</div></td>
+        <td><div className="games__ellipsis">{this.props.game.get('letters_count')}</div></td>
+      </tr>
+    )
+  }
 
   return (
     <div className="games__game list-group-item" onClick={this.onPlay}>
