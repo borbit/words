@@ -49,6 +49,12 @@ module.exports = function() {
       if (action == 'RESIGN') {
         message += ` ${user.gender == "male" ? "закiнчів" : "закiнчила"} гру`
       }
+      if (action == 'FINISH') {
+        message += `Гейм овер! Я ${user.gender == "male" ? "виграв" : "виграла"}!`
+      }
+      if (action == 'DONE') {
+        message += 'Ой, всьо!'
+      }
 
       let className = cn({
         'stream__item': true

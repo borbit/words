@@ -22,6 +22,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(expressSession({secret: 'keyboard cat'}))
 app.use(express.static(config.assets_dir_path))
+app.use(express.static(config.assets_dist_dir_path))
 app.use(express.static(config.public_dir_path))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -38,7 +39,7 @@ try {
 
 app.locals.asset = (src) => {
   if (manifest[src]) {
-    return "/dist/#{manifest[src]}"
+    return `/dist/${manifest[src]}`
   }
   return src
 }

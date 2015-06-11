@@ -1,5 +1,5 @@
 var React = require('react')
-var GamesGame = require('./games__game_active')
+var GamesGame = require('./games__game')
 var Avatar = require('../avatar/avatar')
 
 module.exports = function() {

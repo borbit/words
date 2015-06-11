@@ -7,6 +7,9 @@ module.exports = function() {
   return (
     <div className="menu">
       <div className="menu__btns btn-group">
+        <button className="btn btn-sm btn-default">
+          <i className="fa fa-info-circle"></i>
+        </button>
         <button className="btn btn-sm btn-default" onClick={this.onBoardsClick}>
           <i className="fa fa-trophy"></i> {rank >= 0 && <span>{rank+1}</span>}
         </button>

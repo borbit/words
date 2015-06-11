@@ -67,6 +67,7 @@ module.exports = function() {
               <li onClick={this.onSwap} className={!myTurn && 'disabled'}><a>Помiняти лiтери</a></li>
               <li onClick={this.onResign} className={isFinished && 'disabled'}><a>Закiнчити гру</a></li>
               <li onClick={this.onPass} className={!myTurn && 'disabled'}><a>Спасувати</a></li>
+              <li onClick={this.onDone} className={!myTurn && 'disabled'}><a>Ой, всьо!</a></li>
             </ul>
           </div>
         </div>
@@ -114,6 +115,12 @@ module.exports = function() {
           onCancel={this.onSwapCancel}
           letters={myLetters}>
         </Swap>}
+      {this.state.confirmDone &&
+        <Confirm
+          onOK={this.onDoneConfirm}
+          onCancel={this.onDoneCancel}>
+          Ви впевненi що "Ой, всьо!"?
+        </Confirm>}
     </div>
   )
 }

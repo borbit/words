@@ -1,5 +1,6 @@
 var React = require('react')
 var Reflux = require('reflux')
+var {PureRenderMixin} = React.addons
 var LayoutActions = require('../layout/layout.actions')
 var GamesStore = require('../../js/stores/games')
 var GameStore = require('../../js/stores/game')
@@ -11,6 +12,7 @@ module.exports = React.createClass({
     Reflux.connect(GamesStore, 'games')
   , Reflux.connect(GameStore, 'game')
   , Reflux.connect(MeStore, 'me')
+  , PureRenderMixin
   ],
 
   getInitialState() {

@@ -8,6 +8,7 @@ var Actions = module.exports = Reflux.createActions({
 , 'play': {asyncResult: true}
 , 'swap': {asyncResult: true}
 , 'pass': {asyncResult: true}
+, 'done': {asyncResult: true}
 , 'resign': {asyncResult: true}
 , 'resetError': {}
 })
@@ -60,6 +61,12 @@ Actions.pass.listen(function(gameId) {
 
 Actions.resign.listen(function(gameId) {
   let promise = $.get(`/games/${gameId}/resign`)
+  promise.done(this.completed)
+  promise.fail(this.failed)
+})
+
+Actions.done.listen(function(gameId) {
+  let promise = $.get(`/games/${gameId}/done`)
   promise.done(this.completed)
   promise.fail(this.failed)
 })

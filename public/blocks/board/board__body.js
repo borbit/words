@@ -23,6 +23,7 @@ module.exports = React.createClass({
     , confirmResign: false
     , confirmPass: false
     , confirmSwap: false
+    , confirmDone: false
     , error: null
     , letters: []
     , words: []
@@ -101,6 +102,19 @@ module.exports = React.createClass({
 
   onSwapCancel() {
     this.setState({confirmSwap: false})
+  },
+
+  onDone() {
+    this.setState({confirmDone: true})
+  },
+
+  onDoneConfirm(letters) {
+    GameActions.done(this.state.game.get('id'))
+    this.onDoneCancel()
+  },
+
+  onDoneCancel() {
+    this.setState({confirmDone: false})
   },
 
   onReset() {

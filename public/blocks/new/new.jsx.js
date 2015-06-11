@@ -19,9 +19,13 @@ module.exports = function() {
   let friendsHalf = Math.ceil(friendsTotal / 2)
   
   friends.forEach((friend, i) => {
+    let checked = this.state.checked.has(friend.get('fb_id'))
+    let disabled = this.state.checked.count() == 3 && !checked
+
     friendsRows.push(
       <NewUser
-        checked={this.state.checked.has(friend.get('fb_id'))}
+        checked={checked}
+        disabled={disabled}
         onToggle={this.onToggle.bind(this, friend.get('fb_id'))}
         key={friend.get('fb_id')}
         user={friend}
@@ -55,9 +59,13 @@ module.exports = function() {
   let usersHalf = Math.ceil(usersTotal / 2)
   
   users.forEach((user, i) => {
+    let checked = this.state.checked.has(user.get('fb_id'))
+    let disabled = this.state.checked.count() == 3 && !checked
+
     usersRows.push(
       <NewUser
-        checked={this.state.checked.has(user.get('fb_id'))}
+        checked={checked}
+        disabled={disabled}
         onToggle={this.onToggle.bind(this, user.get('fb_id'))}
         key={user.get('fb_id')}
         user={user}

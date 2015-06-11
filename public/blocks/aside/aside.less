@@ -1,11 +1,19 @@
 .aside {
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-  position: relative;
+  overflow: hidden;
   margin: 0 !important;
   height: 100%;
 
-  &__stream {
+  &__title {
+    margin: 15px 0;
+    text-align: right;
+  }
 
+  &__stream {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    top: 50px;
   }
 }

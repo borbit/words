@@ -4,9 +4,9 @@ var User = require('../user/user')
 
 module.exports = function() {
   return (
-    <div className="new__user list-group-item" onClick={this.props.onToggle}>
+    <div className="new__user list-group-item" onClick={this.onToggle}>
       <div className="new__ctrl">
-        <input type="checkbox" checked={this.props.checked}/>
+        <input type="checkbox" checked={this.props.checked} disabled={this.props.disabled}/>
       </div>
       <div className="new__user-avatar">
         <User user={this.props.user}/>

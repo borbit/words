@@ -34,7 +34,7 @@ module.exports = function() {
   let winner = this.props.game.get('winner')
 
   if (finishedAt && winner >= 0) {
-    let user =this.props.game.get(`user${winner}`)
+    let user = this.props.game.get(`user${winner}`)
 
     info.push(
       <tr>
@@ -67,8 +67,13 @@ module.exports = function() {
     )
   }
 
+  let className = cn({
+    'games__game list-group-item': true
+  , 'games__game_cur': this.props.current
+  })
+
   return (
-    <div className="games__game list-group-item" onClick={this.onPlay}>
+    <div className={className} onClick={this.onPlay}>
       <div className="games__preview">
         {typeof window != 'undefined' &&
           <Preview field={this.props.game.get('field')}/>}
