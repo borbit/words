@@ -8,11 +8,15 @@ module.exports = Reflux.createStore({
   mixins: [StoreMixin],
   
   init() {
-    this.state = Immutable.List()
+    this.state = Immutable.Map()
     this.listenToMany(LogsActions);
   },
 
-  onGetCompleted(data) {
-    this.setState(data)
+  onGet() {
+    this.setState({loading: true, list: []})
+  },
+
+  onGetCompleted(list) {
+    this.setState({loading: false, list: list})
   }
 })

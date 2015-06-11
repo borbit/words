@@ -99,7 +99,7 @@ module.exports = function() {
               </section>}
             {!!users.count() &&
               <section className="new__section">
-                <h4>Бавитись з iньшими <span className="badge">{users.count()}</span></h4>
+                <h4>Бавитись з iншими <span className="badge">{users.count()}</span></h4>
                 {usersCols}
               </section>}
           </div>

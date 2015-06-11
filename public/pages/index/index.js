@@ -21,8 +21,8 @@ GamesStore.setState(app.games)
 MeStore.setState(app.me)
 
 if (app.games[0]) {
+  LogsStore.setState({list: app.logs})
   GameStore.setState(app.games[0])
-  LogsStore.setState(app.logs)
 }
 
 React.render(<Layout/>, document.getElementsByTagName('main')[0])

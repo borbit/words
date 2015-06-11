@@ -12,8 +12,16 @@ module.exports = Reflux.createStore({
     this.listenToMany(GameActions);
   },
 
+  onGet() {
+    this.setState({loading: true})
+  },
+
   onGetCompleted(data) {
     this.setState(data)
+  },
+
+  onAdd() {
+    this.setState({loading: true})
   },
 
   onAddCompleted(data) {
