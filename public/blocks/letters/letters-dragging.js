@@ -7,7 +7,7 @@ var $ = require('jquery')
 const LETTER_SIZE = 52
 const LETTERS_WIDTH = LETTER_SIZE * 7
 const LETTERS_HEIGHT = LETTER_SIZE
-const LETTERS_OFFSET_TOP = 10
+const LETTERS_OFFSET_TOP = 5
 
 module.exports = (el, field) => {
   var $el = $(el)
