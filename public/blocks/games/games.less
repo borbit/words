@@ -73,4 +73,29 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  &__spin {
+    position: absolute;
+    margin: -11px 0 0 -11px;
+    left: 50%;
+    top: 50%;
+
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    border-radius: 50%;
+    background: #eee;
+  }
+
+  &__expand {
+    padding: 5px;
+    border-color: #eee;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+      background: #eee;
+    }
+  }
 }

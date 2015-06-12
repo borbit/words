@@ -79,18 +79,13 @@ module.exports = function() {
     })
   }
 
-  let loading = logs.get('loading') || game.get('loading')
-
   return (
     <div className="stream">
-      {loading &&
-        <i className="stream__spin fa fa-spin fa-circle-o-notch"></i>}
-      {!loading && 
-        <div className="stream__line">
-          <div className="stream__items">
-            {items}
-          </div>
-        </div>}
+      <div className="stream__line">
+        <div className="stream__items">
+          {items}
+        </div>
+      </div>
     </div>
   )
 }

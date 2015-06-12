@@ -13,7 +13,9 @@ var UsersStore = require('../../js/stores/users')
 var LogsActions = require('../../js/actions/logs')
 var LogsStore = require('../../js/stores/logs')
 var MeStore = require('../../js/stores/me')
+var debug = require('debug')
 var io = require('io-client')
+var _ = require('lodash')
 
 UsersStore.setState(app.users)
 FriendsStore.setState(app.friends)
@@ -27,17 +29,30 @@ if (app.games[0]) {
 
 React.render(<Layout/>, document.getElementsByTagName('main')[0])
 
+debug.io = debug('io')
+
 io = io.connect(`ws://${app.config.host}:${app.config.port_io}`)
 io.on('connect', () => {
-  console.log('IO CONNECTED')
-  if (app.games[0]) {
-    io.emit('game:listen', {
-      gameId: app.games[0].id
-    })
-  }
+  debug.io('connected')
+  listenGames()
+})
+io.on('reconnect', () => {
+  debug.io('reconnected')
+  listenGames()
+})
+io.on('reconnect_failed', () => {
+  debug.io('reconnect failed')
+})
+io.on('disconnect', () => {
+  debug.io('disconnected')
+  io.reconnect()
+})
+io.on('error', (error) => {
+  debug.io('error', error)
 })
 
 io.on('game:update', (data) => {
+  debug.io('game:update')
   let game = GameStore.getState()
   if (game.get('id') == data.gameId) {
     GameActions.get(data.gameId)
@@ -46,6 +61,18 @@ io.on('game:update', (data) => {
   GamesActions.getGames()
 })
 
-GameActions.get.listen(function(gameId) {
-  io.emit('game:listen', {gameId: gameId})
+GameActions.add.completed.listen(function(game) {
+  debug.io('game:listen')
+  io.emit('game:listen', {
+    gameId: game.id
+  })
 })
+
+function listenGames() {
+  if (app.games.length > 0) {
+    debug.io('game:listen')
+    io.emit('game:listen', {
+      gameIds: _.map(app.games, game => game.id)
+    })
+  }
+}

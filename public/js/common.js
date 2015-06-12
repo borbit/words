@@ -6,4 +6,5 @@ require('react/addons') //@expose as react
 require('react-canvas') //@expose
 require('lodash') //@expose
 require('moment') //@expose
+require('debug') //@expose
 require('moment/locale/uk')

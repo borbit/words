@@ -12,8 +12,9 @@ module.exports = Reflux.createStore({
     this.listenToMany(GameActions);
   },
 
-  onGet() {
-    this.setState({loading: true})
+  onGet(id) {
+    this.state = this.state.set('loading', id)
+    this.trigger(this.state)
   },
 
   onGetCompleted(data) {
@@ -21,7 +22,8 @@ module.exports = Reflux.createStore({
   },
 
   onAdd() {
-    this.setState({loading: true})
+    this.state = this.state.set('loading', true)
+    this.trigger(this.state)
   },
 
   onAddCompleted(data) {

@@ -74,6 +74,8 @@ module.exports = function() {
 
   return (
     <div className={className} onClick={this.onPlay}>
+      {this.props.loading &&
+        <i className="games__spin fa fa-spin fa-circle-o-notch"></i>}
       <div className="games__preview">
         {typeof window != 'undefined' &&
           <Preview field={this.props.game.get('field')}/>}

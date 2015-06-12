@@ -46,6 +46,7 @@
     "reflux": "^0.2.7",
     "request": "^2.55.0",
     "glob": "^5.0.10",
-    "react-canvas": "0.0.1"
+    "react-canvas": "0.0.1",
+    "debug": "^2.2.0"
   }
 }

@@ -1,5 +1,6 @@
 var $ = require('jquery')
 var moment = require('moment')
+window.debug = require('debug')
 require('jquery.event.drag')($)
 moment.locale('uk')
 

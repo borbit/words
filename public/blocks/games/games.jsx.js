@@ -3,10 +3,10 @@ var GamesGame = require('./games__game')
 var Avatar = require('../avatar/avatar')
 
 module.exports = function() {
-  var gamesMyTurn = []
-  var gamesWaiting = []
-  var gamesFinished = []
-  var games = this.state.games.sortBy((game) => {
+  let gamesMyTurn = []
+  let gamesWaiting = []
+  let gamesFinished = []
+  let games = this.state.games.sortBy((game) => {
     return -(
       game.get('finished_at') ||
       game.get('last_turn_at') ||
@@ -17,13 +17,9 @@ module.exports = function() {
   let myFBId = this.state.me.get('fb_id')
 
   games.forEach((game) => {
-    let item
-    let isCurrent = false
+    let isCurrent = game.get('id') == this.state.game.get('id')
+    let isLoading = game.get('id') == this.state.game.get('loading')
     let myIndex = false
-
-    if (this.state.game) {
-      isCurrent = game.get('id') == this.state.game.get('id')
-    }
 
     for (let i = 1; i <= game.get('users_count'); i++) {
       if (game.get(`user${i}`).get('fb_id') == myFBId) {
@@ -32,11 +28,11 @@ module.exports = function() {
       }
     }
 
-    if (game.get('finished_at')) {
-      item = <GamesGame game={game} current={isCurrent} key={game.get('id')}/>
-    } else {
-      item = <GamesGame game={game} current={isCurrent} key={game.get('id')}/>
-    }
+    let item = <GamesGame
+      key={game.get('id')}
+      current={isCurrent}
+      loading={isLoading}
+      game={game}/>
     
     if (game.get('finished_at')) {
       gamesFinished.push(item)
@@ -46,6 +42,17 @@ module.exports = function() {
       gamesWaiting.push(item)
     }
   })
+
+  let finishedCount = gamesFinished.length
+
+  if (finishedCount > 1 && !this.state.expandFinished) {
+    gamesFinished = [gamesFinished[1]]
+    gamesFinished.push(
+      <div className="games__expand list-group-item" onClick={() => this.setState({expandFinished: true})}>
+        <i className="fa fa-caret-down"></i>
+      </div>
+    )
+  }
 
   return (
     <div className="games">
@@ -69,7 +76,7 @@ module.exports = function() {
       </section>
       {!!gamesFinished.length &&
         <section className="games__group">
-          <h4 className="games__title">Закiнченi <span className="badge">{gamesFinished.length}</span></h4>
+          <h4 className="games__title">Закiнченi <span className="badge">{finishedCount}</span></h4>
           <div className="games__list list-group">{gamesFinished}</div>
         </section>}
     </div>

@@ -13,10 +13,13 @@ module.exports = Reflux.createStore({
   },
 
   onGet() {
-    this.setState({loading: true, list: []})
+    this.state = this.state.set('loading', true)
+    this.trigger(this.state)
   },
 
   onGetCompleted(list) {
-    this.setState({loading: false, list: list})
+    this.state = this.state.set('loading', false)
+    this.state = this.state.set('list', Immutable.fromJS(list))
+    this.trigger(this.state)
   }
 })
