@@ -1,0 +1,11 @@
+app:
+  build: .
+  ports:
+    - '9000:9000'
+    - '9001:9001'
+  env_file: .env
+  links:
+    - redis
+
+redis:
+  image: redis
