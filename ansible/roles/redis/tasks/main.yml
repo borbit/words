@@ -1,0 +1,47 @@
+- name: sysctl tweaks
+  sudo: true
+  sysctl: >
+    name={{ item.key }}
+    value={{ item.value }}
+  with_dict:
+    'vm.overcommit_memory': 1
+    'net.core.somaxconn': 1024
+    'net.core.netdev_max_backlog': 30000
+  notify: restart redis
+
+- name: disable transparent huge pages on boot
+  sudo: true
+  lineinfile: >
+    line='echo never > /sys/kernel/mm/transparent_hugepage/enabled'
+    dest=/etc/rc.local
+    insertbefore='exit 0'
+
+- name: disable transparent huge pages
+  sudo: true
+  shell: >
+    echo never > /sys/kernel/mm/transparent_hugepage/enabled
+  changed_when: false
+
+- name: add repository
+  sudo: true
+  apt_repository: repo=ppa:chris-lea/redis-server
+
+- name: install
+  sudo: true
+  apt: pkg=redis-server
+  register: result
+
+- name: generate config file
+  sudo: true
+  template: >
+    src=redis.conf.j2
+    dest=/etc/redis/redis.conf
+    owner=root
+    group=root
+    mode=0644
+  notify: restart redis
+
+# - name: remove default redis config
+#   sudo: true
+#   file: path=/etc/redis/redis.conf state=absent
+#   when: redis.configPath != '/etc/redis/redis.conf'

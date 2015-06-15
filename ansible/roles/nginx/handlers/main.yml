@@ -1,0 +1,16 @@
+- name: restart nginx
+  sudo: true
+  service: >
+    name=nginx
+    state=restarted
+
+- name: reload nginx
+  sudo: true
+  service: >
+    name=nginx
+    state=reloaded
+
+- name: upgrade nginx
+  sudo: true
+  command: >
+    /etc/init.d/nginx upgrade

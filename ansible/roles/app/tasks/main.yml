@@ -1,0 +1,72 @@
+- name: create group
+  sudo: true
+  group: name={{ app.group }}
+
+- name: create user
+  sudo: true
+  user: >
+    name={{ app.user }}
+    group={{ app.group }}
+    shell=/bin/bash
+
+- name: create project directory
+  sudo: true
+  file: >
+    path={{ app.path }}
+    state=directory
+    owner={{ ansible_user_id }}
+    group={{ ansible_user_id }}
+    mode=0755
+  when: not app.skip_clone
+
+- name: create logs directory
+  sudo: true
+  file: >
+    path={{ app.logdir }}
+    state=directory
+    owner={{ app.user }}
+    group={{ app.group }}
+    mode=0755
+
+- name: clone repository
+  git: >
+    repo={{ app.repository }}
+    version={{ app.version }}
+    dest={{ app.path }}
+  notify: restart app
+  when: not app.skip_clone
+  tags: [deploy]
+
+- name: generate .envrc
+  template: >
+    src=envrc.j2
+    dest='{{ app.path }}/.envrc'
+  notify: restart app
+  tags: [deploy, configure]
+
+- name: allow .envrc
+  sudo: true
+  sudo_user: '{{ app.user }}'
+  command: >
+    /usr/local/bin/direnv allow
+    chdir={{ app.path }}
+  changed_when: false
+  tags: [deploy, configure]
+
+- name: npm install
+  command: >
+    npm install
+    chdir={{ app.path }}
+  changed_when: false
+  tags: [deploy]
+
+- name: generate upstart script
+  sudo: true
+  template: >
+    src=upstart.conf.j2
+    dest=/etc/init/app.conf
+    owner=root
+    group=root
+    mode=0644
+  notify: restart app
+  tags: [deploy]

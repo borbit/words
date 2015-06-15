@@ -1,0 +1,17 @@
+[redis]
+words.dev
+
+[app]
+words.dev
+
+[router]
+words.dev
+
+[all:vars]
+ansible_ssh_user = vagrant
+ansible_ssh_private_key_file = ~/.vagrant.d/insecure_private_key
+
+[vagrant:children]
+redis
+app
+router

@@ -1,0 +1,5 @@
+PATH_add "./node_modules/.bin"
+export PORT="{{ app.port }}"
+{% for k, v in app.env.iteritems() %}
+export {{ k }}='{{ v }}'
+{% endfor %}

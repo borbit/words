@@ -1,0 +1,4 @@
+iojs_version: 2.3.0
+iojs_dist: iojs-v{{ iojs_version }}-linux-x64
+iojs_tar_xz_url: https://iojs.org/dist/v{{ iojs_version }}/{{ iojs_dist }}.tar.xz
+iojs_tar_xz_sha256: ef92a45ea39300dd40f11561226b702acf386793611924c348dbeefc78725a43.

@@ -1,0 +1,13 @@
+app:
+  autostart: true
+  skip_clone: false
+  user: words
+  group: words
+  path: /opt/words
+  logdir: /var/log/words
+  repository: git@github.com:borbit/words.git
+  version: master
+  port: 9000
+  port_io: 9001
+  env:
+    URL: http://words.dev

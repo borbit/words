@@ -1,0 +1,4 @@
+dependencies:
+  - iojs
+  - laggyluke.git
+  - laggyluke.direnv
