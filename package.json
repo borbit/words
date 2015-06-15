@@ -48,5 +48,8 @@
     "glob": "^5.0.10",
     "react-canvas": "0.0.1",
     "debug": "^2.2.0"
+  },
+  "scripts": {
+    "start": "./bin/server"
   }
 }
