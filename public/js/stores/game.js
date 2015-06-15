@@ -95,6 +95,21 @@ module.exports = Reflux.createStore({
     this.trigger(this.state)
   },
 
+  // Done
+  onDone() {
+    this.state = this.state.set('donning', true)
+    this.trigger(this.state)
+  },
+  onDoneCompleted(data) {
+    this.state = this.state.set('donning', false)
+    this.onReceiveUpdates(data)
+  },
+  onDoneFailed(data) {
+    this.state = this.state.set('error', data.responseJSON.error)
+    this.state = this.state.set('donning', false)
+    this.trigger(this.state)
+  },
+
   // UPDATES
   onReceiveUpdates(updates) {
     let logs = updates.logs || []
@@ -118,7 +133,7 @@ module.exports = Reflux.createStore({
     
     this.trigger(this.state)
   },
-  
+
   onMessageCompleted(data) {
     this.onReceiveUpdates(data)
   }

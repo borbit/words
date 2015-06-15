@@ -33,7 +33,8 @@ module.exports = function() {
 
   if (this.state.game.get('resigning') ||
       this.state.game.get('swipping') ||
-      this.state.game.get('passing')) {
+      this.state.game.get('passing') ||
+      this.state.game.get('donning')) {
     menuIcon = <i className="fa fa-spin fa-circle-o-notch"></i>
     menuDisabled = true
   }
