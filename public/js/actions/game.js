@@ -10,8 +10,7 @@ var Actions = module.exports = Reflux.createActions({
 , 'pass': {asyncResult: true}
 , 'done': {asyncResult: true}
 , 'resign': {asyncResult: true}
-, 'sendMessage': {asyncResult: true}
-, 'receiveMessage': {}
+, 'message': {asyncResult: true}
 , 'receiveUpdates': {}
 , 'resetError': {}
 })
@@ -74,23 +73,23 @@ Actions.done.listen(function(gameId) {
   promise.fail(this.failed)
 })
 
-Actions.play.completed.listen(function() {
-  GamesActions.getGames()
+Actions.play.completed.listen(function(data) {
+  GamesActions.receiveUpdates(data)
 })
-Actions.swap.completed.listen(function() {
-  GamesActions.getGames()
+Actions.swap.completed.listen(function(data) {
+  GamesActions.receiveUpdates(data)
 })
-Actions.pass.completed.listen(function() {
-  GamesActions.getGames()
+Actions.pass.completed.listen(function(data) {
+  GamesActions.receiveUpdates(data)
 })
-Actions.resign.completed.listen(function() {
-  GamesActions.getGames()
+Actions.resign.completed.listen(function(data) {
+  GamesActions.receiveUpdates(data)
 })
-Actions.add.completed.listen(function() {
-  GamesActions.getGames()
+Actions.add.completed.listen(function(data) {
+  GamesActions.receiveNew(data)
 })
 
-Actions.sendMessage.listen(function(gameId, message) {
+Actions.message.listen(function(gameId, message) {
   let data = {message: message}
   let promise = $.ajax({
     url: `/games/${gameId}/chat`

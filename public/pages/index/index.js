@@ -46,16 +46,21 @@ io.on('error', (error) => {
 })
 
 io.on('game:update', (data) => {
-  debug.io('game:update')
-  if (data.gameId == GameStore.getState().get('id')) {
-    GameActions.receiveUpdates(data.updates)
+  debug.io('game:update', data)
+  GamesActions.receiveUpdates(data)
+  if (data.id == GameStore.getState().get('id')) {
+    GameActions.receiveUpdates(data)
   }
 })
 io.on('game:message', (data) => {
-  debug.io('game:message')
-  if (data.gameId == GameStore.getState().get('id')) {
-    GameActions.receiveMessage(data.message)
+  debug.io('game:message', data)
+  if (data.id == GameStore.getState().get('id')) {
+    GameActions.receiveUpdates(data)
   }
+})
+io.on('game:new', (data) => {
+  debug.io('game:new', data)
+  GamesActions.receiveNew(data)
 })
 
 function listenUpdates() {

@@ -95,44 +95,31 @@ module.exports = Reflux.createStore({
     this.trigger(this.state)
   },
 
-  // MESSAGE
-  onReceiveMessage(message) {
-    let chat = this.state.get('chat')
-    this.state = this.state.set('chat', chat.push(message))
-    this.trigger(this.state)
-  },
-  onSendMessageCompleted(message) {
-    this.onReceiveMessage(message)
-  },
-
   // UPDATES
   onReceiveUpdates(updates) {
-    let logs = updates.logs
-    let chat = updates.chat
-    delete updates.logs
-    delete updates.chat
+    let logs = updates.logs || []
+    let chat = updates.chat || []
+    let data = _.omit(updates, 'logs', 'chat')
 
     this.state = this.state.withMutations((state) => {
-      _.each(updates, (value, key) => {
+      _.each(data, (value, key) => {
         state.set(key, value)
       })
     })
 
-    if (logs) {
-      this.state = this.state.withMutations((state) => {
-        _.each(logs, (log) => {
-          state.set('logs', state.get('logs').push(log))
-        })
+    this.state = this.state.withMutations((state) => {
+      _.each(logs, (log) => {
+        state.set('logs', state.get('logs').push(log))
       })
-    }
-    if (chat) {
-      this.state = this.state.withMutations((state) => {
-        _.each(chat, (message) => {
-          state.set('chat', state.get('chat').push(message))
-        })
+      _.each(chat, (message) => {
+        state.set('chat', state.get('chat').push(message))
       })
-    }
+    })
     
     this.trigger(this.state)
+  },
+  
+  onMessageCompleted(data) {
+    this.onReceiveUpdates(data)
   }
 })

@@ -49,7 +49,7 @@ module.exports = React.createClass({
     if (e.keyCode == 13) {
       let value = _.trim(e.target.value)
       if (value.length > 0) {
-        GameActions.sendMessage(this.state.game.get('id'), value)
+        GameActions.message(this.state.game.get('id'), value)
         e.target.value = ''
       }
     }
