@@ -1,0 +1,43 @@
+- name: create destination directory
+  sudo: true
+  file: >
+    path=/opt/iojs
+    state=directory
+    owner=root
+    group=root
+    mode=0755
+
+- name: download
+  sudo: true
+  get_url: >
+    url={{ iojs_tar_xz_url }}
+    sha256sum={{ iojs_tar_xz_sha256 }}
+    dest=/opt/{{ iojs_dist }}.tar.xz
+    owner=root
+    group=root
+    mode=0644
+
+- name: unarchive
+  sudo: true
+  unarchive: >
+    src=/opt/{{ iojs_dist }}.tar.xz
+    dest=/opt/iojs
+    creates=/opt/iojs/{{ iojs_dist }}
+    owner=root
+    group=root
+    mode=0755
+    copy=false
+
+- name: symlinks
+  sudo: true
+  file: >
+    src=/opt/iojs/{{ iojs_dist }}/bin/{{ item }}
+    dest=/usr/local/bin/{{ item }}
+    state=link
+    owner=root
+    group=root
+    mode=0755
+  with_items:
+    - iojs
+    - node
+    - npm

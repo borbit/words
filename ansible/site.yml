@@ -1,0 +1,4 @@
+- include: common.yml
+- include: redis.yml
+- include: app.yml
+- include: router.yml

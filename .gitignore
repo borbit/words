@@ -1,5 +1,8 @@
-node_modules
-public/assets
-.DS_Store
+/node_modules
+/public/assets
+/public/dist
+/.DS_Store
 /.env
 /.envrc
+/npm-debug.log
+/.vagrant

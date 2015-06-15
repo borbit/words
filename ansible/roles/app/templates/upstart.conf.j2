@@ -1,0 +1,15 @@
+{% if app.autostart %}
+start on runlevel [2345]
+stop on runlevel [016]
+{% endif %}
+
+respawn
+respawn limit 10 5
+
+setuid {{ app.user }}
+setgid {{ app.group }}
+
+env HOME=/home/{{ app.user }}
+
+chdir {{ app.path }}
+exec direnv exec {{ app.path }} ./bin/server 1>{{ app.logdir }}/server.log 2>&1

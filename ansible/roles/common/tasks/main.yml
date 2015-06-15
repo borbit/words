@@ -1,0 +1,25 @@
+- name: apt-get update
+  sudo: true
+  apt: update_cache=true
+
+- name: install packages
+  sudo: true
+  apt: pkg={{ item }}
+  with_items:
+    - build-essential
+    - vim
+    - htop
+    - curl
+    - screen
+    - python-dev
+    - python-pip # for ansible
+    - python-pycurl # for ansible
+
+- name: set nofile limits
+  sudo: true
+  copy: >
+    src=nofile.conf
+    dest=/etc/security/limits.d/nofile.conf
+    owner=root
+    group=root
+    mode=0644
