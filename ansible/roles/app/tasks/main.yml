@@ -57,6 +57,8 @@
   command: >
     npm install
     chdir={{ app.path }}
+  # environment:
+  #   LINK: g++
   changed_when: false
   tags: [deploy]
 

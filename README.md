@@ -1,31 +1,28 @@
-Blank-babel
-===========
+Words
+=====
 
-Front-end server starter kit based on:
-- [Gulp](http://gulpjs.com)
-- [Express](http://expressjs.com/)
-- [Browserify](http://browserify.org/)
-- [Babel](http://babeljs.io/)
-- [Less](http://lesscss.org/)
-- [React](http://facebook.github.io/react/)
 
-Gulp
-----
+Requirements
+------------
 
-Major part of Blank's architecture is located in `gulpfile.js`. Its main responsibilty is preparing all static resources (css, js, images, tempaltes etc.) to be served by http server. Take a look at the tasks list it can do:
+* [Vagrant](https://www.vagrantup.com/)
+* [Landrush](https://github.com/phinze/landrush)
+* [Ansible](http://docs.ansible.com/intro_installation.html)
 
-Install
--------
+
+Development
+-----------
+
+Do the holy dance:
 
 ```
-$ gem install foreman
-$ git clone git@github.com:borbit/blank-babel.git
-$ cd blank & npm install
+git@github.com:borbit/words.git
+cd words
+vagrant up
+vagrant ssh
+cd /opt/words
+./bin/build
+./bin/server
 ```
 
-Run
----
-
-```
-$ foreman start
-```
+Open [words.dev](http://words.dev/) in your browser and enjoy the nirvana.

@@ -11,7 +11,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.forward_agent = true
   config.ssh.insert_key = false
 
-  config.vm.synced_folder ".", "/opt/words" #, type: "rsync"
+  config.vm.synced_folder ".", "/opt/words", type: "nfs"
 
   config.landrush.enabled = true
   config.landrush.tld = "dev"
