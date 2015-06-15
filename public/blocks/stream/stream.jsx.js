@@ -67,19 +67,19 @@ module.exports = function() {
       , message: message
       })
     })
-  }
 
-  game.get('chat').forEach((item) => {
-    let [userFBId, text] = item.get('message').split('|')
-    let isMe = me.get('fb_id') == userFBId
-    
-    items.push({
-      isMe: isMe
-    , date: +item.get('date')
-    , userFBId: userFBId
-    , message: text
+    game.get('chat').forEach((item) => {
+      let [userFBId, text] = item.get('message').split('|')
+      let isMe = me.get('fb_id') == userFBId
+      
+      items.push({
+        isMe: isMe
+      , date: +item.get('date')
+      , userFBId: userFBId
+      , message: text
+      })
     })
-  })
+  }
 
   items = _.sortBy(items, item => item.date)
   items = _.map(items, (item) => {
