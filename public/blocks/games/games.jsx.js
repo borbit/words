@@ -67,7 +67,8 @@ module.exports = function() {
           <div className="games__list list-group">{gamesWaiting}</div>
         </section>}
       <section className="games__group">
-        {!games.count() && <h4 className="games__title">Привiт <span className="badge">:)</span></h4>}
+        {!games.count() || (!gamesMyTurn.length && !gamesWaiting.length) &&
+          <h4 className="games__title">Немає ігор</h4>}
         <div className="games__list">
           <button className="btn btn-block btn-default" onClick={this.onNewClick}>
             Почати нову гру

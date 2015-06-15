@@ -114,7 +114,11 @@ module.exports = function() {
       </div>
       <div className="stream__foot">
         <i className="stream__input-icon fa fa-comment"></i>
-        <input type="text" className="stream__input" onKeyDown={this.onKeyDown} ref="input"/>
+        <input type="text"
+          className="stream__input"
+          onKeyDown={this.onKeyDown} 
+          disabled={!game.get('id')}
+          ref="input"/>
       </div>
     </div>
   )
