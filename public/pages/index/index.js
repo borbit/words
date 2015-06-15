@@ -10,9 +10,6 @@ var GameActions = require('../../js/actions/game')
 var GamesStore = require('../../js/stores/games')
 var GameStore = require('../../js/stores/game')
 var UsersStore = require('../../js/stores/users')
-var LogsActions = require('../../js/actions/logs')
-var LogsStore = require('../../js/stores/logs')
-var ChatStore = require('../../js/stores/chat')
 var MeStore = require('../../js/stores/me')
 var debug = require('debug')
 var io = require('io-client')
@@ -21,13 +18,8 @@ var _ = require('lodash')
 UsersStore.setState(app.users)
 FriendsStore.setState(app.friends)
 GamesStore.setState(app.games)
+GameStore.setState(app.game)
 MeStore.setState(app.me)
-
-if (app.games[0]) {
-  GameStore.setState(app.games[0])
-  LogsStore.setState(app.logs)
-  ChatStore.setState(app.chat)
-}
 
 React.render(<Layout/>, document.getElementsByTagName('main')[0])
 
@@ -55,12 +47,15 @@ io.on('error', (error) => {
 
 io.on('game:update', (data) => {
   debug.io('game:update')
-  let game = GameStore.getState()
-  if (game.get('id') == data.gameId) {
-    GameActions.get(data.gameId)
-    LogsActions.get(data.gameId)
+  if (data.gameId == GameStore.getState().get('id')) {
+    GameActions.receiveUpdates(data.updates)
   }
-  GamesActions.getGames()
+})
+io.on('game:message', (data) => {
+  debug.io('game:message')
+  if (data.gameId == GameStore.getState().get('id')) {
+    GameActions.receiveMessage(data.message)
+  }
 })
 
 function listenUpdates() {

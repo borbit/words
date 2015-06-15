@@ -7,7 +7,7 @@ var _ = require('lodash')
 module.exports = function() {
   let items = []
   let users = {}
-  let {me, logs, game, chat} = this.state
+  let {me, game} = this.state
 
   if (game.get('id')) {
     for (let i = 1, user; i <= game.get('users_count'); i++) {
@@ -18,7 +18,7 @@ module.exports = function() {
       }
     }
 
-    logs.forEach((item) => {
+    game.get('logs').forEach((item) => {
       let text = item.get('log').split('|')
       let [action, userFBId] = text
       let user = users[userFBId]
@@ -69,7 +69,7 @@ module.exports = function() {
     })
   }
 
-  chat.forEach((item) => {
+  game.get('chat').forEach((item) => {
     let [userFBId, text] = item.get('message').split('|')
     let isMe = me.get('fb_id') == userFBId
     
@@ -89,7 +89,7 @@ module.exports = function() {
     })
 
     return (
-      <div className={className}>
+      <div className={className} key={item.date}>
         <div className="stream__balloon">
           <div className="stream__avatar">
             <Avatar facebookId={item.userFBId} width="20" height="20"/>

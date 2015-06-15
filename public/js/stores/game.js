@@ -3,6 +3,7 @@ var Immutable = require('immutable')
 var StoreMixin = require('../mixins/store')
 var GameActions = require('../actions/game')
 var Immutable = require('immutable')
+var _ = require('lodash')
 
 module.exports = Reflux.createStore({
   mixins: [StoreMixin],
@@ -12,86 +13,126 @@ module.exports = Reflux.createStore({
     this.listenToMany(GameActions);
   },
 
+  // GET
   onGet(id) {
     this.state = this.state.set('loading', id)
     this.trigger(this.state)
   },
-
   onGetCompleted(data) {
     this.setState(data)
   },
 
+  // ADD
   onAdd() {
     this.state = this.state.set('loading', true)
     this.trigger(this.state)
   },
-
   onAddCompleted(data) {
     this.setState(data)
   },
-
   onAddFailed(data) {
     this.state = this.state.set('error', data.responseJSON.error)
     this.trigger(this.state)
   },
 
+  // PLAY
   onPlay() {
     this.state = this.state.set('playing', true)
     this.trigger(this.state)
   },
-
   onPlayCompleted(data) {
-    this.setState(data)
+    this.state = this.state.set('playing', false)
+    this.onReceiveUpdates(data)
   },
-
   onPlayFailed(data) {
     this.state = this.state.set('error', data.responseJSON.error)
     this.state = this.state.set('playing', false)
     this.trigger(this.state)
   },
 
+  // PASS
   onPass() {
     this.state = this.state.set('passing', true)
     this.trigger(this.state)
   },
-  
   onPassCompleted(data) {
-    this.setState(data)
+    this.state = this.state.set('passing', false)
+    this.onReceiveUpdates(data)
   },
-
   onPassFailed(data) {
     this.state = this.state.set('error', data.responseJSON.error)
     this.state = this.state.set('passing', false)
     this.trigger(this.state)
   },
 
+  // RESIGN
   onResign() {
     this.state = this.state.set('resigning', true)
     this.trigger(this.state)
-  },
-  
+  },  
   onResignCompleted(data) {
-    this.setState(data)
+    this.state = this.state.set('resigning', false)
+    this.onReceiveUpdates(data)
   },
-
   onResignFailed(data) {
     this.state = this.state.set('error', data.responseJSON.error)
     this.state = this.state.set('resigning', false)
     this.trigger(this.state)
   },
 
+  // SWAP
   onSwap() {
     this.state = this.state.set('swapping', true)
     this.trigger(this.state)
   },
-  
   onSwapCompleted(data) {
-    this.setState(data)
+    this.state = this.state.set('swapping', false)
+    this.onReceiveUpdates(data)
   },
-
   onSwapFailed(data) {
     this.state = this.state.set('error', data.responseJSON.error)
     this.state = this.state.set('swapping', false)
+    this.trigger(this.state)
+  },
+
+  // MESSAGE
+  onReceiveMessage(message) {
+    let chat = this.state.get('chat')
+    this.state = this.state.set('chat', chat.push(Immutable.Map(message)))
+    this.trigger(this.state)
+  },
+  onSendMessageCompleted(message) {
+    this.onReceiveMessage(message)
+  },
+
+  // UPDATES
+  onReceiveUpdates(updates) {
+    let logs = updates.logs
+    let chat = updates.chat
+    delete updates.logs
+    delete updates.chat
+
+    this.state = this.state.withMutations((state) => {
+      _.each(updates, (value, key) => {
+        state.set(key, value)
+      })
+    })
+
+    if (logs) {
+      this.state = this.state.withMutations((state) => {
+        _.each(logs, (log) => {
+          state.set('logs', state.get('logs').push(Immutable.Map(log)))
+        })
+      })
+    }
+    if (chat) {
+      this.state = this.state.withMutations((state) => {
+        _.each(chat, (message) => {
+          state.set('chat', state.get('chat').push(Immutable.Map(message)))
+        })
+      })
+    }
+
     this.trigger(this.state)
   }
 })

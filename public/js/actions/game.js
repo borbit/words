@@ -10,6 +10,9 @@ var Actions = module.exports = Reflux.createActions({
 , 'pass': {asyncResult: true}
 , 'done': {asyncResult: true}
 , 'resign': {asyncResult: true}
+, 'sendMessage': {asyncResult: true}
+, 'receiveMessage': {}
+, 'receiveUpdates': {}
 , 'resetError': {}
 })
 
@@ -85,4 +88,16 @@ Actions.resign.completed.listen(function() {
 })
 Actions.add.completed.listen(function() {
   GamesActions.getGames()
+})
+
+Actions.sendMessage.listen(function(gameId, message) {
+  let data = {message: message}
+  let promise = $.ajax({
+    url: `/games/${gameId}/chat`
+  , data: JSON.stringify(data)
+  , contentType: 'application/json'
+  , type: 'POST'
+  })
+  promise.done(this.completed)
+  promise.fail(this.failed)
 })

@@ -24,7 +24,7 @@ module.exports = function() {
 
   let isFinished = !!this.state.game.get('finished_at') 
   let myLetters = this.state.game.get(`user${myIndex}_letters`)
-  let myTurn = this.state.game.get(`user${myIndex}_turn`)
+  let myTurn = this.state.game.get('current_turn') == myIndex
   
   if (this.state.game.get('playing')) {
     playIcon = <i className="fa fa-spin fa-circle-o-notch"></i>

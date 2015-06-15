@@ -62,7 +62,7 @@ module.exports = function() {
       <tr>
         <td></td>
         <td><div className="games__ellipsis">Залишилось лiтер</div></td>
-        <td><div className="games__ellipsis">{this.props.game.get('letters_count')}</div></td>
+        <td><div className="games__ellipsis">{this.props.game.get('letters').length}</div></td>
       </tr>
     )
   }

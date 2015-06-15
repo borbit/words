@@ -1,10 +1,8 @@
 var React = require('react')
 var Reflux = require('reflux')
 var {PureRenderMixin} = React.addons
-var ChatActions = require('../../js/actions/chat')
+var GameActions = require('../../js/actions/game')
 var GameStore = require('../../js/stores/game')
-var LogsStore = require('../../js/stores/logs')
-var ChatStore = require('../../js/stores/chat')
 var MeStore = require('../../js/stores/me')
 var render = require('./stream.jsx')
 var _ = require('lodash')
@@ -13,8 +11,6 @@ var $ = require('jquery')
 module.exports = React.createClass({
   mixins: [
     Reflux.connect(GameStore, 'game')
-  , Reflux.connect(LogsStore, 'logs')
-  , Reflux.connect(ChatStore, 'chat')
   , Reflux.connect(MeStore, 'me')
   , PureRenderMixin
   ],
@@ -22,8 +18,6 @@ module.exports = React.createClass({
   getInitialState() {
     return {
       game: GameStore.getState()
-    , logs: LogsStore.getState()
-    , chat: ChatStore.getState()
     , me: MeStore.getState()
     }
   },
@@ -51,7 +45,8 @@ module.exports = React.createClass({
     if (e.keyCode == 13) {
       let value = _.trim(e.target.value)
       if (value.length > 0) {
-        ChatActions.send(this.state.game.get('id'), value)
+        GameActions.sendMessage(this.state.game.get('id'), value)
+        e.target.value = ''
       }
     }
   },
