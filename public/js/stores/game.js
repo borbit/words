@@ -98,7 +98,7 @@ module.exports = Reflux.createStore({
   // MESSAGE
   onReceiveMessage(message) {
     let chat = this.state.get('chat')
-    this.state = this.state.set('chat', chat.push(Immutable.Map(message)))
+    this.state = this.state.set('chat', chat.push(message))
     this.trigger(this.state)
   },
   onSendMessageCompleted(message) {
@@ -121,18 +121,18 @@ module.exports = Reflux.createStore({
     if (logs) {
       this.state = this.state.withMutations((state) => {
         _.each(logs, (log) => {
-          state.set('logs', state.get('logs').push(Immutable.Map(log)))
+          state.set('logs', state.get('logs').push(log))
         })
       })
     }
     if (chat) {
       this.state = this.state.withMutations((state) => {
         _.each(chat, (message) => {
-          state.set('chat', state.get('chat').push(Immutable.Map(message)))
+          state.set('chat', state.get('chat').push(message))
         })
       })
     }
-
+    
     this.trigger(this.state)
   }
 })

@@ -25,7 +25,7 @@ React.render(<Layout/>, document.getElementsByTagName('main')[0])
 
 debug.io = debug('io')
 
-io = io.connect(`ws://${app.config.host}:${app.config.port_io}`)
+io = io.connect(app.config.url_io)
 io.on('connect', () => {
   debug.io('connected')
   listenUpdates()

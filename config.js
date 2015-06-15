@@ -1,9 +1,9 @@
 var config = module.exports
 
-config.host = process.env.HOST || 'localhost'
 config.port = process.env.PORT || 9000
 config.port_io = process.env.PORT_IO || 9001
 config.url = process.env.URL || 'http://localhost:9000'
+config.url_io = process.env.URL_IO || 'ws://localhost:9001'
 config.assets_dir_path = __dirname + '/public/assets'
 config.assets_dist_dir_path = __dirname + '/public/dist'
 config.dist_manifest_path = config.assets_dist_dir_path + '/rev-manifest'
@@ -16,4 +16,4 @@ config.yandex_lookup_url = 'https://dictionary.yandex.net/api/v1/dicservice.json
 
 config.redis_host = process.env.REDIS_HOST || process.env.REDIS_PORT_6379_TCP_ADDR || '127.0.0.1'
 config.redis_port = process.env.REDIS_PORT || process.env.REDIS_PORT_6379_TCP_PORT || '6379'
-config.redis_port = parseInt(config.redis_port, 10);
+config.redis_port = parseInt(config.redis_port, 10)

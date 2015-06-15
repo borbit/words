@@ -24,6 +24,10 @@ module.exports = React.createClass({
 
   componentDidMount() {
     this.scrollBottom()
+    this.refs.input.getDOMNode().focus()
+    $(document.body).click(() => {
+      this.refs.input.getDOMNode().focus()
+    })
   },
 
   componentDidUpdate() {

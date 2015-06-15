@@ -18,9 +18,9 @@ module.exports = function() {
       }
     }
 
-    game.get('logs').forEach((item) => {
-      let text = item.get('log').split('|')
-      let [action, userFBId] = text
+    game.get('logs').forEach((log) => {
+      let text = log.split('|')
+      let [action, date, userFBId] = text
       let user = users[userFBId]
       let message = ''
 
@@ -33,11 +33,11 @@ module.exports = function() {
 
       switch (action) {
         case 'PLAY':
-          let words = _.map(text[2].split(','), (word) => {
+          let words = _.map(text[3].split(','), (word) => {
             return `<a href="http://sum.in.ua/?swrd=${word}">${word}</a>`
           })
           message += ` ${isMale ? "склав" : "склала"}  ${words.join(', ')},`
-          message += ` ${isMale ? "отримав" : "отримала"} ${text[3]} очок`
+          message += ` ${isMale ? "отримав" : "отримала"} ${text[4]} очок`
           break
         case 'SWAP':
           message += ` ${isMale ? "помiняв" : "помiняла"} лiтери`
@@ -62,19 +62,19 @@ module.exports = function() {
 
       items.push({
         isMe: isMe
-      , date: +item.get('date')
+      , date: +date
       , userFBId: userFBId
       , message: message
       })
     })
 
-    game.get('chat').forEach((item) => {
-      let [userFBId, text] = item.get('message').split('|')
+    game.get('chat').forEach((message) => {
+      let [userFBId, date, text] = message.split('|')
       let isMe = me.get('fb_id') == userFBId
       
       items.push({
         isMe: isMe
-      , date: +item.get('date')
+      , date: +date
       , userFBId: userFBId
       , message: text
       })
@@ -112,7 +112,10 @@ module.exports = function() {
           </div>
         </div>
       </div>
-      <input type="text" className="stream__input" onKeyDown={this.onKeyDown}/>
+      <div className="stream__foot">
+        <i className="stream__input-icon fa fa-comment"></i>
+        <input type="text" className="stream__input" onKeyDown={this.onKeyDown} ref="input"/>
+      </div>
     </div>
   )
 }

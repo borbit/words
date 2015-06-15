@@ -85,7 +85,6 @@ app.listen(config.port, null, (err) => {
   if (err) throw err
 
   console.log('Application server started on', {
-    host: config.host,
     port: config.port
   })
 })
