@@ -1,12 +1,11 @@
 var async = require('async')
 var request = require('request')
 var cheerio = require('cheerio')
-var redis = require('redis')
 var iconv = require('iconv')
 var path = require('path')
 var _ = require('lodash')
 
-var client = redis.createClient();
+var client = require('./lib/redis')
 var host = 'http://slovnyk.ua/'
 var crawled = []
 
@@ -18,7 +17,7 @@ function crawlPage(url, cb) {
     data = new Buffer(data, 'binary')
     data = conv.convert(data).toString()
 
-    let $ = cheerio.load(data) 
+    let $ = cheerio.load(data)
     let letters = []
     let pages = []
     let words = []
