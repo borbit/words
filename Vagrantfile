@@ -20,6 +20,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider "virtualbox" do |v|
     v.cpus = ENV.fetch("VAGRANT_CPUS", "1").to_i
     v.memory = ENV.fetch("VAGRANT_RAM", "1024").to_i
+    v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
 
     # seriously, there are no typos on the next line!
     v.customize ["guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", "500"]
