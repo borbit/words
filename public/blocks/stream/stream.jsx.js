@@ -5,9 +5,9 @@ var cn = require('classnames')
 var _ = require('lodash')
 
 module.exports = function() {
-  let {me, logs, game} = this.state
   let items = []
   let users = {}
+  let {me, logs, game, chat} = this.state
 
   if (game.get('id')) {
     for (let i = 1, user; i <= game.get('users_count'); i++) {
@@ -18,10 +18,9 @@ module.exports = function() {
       }
     }
 
-    logs.get('list').forEach((log) => {
-      let text = log.get('log').split('|')
+    logs.forEach((item) => {
+      let text = item.get('log').split('|')
       let [action, userFBId] = text
-      let isMe = me.get('fb_id') == userFBId
       let user = users[userFBId]
       let message = ''
 
@@ -29,63 +28,91 @@ module.exports = function() {
         return
       }
 
+      let isMe = me.get('fb_id') == userFBId
+      let isMale = user.gender == 'male'
+
       switch (action) {
         case 'PLAY':
           let words = _.map(text[2].split(','), (word) => {
             return `<a href="http://sum.in.ua/?swrd=${word}">${word}</a>`
           })
-          message += ` ${user.gender == "male" ? "склав" : "склала"}  ${words.join(', ')},`
-          message += ` ${user.gender == "male" ? "отримав" : "отримала"} ${text[3]} очок`
+          message += ` ${isMale ? "склав" : "склала"}  ${words.join(', ')},`
+          message += ` ${isMale ? "отримав" : "отримала"} ${text[3]} очок`
           break
         case 'SWAP':
-          message += ` ${user.gender == "male" ? "помiняв" : "помiняла"} лiтери`
-          message += ` та ${user.gender == "male" ? "пропустив" : "пропустила"} хiд`
+          message += ` ${isMale ? "помiняв" : "помiняла"} лiтери`
+          message += ` та ${isMale ? "пропустив" : "пропустила"} хiд`
           break
         case 'PASS':
-          message += ` ${user.gender == "male" ? "пропустив" : "пропустила"} хiд`
+          message += ` ${isMale ? "пропустив" : "пропустила"} хiд`
           break
         case 'START':
-          message += ` ${user.gender == "male" ? "почав" : "почала"} гру`
+          message += ` ${isMale ? "почав" : "почала"} гру`
           break
         case 'RESIGN':
-          message += ` ${user.gender == "male" ? "закiнчів" : "закiнчила"} гру`
+          message += ` ${isMale ? "закiнчів" : "закiнчила"} гру`
           break
         case 'FINISH':
-          message += `Гейм овер! Я ${user.gender == "male" ? "виграв" : "виграла"}!`
+          message += `Гейм овер! Я ${isMale ? "виграв" : "виграла"}!`
           break
         case 'DONE':
           message += 'Ой, всьо!'
           break
       }
 
-      let className = cn({
-        'stream__item': true
-      , 'stream__item_me': isMe
+      items.push({
+        isMe: isMe
+      , date: +item.get('date')
+      , userFBId: userFBId
+      , message: message
       })
-
-      items.push(
-        <div className={className}>
-          <div className="stream__balloon">
-            <div className="stream__avatar">
-              <Avatar facebookId={userFBId} width="20" height="20"/>
-            </div>
-            <div className="stream__message">
-              <p className="stream__message-text" dangerouslySetInnerHTML={{__html: message}}/>
-              <i className="stream__message-date">{moment(+log.get('date')).fromNow()}</i>
-            </div>
-          </div>
-        </div>
-      )
     })
   }
 
-  return (
-    <div className="stream">
-      <div className="stream__line">
-        <div className="stream__items">
-          {items}
+  chat.forEach((item) => {
+    let [userFBId, text] = item.get('message').split('|')
+    let isMe = me.get('fb_id') == userFBId
+    
+    items.push({
+      isMe: isMe
+    , date: +item.get('date')
+    , userFBId: userFBId
+    , message: text
+    })
+  })
+
+  items = _.sortBy(items, item => item.date)
+  items = _.map(items, (item) => {
+    let className = cn({
+      'stream__item': true
+    , 'stream__item_me': item.isMe
+    })
+
+    return (
+      <div className={className}>
+        <div className="stream__balloon">
+          <div className="stream__avatar">
+            <Avatar facebookId={item.userFBId} width="20" height="20"/>
+          </div>
+          <div className="stream__message">
+            <p className="stream__message-text" dangerouslySetInnerHTML={{__html: item.message}}/>
+            <i className="stream__message-date">{moment(item.date).fromNow()}</i>
+          </div>
         </div>
       </div>
+    )
+  })
+
+  return (
+    <div className="stream">
+      <div className="stream__line" ref="line">
+        <div className="stream__line-wrap">
+          <div className="stream__items" ref="items">
+            {items}
+          </div>
+        </div>
+      </div>
+      <input type="text" className="stream__input" onKeyDown={this.onKeyDown}/>
     </div>
   )
 }

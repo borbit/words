@@ -12,6 +12,7 @@ var GameStore = require('../../js/stores/game')
 var UsersStore = require('../../js/stores/users')
 var LogsActions = require('../../js/actions/logs')
 var LogsStore = require('../../js/stores/logs')
+var ChatStore = require('../../js/stores/chat')
 var MeStore = require('../../js/stores/me')
 var debug = require('debug')
 var io = require('io-client')
@@ -23,8 +24,9 @@ GamesStore.setState(app.games)
 MeStore.setState(app.me)
 
 if (app.games[0]) {
-  LogsStore.setState({list: app.logs})
   GameStore.setState(app.games[0])
+  LogsStore.setState(app.logs)
+  ChatStore.setState(app.chat)
 }
 
 React.render(<Layout/>, document.getElementsByTagName('main')[0])
@@ -34,11 +36,11 @@ debug.io = debug('io')
 io = io.connect(`ws://${app.config.host}:${app.config.port_io}`)
 io.on('connect', () => {
   debug.io('connected')
-  listenGames()
+  listenUpdates()
 })
 io.on('reconnect', () => {
   debug.io('reconnected')
-  listenGames()
+  listenUpdates()
 })
 io.on('reconnect_failed', () => {
   debug.io('reconnect failed')
@@ -61,18 +63,9 @@ io.on('game:update', (data) => {
   GamesActions.getGames()
 })
 
-GameActions.add.completed.listen(function(game) {
-  debug.io('game:listen')
-  io.emit('game:listen', {
-    gameId: game.id
+function listenUpdates() {
+  debug.io('user:connect')
+  io.emit('user:connect', {
+    userFBId: app.me.fb_id
   })
-})
-
-function listenGames() {
-  if (app.games.length > 0) {
-    debug.io('game:listen')
-    io.emit('game:listen', {
-      gameIds: _.map(app.games, game => game.id)
-    })
-  }
 }
