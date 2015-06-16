@@ -39,7 +39,7 @@ function crawlPage(url, cb) {
     words = _.filter(pages, (i) => {
       let unique = _.unique(i.txt.split(''))
 
-      return i.txt.length > 1 &&
+      return i.txt.length > 4 &&
               ~i.url.indexOf('swrd') &&
              !~i.txt.indexOf(' ') &&
              !~i.txt.indexOf('-') &&
