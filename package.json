@@ -31,6 +31,7 @@
     "gulp-replace": "latest",
     "gulp-rev": "latest",
     "gulp-uglify": "latest",
+    "iconv": "^2.1.8",
     "immutable": "^3.7.2",
     "io-client": "borbit/io-client",
     "io-server": "borbit/io-server",
