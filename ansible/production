@@ -1,0 +1,13 @@
+[redis]
+srabl.com
+
+[app]
+srabl.com
+
+[router]
+srabl.com
+
+[production:children]
+redis
+app
+router

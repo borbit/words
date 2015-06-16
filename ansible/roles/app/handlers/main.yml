@@ -3,6 +3,7 @@
   notify:
     - _rebuild app
     - _restart app
+  when: app.autostart
 
 - name: _rebuild app
   command: >
