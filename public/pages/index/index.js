@@ -24,6 +24,7 @@ MeStore.setState(app.me)
 React.render(<Layout/>, document.getElementsByTagName('main')[0])
 
 debug.io = debug('io')
+debug.assets = debug('assets')
 
 io = io.connect(app.config.url_io)
 io.on('connect', () => {
@@ -53,6 +54,7 @@ io.on('game:update', (data) => {
   } else {
     GamesActions.incrNotifications(data.id)
   }
+  notify()
 })
 
 io.on('game:message', (data) => {
@@ -62,11 +64,13 @@ io.on('game:message', (data) => {
   } else {
     GamesActions.incrNotifications(data.id)
   }
+  notify()
 })
 
 io.on('game:new', (data) => {
   debug.io('game:new', data)
   GamesActions.receiveNew(data)
+  notify()
 })
 
 function listenUpdates() {
@@ -75,3 +79,37 @@ function listenUpdates() {
     userFBId: app.me.fb_id
   })
 }
+
+var $ = require('jquery')
+var $title = $('title')
+var title = $title.html()
+var notifications = 0
+
+var beep = document.createElement('audio')
+beep.src = '/sound/beep.mp3'
+beep.addEventListener('loadeddata', function() {
+  debug.assets('beep sound loaded')
+})
+beep.addEventListener('error', function(err) {
+  debug.assets('beep sound error', err)
+})
+
+function signal() {
+  beep.pause()
+  beep.currentTime = 0
+  beep.play()
+}
+
+function notify() {
+  if (document.hidden) {
+    $title.html(`(${++notifications}) ${title}`)
+    signal()
+  }
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) {
+    $title.html(title)
+    notifications = 0
+  }
+})
