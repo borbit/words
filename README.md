@@ -26,3 +26,22 @@ cd /opt/words
 ```
 
 Open [words.dev](http://words.dev/) in your browser and enjoy the nirvana.
+
+
+Production
+----------
+
+Add the following lines to your `~/.ssh/config`:
+
+    Host srabl.com
+        User root
+        IdentityFile /path/to/keyfile   # or add it to your SSH agent
+        ForwardAgent yes
+
+To deploy, run:
+
+    make production-deploy
+
+To run full provisioning, run:
+
+    make production-provision
