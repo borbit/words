@@ -7,3 +7,4 @@ app:
     FB_APP_ID: 109584259379438
     FB_APP_SECRET: eb3a6a5bcca4a14a8973b2c723871b2c
     URL: http://words.dev
+    URL_IO: ws://words.dev:9001

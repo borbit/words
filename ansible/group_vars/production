@@ -5,3 +5,4 @@ app:
     FB_APP_ID: 902820906442917
     FB_APP_SECRET: c0ec84eaab42276c7d4fbf852058cd97
     URL: http://srabl.com
+    URL_IO: ws://srabl.com:9001
