@@ -16,8 +16,8 @@ var io = require('io-client')
 var _ = require('lodash')
 
 UsersStore.setState(app.users)
-FriendsStore.setState(app.friends)
 GamesStore.setState(app.games)
+FriendsStore.setState(app.friends)
 GameStore.setState(app.game)
 MeStore.setState(app.me)
 
@@ -50,14 +50,20 @@ io.on('game:update', (data) => {
   GamesActions.receiveUpdates(data)
   if (data.id == GameStore.getState().get('id')) {
     GameActions.receiveUpdates(data)
+  } else {
+    GamesActions.incrNotifications(data.id)
   }
 })
+
 io.on('game:message', (data) => {
   debug.io('game:message', data)
   if (data.id == GameStore.getState().get('id')) {
     GameActions.receiveUpdates(data)
+  } else {
+    GamesActions.incrNotifications(data.id)
   }
 })
+
 io.on('game:new', (data) => {
   debug.io('game:new', data)
   GamesActions.receiveNew(data)

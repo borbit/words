@@ -30,6 +30,7 @@ module.exports = function() {
     return -this.props.game.get(`user${i+1}_score`)
   })
 
+  let notif = this.props.game.get('notif') || 0
   let finishedAt = this.props.game.get('finished_at')
   let winner = this.props.game.get('winner')
 
@@ -77,6 +78,8 @@ module.exports = function() {
       {this.props.loading &&
         <i className="games__spin fa fa-spin fa-circle-o-notch"></i>}
       <div className="games__preview">
+        {!!notif &&
+          <span className="games__notif">{notif}</span>}
         {typeof window != 'undefined' &&
           <Preview field={this.props.game.get('field')}/>}
       </div>
