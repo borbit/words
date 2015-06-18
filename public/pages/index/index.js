@@ -113,3 +113,61 @@ document.addEventListener('visibilitychange', () => {
     notifications = 0
   }
 })
+
+var favicon = document.createElement('img')
+favicon.src = '/img/favicon.gif'
+favicon.addEventListener('load', function() {
+  debug.assets('favicon loaded')
+})
+favicon.addEventListener('error', function(err) {
+  debug.assets('favicon error', err)
+})
+
+GameStore.listen(function() {
+  let game = GameStore.getState()
+  let field = game.get('field')
+
+  if (!field) {
+    return
+  }
+
+  let canvas = document.createElement('canvas')
+  let ctx = canvas.getContext('2d')
+  canvas.height = 16
+  canvas.width = 16
+
+  ctx.drawImage(favicon, 0, 0)
+
+  _.each(_.range(0, 15), (y) => {
+  _.each(_.range(0, 15), (x) => {
+    let letter = field[y*15+x]
+
+    if (letter && letter != ' ') {
+      let b = _.random(40, 120)
+      let color = `rgb(${b},${b},${b})`
+
+      ctx.fillStyle = color
+      ctx.fillRect(x, y, 1, 1)
+    }
+  })
+  })
+
+  console.log(123123)
+
+  var links = document.getElementsByTagName('link');
+  var head = document.getElementsByTagName('head')[0];
+
+  for(var i=0, len=links.length; i < len; i++) {
+    var exists = (typeof(links[i]) !== 'undefined');
+    if (exists && (links[i].getAttribute('rel') || '').match(/\bicon\b/)) {
+      head.removeChild(links[i]);
+    }
+  }
+
+  var link = document.createElement('link')
+  link.rel = 'shortcut icon'
+  link.type = 'image/png'
+  link.href = canvas.toDataURL('image/png')
+
+  document.getElementsByTagName("head")[0].appendChild(link)
+})

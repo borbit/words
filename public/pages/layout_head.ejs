@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
   <% if (locals.page_descr) { %><meta name="description" content="<%= page_descr %>" /><% } %>
   <% if (locals.page_title) { %><title><%= page_title %></title><% } %>
-  <link rel="icon" href="<%= asset('img/favicon.gif') %>"/>
+  <link rel="shortcut icon" href="<%= asset('img/favicon.gif') %>"/>
   <link rel="stylesheet" href="<%= asset('common.css') %>" />
 <% (locals.css || []).forEach(function(src) { -%>
   <link rel="stylesheet" href="<%= asset(src) %>" />
