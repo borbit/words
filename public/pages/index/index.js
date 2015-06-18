@@ -114,6 +114,7 @@ document.addEventListener('visibilitychange', () => {
   }
 })
 
+var prevField = null
 var favicon = document.createElement('img')
 favicon.src = '/img/favicon.gif'
 favicon.addEventListener('load', function() {
@@ -123,11 +124,14 @@ favicon.addEventListener('error', function(err) {
   debug.assets('favicon error', err)
 })
 
-GameStore.listen(function() {
-  let game = GameStore.getState()
-  let field = game.get('field')
+GameStore.listen(drawFavicon)
+drawFavicon()
 
-  if (!field) {
+function drawFavicon() {
+  let game = GameStore.getState()
+  let field = game.get('field') || ''
+
+  if (prevField == field) {
     return
   }
 
@@ -135,6 +139,7 @@ GameStore.listen(function() {
   let ctx = canvas.getContext('2d')
   canvas.height = 16
   canvas.width = 16
+  prevField = field
 
   ctx.drawImage(favicon, 0, 0)
 
@@ -152,22 +157,19 @@ GameStore.listen(function() {
   })
   })
 
-  console.log(123123)
+  let links = document.getElementsByTagName('link')
+  let head = document.getElementsByTagName('head')[0]
 
-  var links = document.getElementsByTagName('link');
-  var head = document.getElementsByTagName('head')[0];
-
-  for(var i=0, len=links.length; i < len; i++) {
-    var exists = (typeof(links[i]) !== 'undefined');
-    if (exists && (links[i].getAttribute('rel') || '').match(/\bicon\b/)) {
-      head.removeChild(links[i]);
+  _.each(_.toArray(links), (link) => {
+    if (link.getAttribute('rel') == 'shortcut icon') {
+      head.removeChild(link)
     }
-  }
+  })
 
-  var link = document.createElement('link')
-  link.rel = 'shortcut icon'
+  let link = document.createElement('link')
   link.type = 'image/png'
+  link.rel = 'shortcut icon'
   link.href = canvas.toDataURL('image/png')
 
-  document.getElementsByTagName("head")[0].appendChild(link)
-})
+  head.appendChild(link)
+}
