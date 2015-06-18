@@ -12,3 +12,5 @@ production-provision:
 production-deploy:
 	cd $(ANSIBLE_DIR) && ansible-playbook -i production site.yml --tags deploy
 
+production-restart:
+	cd $(ANSIBLE_DIR) && ansible -i production -m service -a 'name=app state=restarted' app
