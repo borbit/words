@@ -5,6 +5,6 @@ require('jquery.event.drag')($)
 moment.locale('uk')
 
 // prevent rubber effect
-document.body.addEventListener('touchmove', (e) => {
-  e.preventDefault()
-}, false)
+// document.body.addEventListener('touchmove', (e) => {
+//   e.preventDefault()
+// }, false)
