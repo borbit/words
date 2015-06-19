@@ -25,7 +25,7 @@ module.exports = function() {
       <tr className={className}>
         <td><User user={user} width={20} height={20}/></td>
         <td><div className="games__ellipsis">{userRank >= 0 && userRank <= 2 &&
-          <i className={`fa fa-trophy games__medal games__medal_${userRank}`}></i>} {user.get('fb_name')}</div></td>
+          <i className={`fa fa-star games__medal games__medal_${userRank}`}></i>} {user.get('fb_name')}</div></td>
         <td><div className="games__ellipsis">{this.props.game.get(`user${i}_score`)}</div></td>
       </tr>
     )

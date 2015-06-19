@@ -1,4 +1,5 @@
 var React = require('react')
+var ReactTransitionGroup = React.addons.CSSTransitionGroup
 var Avatar = require('../avatar/avatar')
 var moment = require('moment')
 var cn = require('classnames')
@@ -108,7 +109,9 @@ module.exports = function() {
       <div className="stream__line" ref="line">
         <div className="stream__line-wrap">
           <div className="stream__items" ref="items">
-            {items}
+            <ReactTransitionGroup transitionName="stream__item">
+              {items}
+            </ReactTransitionGroup>
           </div>
         </div>
       </div>

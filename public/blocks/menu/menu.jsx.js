@@ -8,6 +8,11 @@ module.exports = function() {
     <div className="menu">
       <div className="menu__btns btn-group">
         <button className="btn btn-sm btn-default">
+          <i className="fa fa-caret-left"></i>
+        </button>
+      </div>
+      <div className="menu__btns btn-group">
+        <button className="btn btn-sm btn-default">
           <i className="fa fa-info-circle"></i>
         </button>
         <button className="btn btn-sm btn-default" onClick={this.onBoardsClick}>
