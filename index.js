@@ -1,4 +1,6 @@
+var fs = require('fs')
 var io = require('io-server')
+var https = require('https')
 var express = require('express')
 var expressState = require('express-state')
 var expressSession = require('express-session')
@@ -63,11 +65,11 @@ app.all('*', (req, res, next) => {
 })
 
 var routes = [
-  require('lib/routes/index')
-, require('lib/routes/auth')
+  require('lib/routes/auth')
 , require('lib/routes/games')
 , require('lib/routes/boards')
 , require('lib/routes/dict')
+, require('lib/routes/index')
 ]
 
 routes.forEach((route) => {
@@ -81,9 +83,15 @@ app.use(function(err, req, res, next) {
   })
 })
 
-app.listen(config.port, null, (err) => {
-  if (err) throw err
+var httpsOptions = {
+  cert: fs.readFileSync('words_ssl.crt')
+, key: fs.readFileSync('words_key.pem')
+}
 
+https
+.createServer(httpsOptions, app)
+.listen(config.port, null, (err) => {
+  if (err) throw err
   console.log('Application server started on', {
     port: config.port
   })
