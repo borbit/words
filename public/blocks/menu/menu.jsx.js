@@ -8,7 +8,7 @@ module.exports = function() {
     <div className="menu">
       <div className="menu__btns btn-group">
         <button className="btn btn-sm btn-default">
-          <i className="fa fa-caret-left"></i>
+          <i className="fa fa-comment"></i>
         </button>
       </div>
       <div className="menu__btns btn-group">

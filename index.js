@@ -83,24 +83,16 @@ app.use(function(err, req, res, next) {
   })
 })
 
-var httpsOptions = {
+var server = https.createServer({
   cert: fs.readFileSync('words_ssl.crt')
 , key: fs.readFileSync('words_key.pem')
-}
+}, app)
 
-https
-.createServer(httpsOptions, app)
-.listen(config.port, null, (err) => {
+server.listen(config.port, null, (err) => {
   if (err) throw err
-  console.log('Application server started on', {
+  console.log('Application and IO server started on', {
     port: config.port
   })
 })
 
-io.listen(config.port_io, (err) => {
-  if (err) throw err
-
-  console.log('IO server started on', {
-    port: config.port_io
-  })
-})
+io.listen({server: server})

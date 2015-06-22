@@ -110,6 +110,21 @@ module.exports = Reflux.createStore({
     this.trigger(this.state)
   },
 
+  // Done
+  onPoke() {
+    this.state = this.state.set('pokking', true)
+    this.trigger(this.state)
+  },
+  onPokeCompleted(data) {
+    this.state = this.state.set('pokking', false)
+    this.onReceiveUpdates(data)
+  },
+  onPokeFailed(data) {
+    this.state = this.state.set('error', data.responseJSON.error)
+    this.state = this.state.set('pokking', false)
+    this.trigger(this.state)
+  },
+
   // UPDATES
   onReceiveUpdates(updates) {
     let logs = updates.logs || []

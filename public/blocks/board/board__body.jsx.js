@@ -7,10 +7,13 @@ var Swap = require('../swap/swap')
 
 module.exports = function() {
   let playIcon = <i className="fa fa-play-circle"></i>
+  let pokeIcon = <i className="fa fa-hand-o-right"></i>
   let menuIcon = <i className="fa fa-navicon"></i>
+  
   let playDisabled = false
   let menuDisabled = false
   let undoDisabled = false
+  let pokeDisabled = false
 
   let myFBId = this.state.me.get('fb_id')
   let myIndex = 0
@@ -24,11 +27,17 @@ module.exports = function() {
 
   let isFinished = !!this.state.game.get('finished_at') 
   let myLetters = this.state.game.get(`user${myIndex}_letters`)
-  let myTurn = this.state.game.get('current_turn') == myIndex
-  
+  let currentTurn = this.state.game.get('current_turn')
+  let myTurn = currentTurn == myIndex
+
   if (this.state.game.get('playing')) {
     playIcon = <i className="fa fa-spin fa-circle-o-notch"></i>
     playDisabled = true
+  }
+
+  if (this.state.game.get('pokking')) {
+    pokeIcon = <i className="fa fa-spin fa-circle-o-notch"></i>
+    pokeDisabled = true
   }
 
   if (this.state.game.get('resigning') ||
@@ -51,6 +60,11 @@ module.exports = function() {
        this.state.game.get('finished_at')) {
     menuDisabled = true
     playDisabled = true
+    pokeDisabled = true
+  }
+  
+  if (myTurn || this.state.game.get(`user${currentTurn}_pocked`) == 1) {
+    pokeDisabled = true
   }
 
   return (
@@ -61,8 +75,8 @@ module.exports = function() {
       <div className="board__letters">
         <div className="board__btns board__btns_left">
           <div className="btn-group dropup">
-            <button className="board__btn btn btn-default" onClick={this.onPoke}>
-              <i className="fa fa-hand-o-right"></i>
+            <button className="board__btn btn btn-default" onClick={this.onPoke} disabled={pokeDisabled}>
+              {pokeIcon}
             </button>
             <button className="board__btn btn btn-default dropdown-toggle" data-toggle="dropdown" disabled={menuDisabled}>
               {menuIcon}
