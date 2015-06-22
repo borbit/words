@@ -1,9 +1,8 @@
 - name: restart app
   command: /bin/true
   notify:
-    - _stop app
     - _rebuild app
-    - _start app
+    - _restart app
   when: app.autostart
 
 - name: reload app
