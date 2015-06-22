@@ -59,11 +59,11 @@ module.exports = function() {
           </div>
           <div className="modal-body">
             <ul className="boards__tabs nav nav-tabs">
-              <li className="boards__tab">
-                <a>За сьогоднi</a>
+              <li className="boards__tab active">
+                <a>За весь час</a>
               </li>
               <li className="boards__tab">
-                <a>Взагалi</a>
+                <a>За сьогоднi</a>
               </li>
             </ul>
             <ul className="boards__tabs nav nav-tabs">
