@@ -24,6 +24,7 @@ module.exports = React.createClass({
     , confirmPass: false
     , confirmSwap: false
     , confirmDone: false
+    , confirmPoke: false
     , error: null
     , letters: []
     , words: []
@@ -55,12 +56,10 @@ module.exports = React.createClass({
     , confirmPlay: true
     })
   },
-
   onPlayConfirm() {
     GameActions.play(this.state.game.get('id'), this.state.letters)
     this.onPlayCancel()
   },
-
   onPlayCancel() {
     this.setState({confirmPlay: false})
   },
@@ -68,12 +67,10 @@ module.exports = React.createClass({
   onResign() {
     this.setState({confirmResign: true})
   },
-
   onResignConfirm() {
     GameActions.resign(this.state.game.get('id'))
     this.onResignCancel()
   },
-
   onResignCancel() {
     this.setState({confirmResign: false})
   },
@@ -81,12 +78,10 @@ module.exports = React.createClass({
   onPass() {
     this.setState({confirmPass: true})
   },
-
   onPassConfirm() {
     GameActions.pass(this.state.game.get('id'))
     this.onPassCancel()
   },
-
   onPassCancel() {
     this.setState({confirmPass: false})
   },
@@ -94,12 +89,10 @@ module.exports = React.createClass({
   onSwap() {
     this.setState({confirmSwap: true})
   },
-
   onSwapConfirm(letters) {
     GameActions.swap(this.state.game.get('id'), letters)
     this.onSwapCancel()
   },
-
   onSwapCancel() {
     this.setState({confirmSwap: false})
   },
@@ -107,14 +100,23 @@ module.exports = React.createClass({
   onDone() {
     this.setState({confirmDone: true})
   },
-
   onDoneConfirm(letters) {
     GameActions.done(this.state.game.get('id'))
     this.onDoneCancel()
   },
-
   onDoneCancel() {
     this.setState({confirmDone: false})
+  },
+
+  onPoke() {
+    this.setState({confirmPoke: true})
+  },
+  onPokeConfirm(letters) {
+    GameActions.poke(this.state.game.get('id'))
+    this.onPokeCancel()
+  },
+  onPokeCancel() {
+    this.setState({confirmPoke: false})
   },
 
   onReset() {

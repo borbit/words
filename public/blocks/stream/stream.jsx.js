@@ -105,7 +105,7 @@ module.exports = function() {
   })
 
   return (
-    <div className="stream">
+    <div className="stream" key={game.get('id') || 0}>
       <div className="stream__line" ref="line">
         <div className="stream__line-wrap">
           <div className="stream__items" ref="items">

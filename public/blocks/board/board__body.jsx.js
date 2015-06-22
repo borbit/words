@@ -61,7 +61,10 @@ module.exports = function() {
       <div className="board__letters">
         <div className="board__btns board__btns_left">
           <div className="btn-group dropup">
-            <button className="btn btn-default dropdown-toggle" data-toggle="dropdown" disabled={menuDisabled}>
+            <button className="board__btn btn btn-default" onClick={this.onPoke}>
+              <i className="fa fa-hand-o-right"></i>
+            </button>
+            <button className="board__btn btn btn-default dropdown-toggle" data-toggle="dropdown" disabled={menuDisabled}>
               {menuIcon}
             </button>
             <ul className="dropdown-menu">
@@ -121,6 +124,12 @@ module.exports = function() {
           onOK={this.onDoneConfirm}
           onCancel={this.onDoneCancel}>
           Ви впевненi що "Ой, всьо!"?
+        </Confirm>}
+      {this.state.confirmPoke &&
+        <Confirm
+          onOK={this.onPokeConfirm}
+          onCancel={this.onPokeCancel}>
+          Ви впевненi що хочете вiдправити нагадування?
         </Confirm>}
     </div>
   )
