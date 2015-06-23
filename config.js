@@ -1,8 +1,9 @@
 var config = module.exports
 
-config.port = process.env.PORT || 9000
-config.url = process.env.URL || 'http://localhost:9000'
-config.url_io = process.env.URL_IO || 'wss://localhost:9000'
+config.port = process.env.PORT || '9000'
+config.port = parseInt(config.port, 10)
+config.url = process.env.URL || 'https://srabl.dev'
+config.url_io = process.env.URL_IO || 'wss://srabl.dev'
 config.assets_dir_path = __dirname + '/public/assets'
 config.assets_dist_dir_path = __dirname + '/public/dist'
 config.dist_manifest_path = config.assets_dist_dir_path + '/rev-manifest'

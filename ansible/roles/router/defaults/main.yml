@@ -1,1 +1,5 @@
-router: {}
+router:
+  domain: srabl.dev
+  https:
+    certificate_file: files/vagrant/srabl.dev.pem
+    private_key_file: files/vagrant/srabl.dev.key

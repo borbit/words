@@ -1,13 +1,11 @@
 app:
   autostart: true
   skip_clone: false
-  user: words
-  group: words
-  path: /opt/words
-  logdir: /var/log/words
+  user: srabl
+  group: srabl
+  path: /opt/srabl
+  logdir: /var/log/srabl
   repository: git@github.com:borbit/words.git
   version: master
   port: 9000
-  port_io: 9001
-  env:
-    URL: http://words.dev
+  env: {}

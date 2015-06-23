@@ -1,6 +1,5 @@
-var fs = require('fs')
 var io = require('io-server')
-var https = require('https')
+var http = require('http')
 var express = require('express')
 var expressState = require('express-state')
 var expressSession = require('express-session')
@@ -83,11 +82,7 @@ app.use(function(err, req, res, next) {
   })
 })
 
-var server = https.createServer({
-  cert: fs.readFileSync('words_ssl.crt')
-, key: fs.readFileSync('words_key.pem')
-}, app)
-
+var server = http.createServer(app)
 server.listen(config.port, null, (err) => {
   if (err) throw err
   console.log('Application and IO server started on', {

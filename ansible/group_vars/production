@@ -1,8 +1,14 @@
 app:
-  user: words
-  group: words
+  user: srabl
+  group: srabl
   env:
     FB_APP_ID: 902820906442917
     FB_APP_SECRET: c0ec84eaab42276c7d4fbf852058cd97
-    URL: http://srabl.com
-    URL_IO: ws://srabl.com:9001
+    URL: https://srabl.com
+    URL_IO: wss://srabl.com
+
+router:
+  domain: srabl.com
+  https:
+    certificate_file: files/production/srabl.com.pem
+    private_key_file: files/production/srabl.com.key

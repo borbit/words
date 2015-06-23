@@ -1,11 +1,11 @@
 [redis]
-words.dev
+srabl.dev
 
 [app]
-words.dev
+srabl.dev
 
 [router]
-words.dev
+srabl.dev
 
 [all:vars]
 ansible_ssh_user = vagrant
