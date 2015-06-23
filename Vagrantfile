@@ -6,12 +6,12 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
-  config.vm.hostname = "words.dev"
+  config.vm.hostname = "srabl.dev"
   config.vm.network "private_network", type: "dhcp"
   config.ssh.forward_agent = true
   config.ssh.insert_key = false
 
-  config.vm.synced_folder ".", "/opt/words", type: "nfs"
+  config.vm.synced_folder ".", "/opt/srabl", type: "nfs"
 
   config.landrush.enabled = true
   config.landrush.tld = "dev"

@@ -1,9 +1,9 @@
+.DS_Store
 /node_modules
 /public/assets
 /public/dist
-/.DS_Store
 /.env
 /.envrc
 /npm-debug.log
 /.vagrant
-.DS_Store
+/ansible/files/production/*.key
