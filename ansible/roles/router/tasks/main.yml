@@ -23,6 +23,16 @@
   notify: reload nginx
   when: private_key.stat.exists
 
+- name: copy dh2048.pem
+  sudo: true
+  copy: >
+    src=dh2048.pem
+    dest=/etc/ssl/certs/dh2048.pem
+    owner=root
+    group=root
+    mode=0644
+  notify: reload nginx
+
 - name: generate vhost
   sudo: true
   template: >

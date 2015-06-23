@@ -23,7 +23,7 @@ server {
     ssl_protocols               TLSv1 TLSv1.1 TLSv1.2;
     ssl_ciphers                 EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5;
     ssl_prefer_server_ciphers   on;
-    # ssl_dhparam /etc/ssl/certs/dhparam.pem;
+    ssl_dhparam /etc/ssl/certs/dh2048.pem;
 
     ssl_session_cache shared:SSL:10m;
     ssl_session_timeout 24h;
@@ -35,12 +35,14 @@ server {
     resolver 8.8.4.4 8.8.8.8 valid=300s;
     resolver_timeout 10s;
 
-    # add_header Strict-Transport-Security "max-age=31536000; includeSubdomains;";
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";
 
     location / {
         proxy_pass http://srabl;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection $connection_upgrade;
+        proxy_read_timeout 86400s;
+        proxy_send_timeout 86400s;
     }
 }
