@@ -17,6 +17,11 @@ module.exports = React.createClass({
     return {
       game: GameStore.getState()
     , layout: LayoutStore.getState()
+    , boardWidth: null
+    , asideWidth: null
+    , asideClosable: false
+    , asideClosed: false
+    , menuClosed: false
     }
   },
 
@@ -41,17 +46,20 @@ module.exports = React.createClass({
   arrangeLayout() {
     let pageWidth = this.$page.outerWidth()
     let boardWidth = this.$board.outerHeight() - 57
-    let asideWidth
+    
+    let asideWidth = (pageWidth - boardWidth) / 2 - 20
+    let asideClosable = false
 
-    if (pageWidth > 1200) {
-      asideWidth = (pageWidth - boardWidth) / 2 - 20
-    } else {
+    if (pageWidth < 1200) {
       asideWidth = pageWidth - boardWidth - 30
+      asideClosable = true
     }
 
-    this.$board.width(boardWidth)
-    this.$aside.width(asideWidth)
-    this.$menu.width(asideWidth)
+    this.setState({
+      asideClosable: asideClosable
+    , boardWidth: boardWidth
+    , asideWidth: asideWidth
+    })
   },
 
   onResetError() {
@@ -60,6 +68,20 @@ module.exports = React.createClass({
     } else if (this.state.games.get('error')) {
       GamesActions.resetError()
     }
+  },
+
+  onMenuClose() {
+    this.setState({
+      asideClosed: false
+    , menuClosed: true
+    })
+  },
+
+  onAsideClose() {
+    this.setState({
+      asideClosed: true
+    , menuClosed: false
+    })
   },
 
   onBoardsClose() {

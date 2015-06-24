@@ -37,6 +37,13 @@
     }
   }
 
+  &_menu &__menu {
+    display: block !important;
+  }
+  &_aside &__menu {
+    display: none !important;
+  }
+
   &__aside {
     position: absolute;
     bottom: 10px;
@@ -49,6 +56,13 @@
     @media (min-width: 1200px) {
       display: block;
     }
+  }
+
+  &_aside &__aside {
+    display: block !important;
+  }
+  &_aside &__menu {
+    display: none !important;
   }
 
   &__board {
