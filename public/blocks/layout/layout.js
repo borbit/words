@@ -69,6 +69,7 @@ module.exports = React.createClass({
   },
 
   onMenuClose() {
+    track('Clicks', 'Layout - Aside Open')
     this.setState({
       asideClosed: false
     , menuClosed: true
@@ -76,6 +77,7 @@ module.exports = React.createClass({
   },
 
   onAsideClose() {
+    track('Clicks', 'Layout - Menu Open')
     this.setState({
       asideClosed: true
     , menuClosed: false

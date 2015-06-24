@@ -24,6 +24,7 @@ module.exports = React.createClass({
   },
 
   onNewClick() {
+    track('Clicks', 'Games - New Game')
     LayoutActions.newOpen()
   },
 

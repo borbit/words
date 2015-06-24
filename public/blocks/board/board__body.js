@@ -65,6 +65,7 @@ module.exports = React.createClass({
   },
 
   onResign() {
+    track('Clicks', 'Board - Resign')
     this.setState({confirmResign: true})
   },
   onResignConfirm() {
@@ -76,6 +77,7 @@ module.exports = React.createClass({
   },
 
   onPass() {
+    track('Clicks', 'Board - Pass')
     this.setState({confirmPass: true})
   },
   onPassConfirm() {
@@ -87,6 +89,7 @@ module.exports = React.createClass({
   },
 
   onSwap() {
+    track('Clicks', 'Board - Swap')
     this.setState({confirmSwap: true})
   },
   onSwapConfirm(letters) {
@@ -98,6 +101,7 @@ module.exports = React.createClass({
   },
 
   onDone() {
+    track('Clicks', 'Board - Done')
     this.setState({confirmDone: true})
   },
   onDoneConfirm(letters) {
@@ -109,6 +113,7 @@ module.exports = React.createClass({
   },
 
   onPoke() {
+    track('Clicks', 'Board - Poke')
     this.setState({confirmPoke: true})
   },
   onPokeConfirm(letters) {
@@ -120,6 +125,7 @@ module.exports = React.createClass({
   },
 
   onReset() {
+    track('Clicks', 'Board - Reset')
     this.setState({letters: []})
     this.refs.letters.reset()
   },

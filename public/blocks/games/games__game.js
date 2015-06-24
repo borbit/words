@@ -11,6 +11,7 @@ module.exports = React.createClass({
 
   onPlay() {
     let gameId = this.props.game.get('id')
+    track('Clicks', 'Games - Load Game')
     GamesActions.clearNotifications(gameId)
     GameActions.get(gameId)
   },

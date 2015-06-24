@@ -17,12 +17,14 @@ module.exports = React.createClass({
   },
 
   onBoardsClick() {
+    track('Clicks', 'Menu - Boards Open')
     this.setState({boardsOpen: true})
     BoardsActions.getBoard('score')
     LayoutActions.boardsOpen()
   },
 
   onNewClick() {
+    track('Clicks', 'Menu - New Game')
     LayoutActions.newOpen()
   },
 
