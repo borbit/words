@@ -53,13 +53,24 @@
     border-radius: 4px;
   }
 
+  &__item_chat &__balloon {
+    background: #eee;
+  }
+
   &__item-enter &__balloon {
     transition: background 1s ease-out;
     background: #eee;
   }
-
   &__item-enter&__item-enter-active &__balloon {
     background: #fff;
+  }
+
+  &__item_chat&__item-enter &__balloon {
+    transition: background 1s ease-out;
+    background: #fff;
+  }
+  &__item_chat&__item-enter&__item-enter-active &__balloon {
+    background: #eee;
   }
 
   &__avatar {

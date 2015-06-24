@@ -75,6 +75,7 @@ module.exports = function() {
       
       items.push({
         isMe: isMe
+      , isChat: true
       , date: +date
       , userFBId: userFBId
       , message: text
@@ -86,6 +87,7 @@ module.exports = function() {
   items = _.map(items, (item) => {
     let className = cn({
       'stream__item': true
+    , 'stream__item_chat': item.isChat
     , 'stream__item_me': item.isMe
     })
 
