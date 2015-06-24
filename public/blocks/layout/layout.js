@@ -27,8 +27,6 @@ module.exports = React.createClass({
 
   componentDidMount() {
     this.$board = $(this.refs.board.getDOMNode())
-    this.$aside = $(this.refs.aside.getDOMNode())
-    this.$menu = $(this.refs.menu.getDOMNode())
     this.$page = $(this.refs.page.getDOMNode())
 
     this.arrangeLayout()
