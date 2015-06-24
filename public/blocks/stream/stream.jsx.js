@@ -65,6 +65,7 @@ module.exports = function() {
         isMe: isMe
       , date: +date
       , userFBId: userFBId
+      , userName: user.name
       , message: message
       })
     })
@@ -72,12 +73,14 @@ module.exports = function() {
     game.get('chat').forEach((message) => {
       let [userFBId, date, text] = message.split('|')
       let isMe = me.get('fb_id') == userFBId
-      
+      let user = users[userFBId]
+
       items.push({
         isMe: isMe
       , isChat: true
       , date: +date
       , userFBId: userFBId
+      , userName: user.name
       , message: text
       })
     })
@@ -94,7 +97,7 @@ module.exports = function() {
     return (
       <div className={className} key={item.date}>
         <div className="stream__balloon">
-          <div className="stream__avatar">
+          <div className="stream__avatar" title={item.userName}>
             <Avatar facebookId={item.userFBId} width="20" height="20"/>
           </div>
           <div className="stream__message">

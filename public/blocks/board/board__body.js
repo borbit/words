@@ -42,6 +42,7 @@ module.exports = React.createClass({
   },
 
   onPlay() {
+    track('Clicks', 'Board - Play')
     let letters = this.state.letters
     let field = this.state.game.get('field')
 
@@ -50,7 +51,7 @@ module.exports = React.createClass({
         error: 'Неправильне розташування лiтер'
       })
     }
-    
+
     this.setState({
       words: FIELD.defineNewWords(field, letters)
     , confirmPlay: true
