@@ -9,30 +9,34 @@ module.exports = Reflux.createStore({
   init() {
     this.listenToMany(BoardsActions)
     this.state = Immutable.Map({
-      current: 'score'
+      currBoard: 'score'
+    , currType: 'daily'
     })
   },
 
-  onGetBoard(boardName) {
+  onGetBoard(boardType, boardName) {
     let data = Immutable.Map({
       list: Immutable.List()
     , loading: true
     })
-    this.state = this.state.set(boardName, data)
-    this.state = this.state.set('next', boardName)
+    this.state = this.state.set(boardType + boardName, data)
+    this.state = this.state.set('nextBoard', boardName)
+    this.state = this.state.set('nextType', boardType)
     this.trigger(this.state)
   },
 
   onGetBoardCompleted(board) {
-    if (this.state.get('next') != board.name) {
+    if (this.state.get('nextBoard') != board.name ||
+        this.state.get('nextType') != board.type) {
       return
     }
     let data = Immutable.Map({
       list: Immutable.fromJS(board.list)
     , loading: false
     })
-    this.state = this.state.set(board.name, data)
-    this.state = this.state.set('current', board.name)
+    this.state = this.state.set(board.type + board.name, data)
+    this.state = this.state.set('currBoard', board.name)
+    this.state = this.state.set('currType', board.type)
     this.trigger(this.state)
   }
 })

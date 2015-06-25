@@ -5,15 +5,22 @@ var _ = require('lodash')
 
 module.exports = function() {
   let rows = []
-  let tabs = [
+  let tabsBoard = [
     {board: 'score', title: 'Рахунок'}
   , {board: 'words', title: 'Кiлькiсть слiв'}
   , {board: 'wins', title: 'Кiлькiсть перемог'}
   ]
+  let tabsType = [
+    {type: 'general', title: 'За весь час'}
+  , {type: 'daily', title: 'За сьогодні'}
+  ]
 
-  let next = this.state.boards.get('next')
-  let current = this.state.boards.get('current')
-  let board = this.state.boards.get(current)
+  let nextType = this.state.boards.get('nextType')
+  let nextBoard = this.state.boards.get('nextBoard')
+  let currType = this.state.boards.get('currType')
+  let currBoard = this.state.boards.get('currBoard')
+
+  let board = this.state.boards.get(currType + currBoard)
   let myFBId = this.state.me.get('fb_id')
 
   board.get('list').forEach((row, i) => {
@@ -31,18 +38,33 @@ module.exports = function() {
     )
   })
 
-  tabs = _.map(tabs, (tab) => {
-    let board = this.state.boards.get(tab.board)
+  tabsBoard = _.map(tabsBoard, (tab) => {
+    let board = this.state.boards.get(nextType + tab.board)
     let className = cn({
       'boards__tab': true
-    , 'active': current == tab.board
+    , 'active': currBoard == tab.board
     })
 
     return (
       <li className={className}>
-        <a onClick={this.onTab.bind(this, tab.board)}>
-          {next == tab.board && !!board && board.get('loading') &&
+        <a onClick={this.onTab.bind(this, currType, tab.board)}>
+          {nextBoard == tab.board && !!board && board.get('loading') &&
             <i className="boards__tab-spin fa fa-spin fa-circle-o-notch"></i>}
+          {tab.title}
+        </a>
+      </li>
+    )
+  })
+
+  tabsType = _.map(tabsType, (tab) => {
+    let className = cn({
+      'boards__tab': true
+    , 'active': currType == tab.type
+    })
+
+    return (
+      <li className={className}>
+        <a onClick={this.onTab.bind(this, tab.type, currBoard)}>
           {tab.title}
         </a>
       </li>
@@ -58,17 +80,8 @@ module.exports = function() {
             <h4 className="modal-title">Лідери</h4>
           </div>
           <div className="modal-body">
-            <ul className="boards__tabs nav nav-tabs">
-              <li className="boards__tab active">
-                <a>За весь час</a>
-              </li>
-              <li className="boards__tab">
-                <a>За сьогоднi</a>
-              </li>
-            </ul>
-            <ul className="boards__tabs nav nav-tabs">
-              {tabs}
-            </ul>
+            <ul className="boards__tabs nav nav-tabs">{tabsType}</ul>
+            <ul className="boards__tabs nav nav-tabs">{tabsBoard}</ul>
             <table className="boards__table table table-hover table-condensed">
               <tbody>
                 {rows}

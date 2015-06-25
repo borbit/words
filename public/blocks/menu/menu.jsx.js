@@ -2,7 +2,13 @@ var React = require('react')
 var Games = require('../games/games')
 
 module.exports = function() {
-  let rank = this.state.me.get('ranks').get('score')
+  let rankGeneral = this.state.me.get('ranks').get('general').get('score')
+  let rankDaily = this.state.me.get('ranks').get('daily').get('score')
+
+  let rank = []
+  if (rankDaily >= 0) rank.push(rankDaily+1)
+  if (rankGeneral >= 0) rank.push(rankGeneral+1)
+  rank = rank.join('/')
 
   return (
     <div className="menu">
@@ -17,7 +23,7 @@ module.exports = function() {
           <i className="fa fa-info-circle"></i>
         </button>
         <button className="btn btn-sm btn-default" onClick={this.onBoardsClick}>
-          <i className="fa fa-trophy"></i> {rank >= 0 && <span>{rank+1}</span>}
+          <i className="fa fa-trophy"></i> {rank && <span>{rank}</span>}
         </button>
         <button className="btn btn-sm btn-default" onClick={this.onNewClick}>
           <i className="fa fa-plus-circle"></i>

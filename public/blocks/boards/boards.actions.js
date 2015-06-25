@@ -5,10 +5,10 @@ var Actions = module.exports = Reflux.createActions({
   'getBoard': {asyncResult: true}
 });
 
-Actions.getBoard.listen(function(board) {
-  var promise = $.get(`/boards/${board}`)
+Actions.getBoard.listen(function(type, board) {
+  var promise = $.get(`/boards/${type}/${board}`)
   promise.fail(this.failed)
   promise.done((list) => {
-    this.completed({name: board, list: list})
+    this.completed({type: type, name: board, list: list})
   })
 })

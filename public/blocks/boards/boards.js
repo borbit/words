@@ -18,8 +18,8 @@ module.exports = React.createClass({
     }
   },
 
-  onTab(board) {
-    BoardsActions.getBoard(board)
+  onTab(type, board) {
+    BoardsActions.getBoard(type, board)
   },
 
   render() {
