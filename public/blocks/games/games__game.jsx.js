@@ -19,7 +19,7 @@ module.exports = function() {
     })
 
     let user = this.props.game.get(`user${i}`)
-    let userRank = user.get('ranks').get('score')
+    let userRank = user.get('ranks').get('general').get('score')
 
     info.push(
       <tr className={className}>
