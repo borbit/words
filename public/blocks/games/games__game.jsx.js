@@ -19,13 +19,20 @@ module.exports = function() {
     })
 
     let user = this.props.game.get(`user${i}`)
-    let userRank = user.get('ranks').get('general').get('score')
+    let userRankGeneral = user.get('ranks').get('general').get('score')
+    let userRankDaily = user.get('ranks').get('daily').get('score')
 
     info.push(
       <tr className={className}>
         <td><User user={user} width={20} height={20}/></td>
-        <td><div className="games__ellipsis">{userRank >= 0 && userRank <= 2 &&
-          <i className={`fa fa-star games__medal games__medal_${userRank}`}></i>} {user.get('fb_name')}</div></td>
+        <td>
+          <div className="games__ellipsis">
+            {userRankGeneral >= 0 && userRankGeneral <= 2 &&
+              <i className={`fa fa-star games__medal games__medal_${userRankGeneral}`}></i>} {user.get('fb_name')}
+            {userRankDaily >= 0 && userRankDaily <= 2 &&
+              <i className={`fa fa-star games__medal games__medal_${userRankDaily}`}></i>}
+          </div>
+        </td>
         <td><div className="games__ellipsis">{this.props.game.get(`user${i}_score`)}</div></td>
       </tr>
     )
