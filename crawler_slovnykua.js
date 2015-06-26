@@ -29,7 +29,7 @@ function crawlPage(url, cb) {
       })
     })
 
-    $('.wordhref').each(function() {
+    $('.wordhref,.pagelink_a').each(function() {
       pages.push({
         url: $(this).attr('href')
       , txt: $(this).text()
