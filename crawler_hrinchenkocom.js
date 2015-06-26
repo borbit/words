@@ -47,9 +47,10 @@ function crawlPage(url, cb) {
     words = _.filter(words, (i) => {
       let unique = _.unique(i.txt.split(''))
 
-      return i.txt.length > 1 &&
+      return i.txt.length > 2 &&
              !~i.txt.indexOf(' ') &&
              !~i.txt.indexOf('-') &&
+             !~i.txt.indexOf('!') &&
              !/\d/.test(i.txt) &&
              unique.length > 1
     })
