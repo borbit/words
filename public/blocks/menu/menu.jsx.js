@@ -14,18 +14,18 @@ module.exports = function() {
     <div className="menu">
       {this.props.closable &&
         <div className="menu__btns btn-group">
-          <button className="btn btn-sm btn-default" onClick={this.props.onClose}>
+          <button className="btn btn-sm btn-default" onClick={this.props.onClose} title="Вiдкрити чат">
             <i className="fa fa-comment"></i>
           </button>
         </div>}
       <div className="menu__btns btn-group">
-        <button className="btn btn-sm btn-default">
+        <button className="btn btn-sm btn-default" title="Iнформацiя про гру">
           <i className="fa fa-info-circle"></i>
         </button>
-        <button className="btn btn-sm btn-default" onClick={this.onBoardsClick}>
+        <button className="btn btn-sm btn-default" onClick={this.onBoardsClick} title="Вiдкрити таблицi лiдерiв">
           <i className="fa fa-trophy"></i> {rank && <span>{rank}</span>}
         </button>
-        <button className="btn btn-sm btn-default" onClick={this.onNewClick}>
+        <button className="btn btn-sm btn-default" onClick={this.onNewClick} title="Почати нову гру">
           <i className="fa fa-plus-circle"></i>
         </button>
       </div>

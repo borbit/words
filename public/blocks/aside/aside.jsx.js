@@ -6,7 +6,7 @@ module.exports = function() {
     <div className="aside">
       {this.props.closable &&
         <div className="aside__btns btn-group">
-          <button className="btn btn-sm btn-default" onClick={this.props.onClose}>
+          <button className="btn btn-sm btn-default" onClick={this.props.onClose} title="Вiдкрити список iгор">
             <i className="fa fa-list-ul"></i>
           </button>
         </div>}

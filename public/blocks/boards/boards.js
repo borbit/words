@@ -4,6 +4,7 @@ var BoardsActions = require('./boards.actions')
 var BoardsStore = require('./boards.store')
 var MeStore = require('../../js/stores/me')
 var render = require('./boards.jsx')
+var _ = require('lodash')
 
 module.exports = React.createClass({
   mixins: [
@@ -19,6 +20,7 @@ module.exports = React.createClass({
   },
 
   onTab(type, board) {
+    track('Clicks', `Boards - Open ${_.capitalize(type)} ${_.capitalize(board)}`)
     BoardsActions.getBoard(type, board)
   },
 

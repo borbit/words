@@ -61,7 +61,7 @@ module.exports = function() {
       <tr>
         <td></td>
         <td><div className="games__ellipsis">Попер. хiд</div></td>
-        <td><div className="games__ellipsis">{moment(+this.props.game.get('created_at')).fromNow()}</div></td>
+        <td><div className="games__ellipsis">{moment(+this.props.game.get('last_turn_at')).fromNow()}</div></td>
       </tr>
     )
     info.push(

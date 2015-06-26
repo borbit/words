@@ -1,5 +1,6 @@
 var React = require('react')
 var ReactTransitionGroup = React.addons.CSSTransitionGroup
+var StreamItem = require('./stream__item')
 var Avatar = require('../avatar/avatar')
 var moment = require('moment')
 var cn = require('classnames')
@@ -88,25 +89,7 @@ module.exports = function() {
 
   items = _.sortBy(items, item => item.date)
   items = _.map(items, (item) => {
-    let className = cn({
-      'stream__item': true
-    , 'stream__item_chat': item.isChat
-    , 'stream__item_me': item.isMe
-    })
-
-    return (
-      <div className={className} key={item.date}>
-        <div className="stream__balloon">
-          <div className="stream__avatar" title={item.userName}>
-            <Avatar facebookId={item.userFBId} width="20" height="20"/>
-          </div>
-          <div className="stream__message">
-            <p className="stream__message-text" dangerouslySetInnerHTML={{__html: item.message}}/>
-            <i className="stream__message-date">{moment(item.date).fromNow()}</i>
-          </div>
-        </div>
-      </div>
-    )
+    return <StreamItem {...item}/>
   })
 
   return (

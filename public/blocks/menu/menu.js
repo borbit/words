@@ -4,6 +4,7 @@ var BoardsActions = require('../boards/boards.actions')
 var LayoutActions = require('../layout/layout.actions')
 var MeStore = require('../../js/stores/me')
 var render = require('./menu.jsx')
+var $ = require('jquery')
 
 module.exports = React.createClass({
   mixins: [
@@ -14,6 +15,14 @@ module.exports = React.createClass({
     return {
       me: MeStore.getState()
     }
+  },
+
+  componentDidUpdate() {
+    $(this.getDOMNode()).find('.menu__btns .btn').tooltip({
+      delay: {show: 300, hide: 100}
+    , container: 'body'
+    , placement: 'auto'
+    })
   },
 
   onBoardsClick() {

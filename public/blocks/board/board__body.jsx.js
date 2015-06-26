@@ -75,10 +75,10 @@ module.exports = function() {
       <div className="board__letters">
         <div className="board__btns board__btns_left">
           <div className="btn-group dropup">
-            <button className="board__btn btn btn-default" onClick={this.onPoke} disabled={pokeDisabled}>
+            <button className="board__btn btn btn-default" onClick={this.onPoke} disabled={pokeDisabled} title="Вiдправити нагадування наступному гравцю">
               {pokeIcon}
             </button>
-            <button className="board__btn btn btn-default dropdown-toggle" data-toggle="dropdown" disabled={menuDisabled}>
+            <button className="board__btn btn btn-default dropdown-toggle" data-toggle="dropdown" disabled={menuDisabled} title="Iншi дії">
               {menuIcon}
             </button>
             <ul className="dropdown-menu">
@@ -91,10 +91,10 @@ module.exports = function() {
         </div>
         <div className="board__btns board__btns_right">
           <div className="btn-group">
-            <button className="board__btn btn btn-default" onClick={this.onReset} disabled={undoDisabled}>
+            <button className="board__btn btn btn-default" onClick={this.onReset} disabled={undoDisabled} title="Повернути лiтери">
               <i className="fa fa-undo"></i>
             </button>
-            <button className="board__btn btn btn-default" onClick={this.onPlay} disabled={playDisabled}>
+            <button className="board__btn btn btn-default" onClick={this.onPlay} disabled={playDisabled} title="Зробити хiд">
               {playIcon}
             </button>
           </div>

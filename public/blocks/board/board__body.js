@@ -6,6 +6,7 @@ var GameStore = require('../../js/stores/game')
 var GameActions = require('../../js/actions/game')
 var EscapeMixin = require('../../js/mixins/escape')
 var render = require('./board__body.jsx')
+var $ = require('jquery')
 var _ = require('lodash')
 
 module.exports = React.createClass({
@@ -29,6 +30,14 @@ module.exports = React.createClass({
     , letters: []
     , words: []
     }
+  },
+
+  componentDidMount() {
+    $(this.getDOMNode()).find('.board__btn').tooltip({
+      delay: {show: 300, hide: 100}
+    , container: 'body'
+    , placement: 'top'
+    })
   },
 
   onPlace(letters) {
