@@ -45,7 +45,7 @@ module.exports = React.createClass({
     let pageWidth = this.$page.outerWidth()
     let boardWidth = this.$board.outerHeight() - 57
     
-    let asideWidth = (pageWidth - boardWidth) / 2 - 20
+    let asideWidth = (pageWidth - boardWidth) / 2 - 12
     let asideClosable = false
 
     if (pageWidth < 1200) {

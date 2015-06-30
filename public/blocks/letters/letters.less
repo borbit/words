@@ -1,29 +1,48 @@
 .letters {
+  position: relative;
+  height: 52px;
+
+  &__bg,
   &__list {
-    margin: 0 auto;
-    position: relative;
+    position: absolute;
     display: block;
     height: 52px;
     width: 364px;
+    margin-left: -182px;
+    left: 50%;
+  }
 
+  &__bg {
     background: repeat-x top left;
     background-image: url("img/blank.png");
+
+    @media (max-width: @maxWidthMobile) {
+      position: fixed;
+      bottom: 7px;
+      right: 0;
+      left: 0;
+    }
   }
 
   &__letter {
     position: absolute;
     height: 52px;
-    width: 52px;
+    width: 100%/7;
+
+    @media (max-width: @maxWidthMobile) {
+      position: fixed;
+    }
 
     -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
+       -moz-user-select: none;
+            user-select: none;
 
     &_dragging {
       z-index: 1;
     }
 
     &_placed {
+      position: absolute !important;
       padding: 1px;
     }
 

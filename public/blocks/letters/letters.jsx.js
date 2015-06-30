@@ -16,6 +16,7 @@ module.exports = function() {
   
   return (
     <div className="letters" key={Date.now()}>
+      <div className="letters__bg"></div>
       <div className="letters__list">
         {letters}
       </div>
