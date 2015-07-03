@@ -4,7 +4,7 @@ var BoardBody = require('./board__body')
 module.exports = function() {
   return (
     <div className="board">
-      <div className="board__panel panel panel-default">
+      <div className="board__panel">
         <BoardBody/>
       </div>
     </div>

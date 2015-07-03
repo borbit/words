@@ -1,5 +1,4 @@
 require('../../js/bootstrap')
-require('../../js/changelog')
 
 var React = require('react')
 var Layout = require('../../blocks/layout/layout')

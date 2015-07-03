@@ -27,10 +27,14 @@
 
   &__field {
     position: absolute;
+    width: 100%;
     bottom: 57px;
     left: 0;
     top: 0;
-    width: 100%;
+
+    @media (max-width: @maxWidthMobile) {
+      top: 57px;
+    }
   }
 
   &__letters {
@@ -38,6 +42,11 @@
     width: 100%;
     bottom: 0;
     left: 0;
+    top: 0;
+
+    @media (max-width: @maxWidthMobile) {
+      top: 57px;
+    }
   }
 
   &__player {
@@ -65,8 +74,8 @@
     position: absolute;
     margin-top: -17px;
     text-align: center;
+    bottom: 9px;
     width: 50%;
-    top: 50%;
 
     @media (max-width: @maxWidthMobile) {
       display: none;

@@ -12,14 +12,24 @@ const LETTERS_OFFSET_TOP = 5
 module.exports = (el, field) => {
   var $el = $(el)
   var $letters = $el.find('.letters__letter')
+  var $banch = $el.find('.letters__banch')
+
   var emitter = new EventEmitter()
   var reordering = false
   var letters = {}
   var placed = []
 
-  var lettersOffsetLeft = ($el.width() - LETTERS_WIDTH) / 2
   var tableCellSize = $el.width() / 15
   var tableSize = $el.width()
+
+  var offsetEl = $el.offset()
+  var offsetLettersLeft = ($el.width() - LETTERS_WIDTH) / 2
+  
+  var banchOffset = $banch.offset()
+  banchOffset.top -= $(window).scrollTop()
+  banchOffset.left -= $(window).scrollLeft()
+  banchOffset.bottom = banchOffset.top + $banch.height()
+  banchOffset.right = banchOffset.left + $banch.width()
 
   mapLetters()
 
@@ -75,11 +85,15 @@ module.exports = (el, field) => {
       // start dragging from table
       if ($letter.hasClass('letters__letter_placed')) {
         $letter.removeClass('letters__letter_placed')
+        $letter.addClass('letters__letter_placed-was')
+
         removePlaced(letterCellX, letterCellY)
+        
         letterDeltaX -= 6
         letterDeltaY -= 6
         letterCellX = null
         letterCellY = null
+      
       // start dragging from panel
       } else {
         letterIndex = getIndex($letter)
@@ -89,25 +103,30 @@ module.exports = (el, field) => {
     })
 
     $letter.on('dragend', (e, d) => {
+      $letter.removeClass('letters__letter_placed-was')
+
       // calc letter coordinates related to the table
-      var centerX = letterDeltaX + d.deltaX + LETTER_SIZE / 2 + letterLeft
-      var centerY = letterDeltaY + d.deltaY + LETTER_SIZE / 2
-      
-      centerX += lettersOffsetLeft
-      centerY += LETTERS_OFFSET_TOP
-      centerY += tableSize
-      
+      var centerX = d.offsetX - offsetEl.left + LETTER_SIZE / 2
+      var centerY = d.offsetY - offsetEl.top + LETTER_SIZE / 2
+            
       let cellX = ~~(centerX / tableCellSize)
       let cellY = ~~(centerY / tableCellSize)
       let letter = $letter.data('letter')
 
+      let dox = d.offsetX - $(window).scrollLeft() + LETTER_SIZE / 2
+      let doy = d.offsetY - $(window).scrollTop() + LETTER_SIZE / 2
+      let isOverBanch =
+        dox > banchOffset.left && dox < banchOffset.right &&
+        doy > banchOffset.top && doy < banchOffset.bottom
+
       // if current letter coords fall within table
       // then we try to place it there if possible
-      if (!isOccupied(cellX, cellY) &&
+      if (!isOverBanch &&
+          !isOccupied(cellX, cellY) &&
           centerX > 0 && centerX < tableSize &&
           centerY > 0 && centerY < tableSize) {
 
-        letterDeltaX = cellX * tableCellSize - lettersOffsetLeft - letterLeft
+        letterDeltaX = cellX * tableCellSize - offsetLettersLeft - letterLeft
         letterDeltaY = cellY * tableCellSize - LETTERS_OFFSET_TOP - tableSize
         
         translateLetter($letter, letterDeltaX, letterDeltaY)
@@ -170,7 +189,7 @@ module.exports = (el, field) => {
   }
 
   function getLeft($letter) {
-    return +$letter.css('left').replace('px', '')
+    return 182 + +$letter.css('margin-left').replace('px', '')
   }
   
   function translateLetter($letter, x, y) {
@@ -179,7 +198,7 @@ module.exports = (el, field) => {
 
   // move letter to new position by index
   function moveLetter($letter, index) {
-    $letter.css('left', LETTER_SIZE * index)
+    $letter.css('margin-left', LETTER_SIZE * index - 182)
   }
 
   // move a row of letters on one cell left or

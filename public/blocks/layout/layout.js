@@ -43,7 +43,7 @@ module.exports = React.createClass({
 
   arrangeLayout() {
     let pageWidth = this.$page.outerWidth()
-    let boardWidth = this.$board.outerHeight() - 57
+    let boardWidth = this.$board.outerHeight() - 114
     
     let asideWidth = (pageWidth - boardWidth) / 2 - 12
     let asideClosable = false
