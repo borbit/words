@@ -49,8 +49,7 @@
     "redis": "^0.12.1",
     "reflux": "^0.2.7",
     "request": "^2.57.0",
-    "vinyl-source-stream": "^1.1.0",
-    "node-waves": "^0.7.2"
+    "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
     "start": "./bin/server"
